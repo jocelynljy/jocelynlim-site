@@ -183,3 +183,40 @@ footer .fbot{display:flex; justify-content:space-between; align-items:center; ma
 .post .meta .arrow{transition:transform .25s}
 .post:hover .meta .arrow{transform:translateX(5px); color:var(--blog)}
 @media(max-width:640px){ .post{flex-direction:column; align-items:flex-start; gap:7px} .post .meta{order:-1} }
+
+/* ============================================================
+   v3 — atmosphere, accent & motion (same layout/fonts/palette)
+   ============================================================ */
+body{background:radial-gradient(125% 85% at 50% -12%, #f9f3e7 0%, #f3ecde 55%, #efe6d4 100%) fixed;}
+
+/* hero + detail-hero atmosphere */
+.hero, .dhero{position:relative; overflow:hidden}
+.hero-bg{position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(46% 44% at 86% 8%, rgba(196,100,79,.20), transparent 70%),
+    radial-gradient(42% 42% at 4% 94%, rgba(74,94,148,.14), transparent 72%),
+    radial-gradient(38% 50% at 60% 120%, rgba(176,125,58,.10), transparent 70%);}
+.hero-bg::after{content:""; position:absolute; inset:0; opacity:.5;
+  background-image:repeating-linear-gradient(90deg, transparent 0, transparent calc(14.285% - 1px), rgba(44,36,32,.05) calc(14.285% - 1px), rgba(44,36,32,.05) 14.285%);
+  -webkit-mask-image:linear-gradient(180deg,#000,transparent 92%); mask-image:linear-gradient(180deg,#000,transparent 92%);}
+.hero .wrap, .dhero .wrap{position:relative; z-index:1}
+
+/* headline: smaller second clause */
+.hero h1 .tail{display:block; font-size:.42em; font-style:normal; font-weight:400; color:var(--ink-soft); letter-spacing:0; line-height:1.2; margin-top:.45em}
+
+/* gradient primary button */
+.btn-primary{background:linear-gradient(135deg,#c8674f 0%,#a8462f 100%); color:#fff; box-shadow:0 8px 20px rgba(168,70,47,.18)}
+.btn-primary:hover{background:linear-gradient(135deg,#d2735a 0%,#9c3f29 100%); transform:translateY(-2px); box-shadow:0 12px 28px rgba(168,70,47,.30)}
+
+/* card hover accent wash */
+.quest::after{content:""; position:absolute; inset:0; pointer-events:none; opacity:0; transition:opacity .35s;
+  background:linear-gradient(180deg, transparent 55%, color-mix(in srgb, var(--qc,var(--bloom)) 16%, transparent));}
+.quest:hover::after{opacity:1}
+
+/* soft accent glows behind content sections */
+#why, #about{position:relative}
+#why::before, #about::before{content:""; position:absolute; pointer-events:none; width:520px; height:520px; border-radius:50%; z-index:0;
+  background:radial-gradient(circle, rgba(196,100,79,.09), transparent 70%);}
+#why::before{top:-120px; right:-120px}
+#about::before{bottom:-160px; left:-160px; background:radial-gradient(circle, rgba(74,94,148,.09), transparent 70%)}
+#why .wrap, #about .wrap{position:relative; z-index:1}
