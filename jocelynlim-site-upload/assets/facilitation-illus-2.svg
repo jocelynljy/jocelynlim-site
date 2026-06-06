@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Illustration of a workshop wall of sticky notes and ideas">
+  <rect width="800" height="600" fill="#f3ead9"/>
+  <g stroke="#7c6f5c" stroke-width="5" stroke-linecap="round" opacity="0.85">
+    <g transform="rotate(-6 150 150)"><rect x="80" y="90" width="150" height="150" rx="6" fill="#e8b94f"/><line x1="105" y1="135" x2="205" y2="135"/><line x1="105" y1="165" x2="190" y2="165"/><line x1="105" y1="195" x2="200" y2="195"/></g>
+    <g transform="rotate(4 420 130)"><rect x="330" y="70" width="150" height="150" rx="6" fill="#d98c6a"/><line x1="355" y1="115" x2="455" y2="115"/><line x1="355" y1="145" x2="440" y2="145"/><line x1="355" y1="175" x2="450" y2="175"/></g>
+    <g transform="rotate(-3 650 160)"><rect x="560" y="100" width="150" height="150" rx="6" fill="#8fa3d6"/><line x1="585" y1="145" x2="685" y2="145"/><line x1="585" y1="175" x2="660" y2="175"/><line x1="585" y1="205" x2="680" y2="205"/></g>
+    <g transform="rotate(5 200 410)"><rect x="120" y="350" width="150" height="150" rx="6" fill="#a9b56f"/><line x1="145" y1="395" x2="245" y2="395"/><line x1="145" y1="425" x2="225" y2="425"/><line x1="145" y1="455" x2="240" y2="455"/></g>
+    <g transform="rotate(-5 470 430)"><rect x="390" y="370" width="150" height="150" rx="6" fill="#c98aae"/><line x1="415" y1="415" x2="515" y2="415"/><line x1="415" y1="445" x2="495" y2="445"/><line x1="415" y1="475" x2="505" y2="475"/></g>
+    <g transform="rotate(3 660 440)"><rect x="585" y="380" width="140" height="140" rx="6" fill="#6fb5ad"/><line x1="610" y1="425" x2="700" y2="425"/><line x1="610" y1="455" x2="685" y2="455"/></g>
+  </g>
+</svg>

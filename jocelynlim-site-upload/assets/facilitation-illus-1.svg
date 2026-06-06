@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Illustration of a warm group gathering in conversation">
+  <defs>
+    <radialGradient id="glow" cx="78%" cy="22%" r="70%">
+      <stop offset="0%" stop-color="#fff7ea"/><stop offset="100%" stop-color="#f3ead9"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#glow)"/>
+  <!-- soft window light -->
+  <g opacity="0.5" fill="#ffffff">
+    <rect x="60" y="60" width="150" height="220" rx="8"/>
+    <rect x="230" y="60" width="150" height="220" rx="8"/>
+  </g>
+  <!-- connecting ring -->
+  <ellipse cx="640" cy="380" rx="300" ry="150" fill="none" stroke="#c9bca6" stroke-width="2" stroke-dasharray="3 10"/>
+  <!-- people as soft overlapping forms -->
+  <g>
+    <g transform="translate(420,300)"><circle cx="0" cy="-46" r="30" fill="#b07d3a"/><path d="M-46 60 a46 52 0 0 1 92 0 z" fill="#b07d3a"/></g>
+    <g transform="translate(560,250)"><circle cx="0" cy="-46" r="30" fill="#93577f"/><path d="M-46 60 a46 52 0 0 1 92 0 z" fill="#93577f"/></g>
+    <g transform="translate(720,250)"><circle cx="0" cy="-46" r="30" fill="#4a5e94"/><path d="M-46 60 a46 52 0 0 1 92 0 z" fill="#4a5e94"/></g>
+    <g transform="translate(860,300)"><circle cx="0" cy="-46" r="30" fill="#7d8a4f"/><path d="M-46 60 a46 52 0 0 1 92 0 z" fill="#7d8a4f"/></g>
+    <g transform="translate(490,430)"><circle cx="0" cy="-44" r="28" fill="#c4644f"/><path d="M-44 56 a44 50 0 0 1 88 0 z" fill="#c4644f"/></g>
+    <g transform="translate(790,430)"><circle cx="0" cy="-44" r="28" fill="#3f8a82"/><path d="M-44 56 a44 50 0 0 1 88 0 z" fill="#3f8a82"/></g>
+  </g>
+  <!-- low table with sticky notes -->
+  <ellipse cx="640" cy="430" rx="120" ry="40" fill="#fffdf8" stroke="#e2d8c6" stroke-width="2"/>
+  <rect x="588" y="406" width="40" height="40" rx="4" fill="#e8b94f" transform="rotate(-8 608 426)"/>
+  <rect x="630" y="410" width="40" height="40" rx="4" fill="#d98c6a" transform="rotate(6 650 430)"/>
+  <rect x="672" y="404" width="40" height="40" rx="4" fill="#8fa3d6" transform="rotate(-4 692 424)"/>
+</svg>
