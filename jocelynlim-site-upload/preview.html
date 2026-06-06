@@ -6,270 +6,173 @@
 <title>Design Preview — Jocelyn Lim</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..700&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 <style>
-:root{
-  --paper:#f1e7d4; --paper2:#eaddc4; --cream:#f8f1e3;
-  --espresso:#211913; --espresso2:#2c221a;
-  --ink:#2a2018; --ink-soft:#6f6253; --faint:#9c8e79;
-  --line:#d9c9ad; --line-dk:rgba(244,236,222,.16);
-  --terra:#c8553d; --terra2:#d8693f; --ochre:#b07d3a; --olive:#7d8a4f; --scent:#4a5e94; --plum:#93577f;
-  --disp:'Fraunces',Georgia,serif; --body:'Bricolage Grotesque',-apple-system,sans-serif;
-  --maxw:1200px;
+/* ============================================================
+   ENHANCEMENTS on the ORIGINAL design — atmosphere, accent, motion
+   (same layout, fonts, palette; just richer)
+   ============================================================ */
+
+/* subtle warm depth instead of flat paper */
+body{background:radial-gradient(125% 85% at 50% -12%, #f9f3e7 0%, #f3ecde 55%, #efe6d4 100%) fixed;}
+
+/* ---- HERO atmosphere ---- */
+.hero{position:relative; overflow:hidden}
+.hero-bg{position:absolute; inset:0; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(46% 44% at 86% 8%, rgba(196,100,79,.22), transparent 70%),
+    radial-gradient(42% 42% at 4% 94%, rgba(74,94,148,.16), transparent 72%),
+    radial-gradient(38% 50% at 60% 120%, rgba(176,125,58,.12), transparent 70%);}
+.hero-bg::after{content:""; position:absolute; inset:0; opacity:.5;
+  background-image:repeating-linear-gradient(90deg, transparent 0, transparent calc(14.285% - 1px), rgba(44,36,32,.05) calc(14.285% - 1px), rgba(44,36,32,.05) 14.285%);
+  -webkit-mask-image:linear-gradient(180deg, #000 0%, transparent 92%); mask-image:linear-gradient(180deg, #000 0%, transparent 92%);}
+.hero .wrap{position:relative; z-index:1}
+
+/* ---- headline re-weighted: the human line is the hero ---- */
+.hero h1 .tail{display:block; font-size:.42em; font-style:normal; font-weight:400; color:var(--ink-soft); letter-spacing:0; line-height:1.2; margin-top:.45em}
+
+/* ---- gradient primary button (warm accent) ---- */
+.btn-primary{background:linear-gradient(135deg, #c8674f 0%, #a8462f 100%); color:#fff; box-shadow:0 8px 20px rgba(168,70,47,.18)}
+.btn-primary:hover{background:linear-gradient(135deg, #d2735a 0%, #9c3f29 100%); transform:translateY(-2px); box-shadow:0 12px 28px rgba(168,70,47,.30)}
+.tagchip{backdrop-filter:blur(4px)}
+
+/* ---- soft accent glows behind section headings for depth ---- */
+#why, #quests, #about{position:relative}
+#why::before, #about::before{content:""; position:absolute; pointer-events:none; width:520px; height:520px; border-radius:50%; z-index:0;
+  background:radial-gradient(circle, rgba(196,100,79,.10), transparent 70%); }
+#why::before{top:-120px; right:-120px}
+#about::before{bottom:-160px; left:-160px; background:radial-gradient(circle, rgba(74,94,148,.10), transparent 70%)}
+#why .wrap, #about .wrap{position:relative; z-index:1}
+
+/* ---- richer card hover (accent wash + lift) ---- */
+.quest{transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s, border-color .35s}
+.quest::after{content:""; position:absolute; inset:0; pointer-events:none; opacity:0; transition:opacity .35s;
+  background:linear-gradient(180deg, transparent 55%, color-mix(in srgb, var(--qc,var(--bloom)) 16%, transparent));}
+.quest:hover::after{opacity:1}
+.quest .verb{display:inline-block}
+
+/* ---- orchestrated page-load on hero (staggered) ---- */
+@keyframes pl-rise{from{opacity:0; transform:translateY(26px)} to{opacity:1; transform:none}}
+@media(prefers-reduced-motion:no-preference){
+  .hero .eyebrow, .hero h1, .hero .sub, .hero .cta-row, .hero .portrait{opacity:0; animation:pl-rise .95s cubic-bezier(.16,1,.3,1) forwards}
+  .hero h1{animation-delay:.12s} .hero .sub{animation-delay:.30s} .hero .cta-row{animation-delay:.44s} .hero .portrait{animation-delay:.24s}
 }
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-/* grain */
-body::after{content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
-a{color:inherit;text-decoration:none}
-img{display:block;max-width:100%}
-::selection{background:var(--terra);color:#fff}
 
-/* ribbon */
-.ribbon{background:var(--terra);color:#fff;text-align:center;font-size:12px;letter-spacing:.04em;padding:7px 16px;font-weight:500}
-
-/* ---------- HERO (dark) ---------- */
-.hero{position:relative;background:var(--espresso);color:var(--cream);overflow:hidden}
-.hero::before{content:"";position:absolute;inset:0;background:
-  radial-gradient(60% 50% at 82% 18%, rgba(216,105,63,.22), transparent 70%),
-  radial-gradient(50% 40% at 10% 90%, rgba(74,94,148,.16), transparent 70%);}
-.hero .grid{position:absolute;inset:0;opacity:.5;background-image:repeating-linear-gradient(90deg,transparent 0,transparent calc(12.5% - 1px),var(--line-dk) calc(12.5% - 1px),var(--line-dk) 12.5%)}
-.hero .grain{position:absolute;inset:0;opacity:.06;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='m'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E")}
-
-/* top bar */
-.topbar{position:relative;z-index:5}
-.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:78px}
-.brand{font-family:var(--disp);font-weight:600;font-size:22px;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
-.brand .star{color:var(--terra2);font-size:15px}
-.nav{display:flex;gap:26px;align-items:center;font-size:13.5px;font-weight:500;color:rgba(248,241,227,.66)}
-.nav a:hover{color:var(--cream)}
-.nav .cta{border:1px solid rgba(248,241,227,.3);border-radius:40px;padding:8px 17px;color:var(--cream)}
-.nav .cta:hover{background:var(--terra);border-color:var(--terra)}
-
-.hero-main{position:relative;z-index:5}
-.hero-main .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center;padding:60px 32px 86px}
-.kicker{display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:rgba(248,241,227,.55);font-weight:500}
-.kicker .ln{height:1px;width:46px;background:rgba(248,241,227,.3)}
-h1.title{font-family:var(--disp);font-weight:340;font-size:clamp(44px,6.6vw,86px);line-height:.97;letter-spacing:-.02em;margin:26px 0 0}
-h1.title em{font-style:italic;color:var(--terra2)}
-.line{display:block;overflow:hidden}
-.line>span{display:block;transform:translateY(115%);animation:lineUp 1.05s cubic-bezier(.16,1,.3,1) forwards}
-.hero .sub{font-size:18px;line-height:1.65;color:rgba(248,241,227,.74);margin-top:30px;max-width:540px}
-.hero-cta{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-weight:600;font-size:15px;padding:14px 28px;border-radius:4px;transition:transform .2s,background .25s,color .25s,border-color .25s;cursor:pointer;border:none}
-.btn .ar{transition:transform .25s}.btn:hover .ar{transform:translateX(5px)}
-.btn-solid{background:var(--cream);color:var(--espresso)}
-.btn-solid:hover{background:var(--terra2);color:#fff;transform:translateY(-2px)}
-.btn-ghost{background:transparent;color:var(--cream);border:1px solid rgba(248,241,227,.35)}
-.btn-ghost:hover{border-color:var(--cream);transform:translateY(-2px)}
-
-.portrait{position:relative;justify-self:center}
-.portrait .frame{position:relative;width:min(360px,80vw);aspect-ratio:4/5;border-radius:230px 230px 8px 8px;overflow:hidden;border:1px solid rgba(248,241,227,.25);box-shadow:0 40px 80px rgba(0,0,0,.4)}
-.portrait .frame img{width:100%;height:100%;object-fit:cover}
-.portrait .tape{position:absolute;-z-index:2}
-.chip{position:absolute;bottom:24px;left:-22px;background:var(--cream);color:var(--ink);border-radius:4px;padding:10px 16px;font-size:13px;font-weight:600;box-shadow:0 14px 30px rgba(0,0,0,.3);display:flex;align-items:center;gap:8px}
-.chip .dot{width:8px;height:8px;border-radius:50%;background:var(--terra);box-shadow:0 0 0 4px rgba(200,85,61,.2)}
-.vlabel{position:absolute;top:50%;right:-54px;transform:translateY(-50%) rotate(90deg);font-size:11px;letter-spacing:.4em;text-transform:uppercase;color:rgba(248,241,227,.4)}
-
-/* load orchestration */
-.load{opacity:0;animation:rise 1s cubic-bezier(.16,1,.3,1) forwards}
-.d1{animation-delay:.1s}.d2{animation-delay:.55s}.d3{animation-delay:.7s}.d4{animation-delay:.85s}.d5{animation-delay:1s}
-.line:nth-child(1)>span{animation-delay:.18s}.line:nth-child(2)>span{animation-delay:.30s}.line:nth-child(3)>span{animation-delay:.42s}.line:nth-child(4)>span{animation-delay:.54s}
-@keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
-@keyframes lineUp{from{transform:translateY(115%)}to{transform:translateY(0)}}
-
-/* ---------- sections ---------- */
-.sec{position:relative;padding:104px 0}
-.idx{display:flex;align-items:baseline;gap:16px;font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--faint);font-weight:600}
-.idx .no{font-family:var(--disp);font-style:italic;font-size:30px;letter-spacing:0;color:var(--terra);line-height:1}
-.h2{font-family:var(--disp);font-weight:360;font-size:clamp(30px,4.6vw,52px);line-height:1.03;letter-spacing:-.018em;margin-top:22px;max-width:13ch}
-.h2 em{font-style:italic;color:var(--terra)}
-.prose{margin-top:30px;max-width:620px}
-.prose p{font-size:17.5px;line-height:1.72;color:#41372b;margin-bottom:20px}
-.mark{background:linear-gradient(transparent 58%, rgba(200,85,61,.26) 58%);padding:0 2px}
-.faintword{position:absolute;font-family:var(--disp);font-style:italic;font-size:clamp(120px,22vw,300px);color:#000;opacity:.03;right:-10px;top:-30px;pointer-events:none;line-height:1}
-
-/* quests as editorial index */
-.quests{margin-top:54px;border-top:1px solid var(--line)}
-.q{display:grid;grid-template-columns:64px 1fr auto;gap:28px;align-items:center;padding:26px 8px;border-bottom:1px solid var(--line);position:relative;transition:padding-left .3s,background .3s}
-.q:hover{padding-left:22px;background:rgba(200,85,61,.04)}
-.q .qno{font-family:var(--disp);font-style:italic;font-size:24px;color:var(--faint)}
-.q:hover .qno{color:var(--terra)}
-.q .qmid{min-width:0}
-.q .qverb{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--qc,var(--terra))}
-.q h3{font-family:var(--disp);font-weight:500;font-size:clamp(24px,3vw,34px);line-height:1.08;margin:5px 0 4px;letter-spacing:-.01em}
-.q p{font-size:15px;color:var(--ink-soft);max-width:62ch}
-.q .qthumb{width:124px;height:84px;border-radius:6px;overflow:hidden;flex:none;filter:grayscale(.25);transition:filter .4s,transform .4s;box-shadow:0 8px 20px rgba(60,45,30,.12)}
-.q:hover .qthumb{filter:none;transform:scale(1.04) rotate(-1deg)}
-.q .qthumb img{width:100%;height:100%;object-fit:cover}
-.q .qgo{font-size:20px;color:var(--faint);transition:transform .3s,color .3s}
-.q:hover .qgo{color:var(--terra);transform:translateX(6px)}
-@media(max-width:720px){.q{grid-template-columns:40px 1fr;gap:14px}.q .qthumb,.q .qgo{display:none}}
-
-/* proof marquee (dark) */
-.proof{background:var(--espresso);color:var(--cream);padding:34px 0;overflow:hidden;position:relative}
-.proof .lbl{text-align:center;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:rgba(248,241,227,.45);margin-bottom:20px;font-weight:600}
-.mq{display:flex;gap:40px;width:max-content;animation:slide 30s linear infinite;align-items:center}
-.mq span{font-family:var(--disp);font-style:italic;font-size:26px;color:rgba(248,241,227,.85);white-space:nowrap}
-.mq .sep{color:var(--terra2);font-style:normal}
-@keyframes slide{to{transform:translateX(-50%)}}
-
-/* about split */
-.split{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center}
-.split .media{position:relative}
-.split .media img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:6px;filter:grayscale(.15)}
-.split .media::before{content:"";position:absolute;inset:14px -14px -14px 14px;border:1px solid var(--line);border-radius:6px;z-index:-1}
-
-/* connect band */
-.connect{background:var(--paper2);border-radius:10px;padding:64px 40px;text-align:center;max-width:880px;margin:0 auto}
-.connect .big{font-family:var(--disp);font-style:italic;font-size:clamp(24px,3.4vw,34px);line-height:1.32;letter-spacing:-.01em}
-.connect .big b{font-style:normal;color:var(--terra)}
-
-/* footer */
-footer{background:var(--espresso);color:var(--cream);padding:76px 0 40px;margin-top:0}
-.fgrid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px}
-footer h4{font-family:var(--disp);font-weight:400;font-size:32px;line-height:1.12}
-footer h4 em{font-style:italic;color:var(--terra2)}
-footer h5{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(248,241,227,.45);margin-bottom:15px;font-weight:600}
-footer a.fl{display:block;color:rgba(248,241,227,.82);font-size:15px;margin-bottom:10px}
-footer a.fl:hover{color:var(--terra2)}
-.fbot{display:flex;justify-content:space-between;margin-top:52px;padding-top:24px;border-top:1px solid var(--line-dk);font-size:13px;color:rgba(248,241,227,.45);flex-wrap:wrap;gap:8px}
-
-/* scroll reveal */
-.rv{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
-.rv.in{opacity:1;transform:none}
-.rv.s1{transition-delay:.08s}.rv.s2{transition-delay:.16s}.rv.s3{transition-delay:.24s}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.load,.rv,.line>span{opacity:1!important;transform:none!important}}
-
-@media(max-width:860px){
-  .nav{display:none}
-  .hero-main .wrap{grid-template-columns:1fr;gap:44px;padding:30px 32px 64px}
-  .split{grid-template-columns:1fr;gap:30px}
-  .fgrid{grid-template-columns:1fr 1fr}footer h4{grid-column:1/-1}
-  .faintword{display:none}
-}
+/* tighten nav to fit all 7 with breathing room (matches main site) */
+.nav-links{gap:23px}
 </style>
 </head>
 <body>
-<div class="ribbon">Design preview · same content &amp; branding intent, bold new look — your live site is untouched</div>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="grid"></div><div class="grain"></div>
-  <div class="topbar"><div class="wrap">
-    <a class="brand" href="#"><span class="star">✳</span>Jocelyn Lim</a>
-    <nav class="nav">
-      <a href="#">What I'm building</a><a href="#">Hosting</a><a href="#">Facilitation</a><a href="#">Scentura</a><a href="#">letsbloom</a><a href="#">Stories</a>
-      <a class="cta" href="#">Let's connect</a>
-    </nav>
-  </div></div>
+<div style="background:linear-gradient(135deg,#c8674f,#a8462f);color:#fff;text-align:center;font-size:12px;letter-spacing:.03em;padding:7px 16px;font-weight:500">Design preview · same content, original design — just richer atmosphere, accent &amp; motion. Live site untouched.</div>
 
-  <div class="hero-main"><div class="wrap">
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="#">Jocelyn Lim<span class="d">.</span></a>
+    <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-links">
+      <a href="#quests" class="active">What I'm building</a>
+      <a href="#">Hosting</a>
+      <a href="#">Facilitation</a>
+      <a href="#">Scentura</a>
+      <a href="#">letsbloom</a>
+      <a href="#">Stories</a>
+      <a class="nav-cta" href="#connect">Let's connect</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <span class="hero-bg" aria-hidden="true"></span>
+  <div class="wrap">
     <div>
-      <div class="kicker load d1"><span class="ln"></span>Singapore · host · facilitator · founder</div>
-      <h1 class="title">
-        <span class="line"><span>I help people feel</span></span>
-        <span class="line"><span>a little more <em>human</em> —</span></span>
-        <span class="line"><span>in a world that keeps</span></span>
-        <span class="line"><span>going digital.</span></span>
-      </h1>
-      <p class="sub load d2">While AI scales the virtual world, my rebellion is in scaling the physical one. I host rooms, run workshops, build Scentura, and create craft spaces where people make something by hand — and feel a little closer. Different projects, same quiet obsession: keeping people close.</p>
-      <div class="hero-cta load d3">
-        <a class="btn btn-solid" href="#">See what I'm building <span class="ar">→</span></a>
-        <a class="btn btn-ghost" href="#">Work with me</a>
+      <div class="eyebrow">Singapore · host · facilitator · founder</div>
+      <h1>I help people feel a little more <em>human</em><span class="tail">— in a world that keeps going digital.</span></h1>
+      <p class="sub">While AI scales the virtual world, my rebellion is in scaling the physical one. I host rooms, run workshops, build Scentura, and create craft spaces where people make something by hand — and feel a little closer. Different projects, same quiet obsession: keeping people close.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#quests">See what I'm building <span class="arrow">→</span></a>
+        <a class="btn btn-ghost" href="#connect">Work with me</a>
       </div>
     </div>
-    <div class="portrait load d2">
-      <div class="frame"><img src="assets/jocelyn-portrait.jpg" alt="Jocelyn Lim"></div>
-      <div class="chip"><span class="dot"></span>Now: just graduated &amp; building in public</div>
-      <div class="vlabel">est. 2026 — Singapore</div>
+    <div class="portrait">
+      <span class="ring"></span>
+      <img src="assets/jocelyn-portrait.jpg" alt="Jocelyn Lim">
+      <div class="tagchip"><span class="dot"></span>Now: just graduated &amp; building in public</div>
     </div>
-  </div></div>
-</section>
+  </div>
+</header>
 
-<!-- THE WHY -->
-<section class="sec">
-  <span class="faintword">why</span>
+<section class="section" id="why">
   <div class="wrap">
-    <div class="idx rv"><span class="no">01</span> the why</div>
-    <h2 class="h2 rv s1">Lots of side quests. <em>One</em> reason.</h2>
-    <div class="prose">
-      <p class="rv s1">On paper, my week makes no sense. One day I'm holding a mic in front of a room. The next I'm rewriting a pitch, prepping for a facilitation session, or cutting pipe cleaners into petals at my kitchen table. People keep telling me to pick one thing.</p>
-      <p class="rv s2">I'm graduating into a lot of noise — the job market is brutal, AI is coming for the work. But here's the quieter thing I believe: there are still some things AI can't take from us. <span class="mark">The comfort of making things with people, by people, for people?</span> That.</p>
-      <p class="rv s2">That's the thread connecting it all: <span class="mark">meet people, go deeper, and stay connected.</span></p>
+    <div class="eyebrow reveal">the why</div>
+    <h2 class="section-h reveal d1">Lots of side quests. <em>One</em> reason.</h2>
+    <div class="prose reveal d2" style="margin-top:28px">
+      <p>On paper, my week makes no sense. One day I'm holding a mic in front of a room. The next I'm rewriting a pitch, prepping for a facilitation session, or cutting pipe cleaners into petals at my kitchen table. People keep telling me to pick one thing.</p>
+      <p>I'm graduating into a lot of noise — the job market is brutal, AI is coming for the work. But here's the quieter thing I believe: there are still some things AI can't take from us. <span class="hl">The comfort of making things with people, by people, for people?</span> That.</p>
+      <p>That's the thread connecting it all: <span class="hl">meet people, go deeper, and stay connected.</span></p>
     </div>
   </div>
 </section>
 
-<!-- SIDE QUESTS -->
-<section class="sec" style="padding-top:0">
+<section class="section" id="quests" style="padding-top:0">
   <div class="wrap">
-    <div class="idx rv"><span class="no">02</span> what I'm building right now</div>
+    <div class="eyebrow reveal">the side quests</div>
+    <h2 class="section-h reveal d1">What I'm building <em>right now</em></h2>
+    <p class="lead reveal d2">Still early on all of these — click into any one for the full story.</p>
     <div class="quests">
-      <a class="q rv" href="#" style="--qc:var(--ochre)">
-        <div class="qno">01</div>
-        <div class="qmid"><div class="qverb">hold the room</div><h3>Hosting &amp; Emceeing</h3><p>Events, demo days and panels — from an 80-person company event to startup demo days.</p></div>
-        <div class="qthumb"><img src="assets/demo-day.jpg" alt=""></div><div class="qgo">→</div>
+      <a class="quest reveal d1" href="#" style="--qc:var(--host)">
+        <div class="ph"><img src="assets/demo-day.jpg" alt=""></div>
+        <div class="body"><div class="verb">hold the room</div><h3>Hosting &amp; Emceeing</h3><p>Events, demo days and panels — from an 80-person company event to startup demo days. I keep the energy warm, the timing tight, and the room awake.</p><span class="go">Explore <span class="arrow">→</span></span></div>
       </a>
-      <a class="q rv" href="#" style="--qc:var(--plum)">
-        <div class="qno">02</div>
-        <div class="qmid"><div class="qverb">guide the room</div><h3>Facilitation</h3><p>Guiding students and young leaders to their own aha — in schools, community projects and youth programmes.</p></div>
-        <div class="qthumb"><img src="assets/facilitation-ai-hero.jpg" alt=""></div><div class="qgo">→</div>
+      <a class="quest reveal d2" href="#" style="--qc:var(--hub)">
+        <div class="ph"><img src="assets/facilitation-ai-hero.jpg" alt=""></div>
+        <div class="body"><div class="verb">guide the room</div><h3>Facilitation</h3><p>Guiding students and young leaders to their own aha — in schools, community projects and youth programmes.</p><span class="go">Explore <span class="arrow">→</span></span></div>
       </a>
-      <a class="q rv" href="#" style="--qc:var(--scent)">
-        <div class="qno">03</div>
-        <div class="qmid"><div class="qverb">sense connection</div><h3>Scentura</h3><p>Helping cold-food brands — ice cream, bakeries, snacks — create atmosphere through scent. Now piloting.</p></div>
-        <div class="qthumb"><img src="assets/scentura-hero.jpg" alt=""></div><div class="qgo">→</div>
+      <a class="quest reveal d3" href="#" style="--qc:var(--scent)">
+        <div class="ph"><img src="assets/scentura-cofounders.jpg" alt=""></div>
+        <div class="body"><div class="verb">sense connection</div><h3>Scentura</h3><p>Helping cold-food brands — ice cream, bakeries, snacks — create atmosphere through scent. Now piloting.</p><span class="go">Explore <span class="arrow">→</span></span></div>
       </a>
-      <a class="q rv" href="#" style="--qc:var(--terra)">
-        <div class="qno">04</div>
-        <div class="qmid"><div class="qverb">grow connection</div><h3>letsbloom</h3><p>Handmade flowers and craft sessions — a way to make things by hand and keep friendships close.</p></div>
-        <div class="qthumb"><img src="assets/bloom-community.jpg" alt=""></div><div class="qgo">→</div>
+      <a class="quest reveal d4" href="#" style="--qc:var(--bloom)">
+        <div class="ph"><img src="assets/bloom-community.jpg" alt=""></div>
+        <div class="body"><div class="verb">grow connection</div><h3>letsbloom</h3><p>Handmade flowers and craft sessions — a way to make things by hand and keep friendships close.</p><span class="go">Explore <span class="arrow">→</span></span></div>
       </a>
-      <a class="q rv" href="#" style="--qc:var(--olive)">
-        <div class="qno">05</div>
-        <div class="qmid"><div class="qverb">share the journey</div><h3>Stories &amp; Writing</h3><p>Honest notes on the work — startups, rejection, solo travel, and figuring it out. On Medium.</p></div>
-        <div class="qthumb"><img src="assets/aylep-mbs.jpg" alt=""></div><div class="qgo">→</div>
+      <a class="quest reveal d5" href="#" style="--qc:var(--blog); grid-column:span 2">
+        <div class="ph"><img src="assets/aylep-mbs.jpg" alt=""></div>
+        <div class="body"><div class="verb">share the journey</div><h3>Stories &amp; Writing</h3><p>Honest notes on the work — startups, rejection, solo travel, and figuring it out. On Medium.</p><span class="go">Read <span class="arrow">→</span></span></div>
       </a>
     </div>
   </div>
 </section>
 
-<!-- PROOF -->
 <div class="proof">
-  <div class="lbl">where I've been learning &amp; showing up</div>
-  <div class="mq" id="mq">
-    <span>NUS Business School</span><span class="sep">✳</span><span>NUS Overseas Colleges</span><span class="sep">✳</span><span>Ngee Ann Poly GEIP</span><span class="sep">✳</span><span>Scentura — 1st Runner-Up</span><span class="sep">✳</span><span>Toastmasters</span><span class="sep">✳</span><span>ASEAN Youth Exchange Delegate</span><span class="sep">✳</span>
-  </div>
+  <div class="label">where I've been learning &amp; showing up</div>
+  <div class="marquee"><span>NUS Business School</span><span>NUS Overseas Colleges</span><span>Ngee Ann Poly GEIP</span><span>Scentura — 1st Runner-Up</span><span>Toastmasters</span><span>ASEAN Youth Exchange Delegate</span></div>
 </div>
 
-<!-- ABOUT -->
-<section class="sec">
+<section class="section" id="about">
   <div class="wrap split">
-    <div class="media rv"><img src="assets/aylep-homestay.jpg" alt="Jocelyn at a homestay meal during an ASEAN youth exchange"></div>
-    <div>
-      <div class="idx rv"><span class="no">03</span> the human behind it</div>
-      <h2 class="h2 rv s1">Hi, I'm <em>Jocelyn</em>.</h2>
-      <div class="prose">
-        <p class="rv s1">I studied Marketing at NUS Business School, but a lot of the real learning happened between countries — growing up across Singapore, Indonesia and Canada, doing homestays and farm stays through ASEAN youth exchanges, and living far from family (sharing a place with friends in Toronto) for a startup stint through NUS Overseas Colleges.</p>
-        <p class="rv s2">I don't travel to collect stamps. I travel because I'm endlessly curious about how people live, connect and make meaning — and that same curiosity is the muscle behind everything on this page.</p>
+    <div class="split-media tall reveal"><img src="assets/aylep-homestay.jpg" alt="Jocelyn at a homestay meal during an ASEAN youth exchange"></div>
+    <div class="reveal d2">
+      <div class="eyebrow">the human behind it</div>
+      <h2 class="section-h" style="margin-top:8px">Hi, I'm <em>Jocelyn</em>.</h2>
+      <div class="prose" style="margin-top:22px">
+        <p>I studied Marketing at NUS Business School, but a lot of the real learning happened between countries — growing up across Singapore, Indonesia and Canada, doing homestays and farm stays through ASEAN youth exchanges, and living far from family (sharing a place with friends in Toronto) for a startup stint through NUS Overseas Colleges.</p>
+        <p>I don't travel to collect stamps. I travel because I'm endlessly curious about how people live, connect and make meaning — and that same curiosity is the muscle behind everything on this page.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CONNECT -->
-<section class="sec" style="padding-top:0">
+<section class="section" id="connect" style="padding-top:0">
   <div class="wrap">
-    <div class="connect rv">
-      <div class="idx" style="justify-content:center"><span class="no">04</span> let's stay in touch</div>
-      <div class="big" style="margin-top:18px">Hosting an event, planning a workshop, curious about Scentura — <b>or just want to say hi?</b> I'm early in this and genuinely excited. My inbox is open.</div>
-      <div class="hero-cta" style="justify-content:center;margin-top:30px">
-        <a class="btn btn-solid" style="background:var(--espresso);color:var(--cream)" href="#">Email me <span class="ar">→</span></a>
-        <a class="btn btn-ghost" style="color:var(--ink);border-color:var(--line)" href="#">LinkedIn</a>
-        <a class="btn btn-ghost" style="color:var(--ink);border-color:var(--line)" href="#">Medium</a>
+    <div class="tieback reveal">
+      <div class="eyebrow" style="margin-bottom:14px">let's stay in touch</div>
+      <div class="q">Hosting an event, planning a workshop, curious about Scentura — <b>or just want to say hi?</b> I'm early in this and genuinely excited. My inbox is open.</div>
+      <div class="cta-row reveal d1" style="justify-content:center; margin-top:30px">
+        <a class="btn btn-primary" href="#">Email me <span class="arrow">→</span></a>
+        <a class="btn btn-ghost" href="#">LinkedIn</a>
+        <a class="btn btn-ghost" href="#">Medium</a>
       </div>
     </div>
   </div>
@@ -277,21 +180,21 @@ footer a.fl:hover{color:var(--terra2)}
 
 <footer>
   <div class="wrap">
-    <div class="fgrid">
+    <div class="ftop">
       <div><h4>Meet people.<br><em>Go deeper.</em><br>Stay connected.</h4></div>
-      <div><h5>Explore</h5><a class="fl" href="#">Hosting &amp; Emceeing</a><a class="fl" href="#">Facilitation</a><a class="fl" href="#">Scentura</a><a class="fl" href="#">letsbloom</a><a class="fl" href="#">Stories</a></div>
-      <div><h5>Elsewhere</h5><a class="fl" href="#">LinkedIn</a><a class="fl" href="#">Medium</a><a class="fl" href="#">Instagram</a><a class="fl" href="#">Email</a></div>
+      <div class="col"><h5>Explore</h5><a href="#">Hosting &amp; Emceeing</a><a href="#">Facilitation</a><a href="#">Scentura</a><a href="#">letsbloom</a><a href="#">Stories</a></div>
+      <div class="col"><h5>Elsewhere</h5><a href="#">LinkedIn</a><a href="#">Medium</a><a href="#">Instagram</a><a href="#">Email</a></div>
     </div>
-    <div class="fbot"><span>© 2026 Jocelyn Lim · jocelynlim.space</span><span>Made with care in Singapore</span></div>
+    <div class="fbot"><span>© <span class="year"></span> Jocelyn Lim · jocelynlim.space</span><span>Made with care in Singapore</span></div>
   </div>
 </footer>
 
 <script>
-  // duplicate marquee for seamless loop
-  const mq=document.getElementById('mq'); if(mq) mq.innerHTML+=mq.innerHTML;
-  // scroll reveals
-  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
-  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+  document.querySelectorAll('.marquee').forEach(m=>m.innerHTML+=m.innerHTML);
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  document.querySelectorAll('.year').forEach(el=>el.textContent=new Date().getFullYear());
+  const nav=document.querySelector('.nav'); addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>12));
 </script>
 </body>
 </html>
