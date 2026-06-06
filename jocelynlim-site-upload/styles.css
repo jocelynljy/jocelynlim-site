@@ -153,3 +153,33 @@ footer .fbot{display:flex; justify-content:space-between; align-items:center; ma
   .tieback{padding:34px 22px}
 }
 @media(max-width:520px){ footer .ftop{grid-template-columns:1fr} }
+
+/* ============================================================
+   v2 additions — full nav, illustrations, notes, Medium posts
+   ============================================================ */
+/* full nav always visible + active state */
+.nav-links{gap:23px}
+.nav-links a{font-size:13.5px; white-space:nowrap}
+.nav-links a.active{color:var(--ink)}
+.nav-links a.active:not(.nav-cta)::after{width:100%}
+@media(min-width:881px) and (max-width:1080px){ .nav-links{gap:15px} .nav-links a{font-size:12.5px} }
+
+/* illustration / AI tag on figures */
+.figtag{display:inline-block; font-size:10px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-soft); background:#ece4d4; border:1px solid var(--line); border-radius:30px; padding:3px 9px; margin-left:8px; vertical-align:middle}
+.gallery figure.illus img{background:var(--paper-2); aspect-ratio:auto}
+
+/* callout note (NDA etc.) */
+.note{display:flex; gap:14px; align-items:flex-start; background:var(--paper-2); border:1px solid var(--line); border-radius:16px; padding:18px 20px; margin-top:32px; max-width:680px; font-size:14.5px; color:var(--ink-soft); line-height:1.6}
+.note .ic{flex:none; width:34px; height:34px; border-radius:50%; background:var(--card); border:1px solid var(--line); display:grid; place-items:center; font-size:16px}
+
+/* Medium post list */
+.posts{margin-top:38px; border-top:1px solid var(--line)}
+.post{display:flex; justify-content:space-between; align-items:center; gap:24px; padding:23px 4px; border-bottom:1px solid var(--line); transition:padding-left .25s, background .2s}
+.post:hover{padding-left:10px}
+.post .pmain{min-width:0}
+.post h3{font-family:var(--disp); font-weight:600; font-size:clamp(18px,2.3vw,23px); line-height:1.22}
+.post p{font-size:14px; color:var(--ink-soft); margin-top:5px; max-width:600px}
+.post .meta{display:flex; align-items:center; gap:12px; flex:none; color:var(--faint); font-size:12.5px; font-weight:600; white-space:nowrap}
+.post .meta .arrow{transition:transform .25s}
+.post:hover .meta .arrow{transform:translateX(5px); color:var(--blog)}
+@media(max-width:640px){ .post{flex-direction:column; align-items:flex-start; gap:7px} .post .meta{order:-1} }
