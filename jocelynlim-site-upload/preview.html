@@ -6,146 +6,292 @@
 <title>Design Preview — Jocelyn Lim</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config={theme:{extend:{
-  colors:{paper:'#f6f0e6',paper2:'#efe7d8',ink:'#2c2420',inksoft:'#6f655c',faint:'#9a9085',line:'#e2d8c6',card:'#fffdf8',bloom:'#c4644f',host:'#b07d3a',scent:'#4a5e94',blog:'#7d8a4f',hub:'#93577f'},
-  fontFamily:{disp:['Fraunces','Georgia','serif'],body:['"DM Sans"','ui-sans-serif','sans-serif']},
-  borderRadius:{'4xl':'2rem'}
-}}}
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..700&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&display=swap" rel="stylesheet">
 <style>
-  body{background:#f6f0e6;color:#2c2420;font-family:'DM Sans',sans-serif}
-  .font-disp{font-family:'Fraunces',Georgia,serif}
-  /* grain */
-  body::before{content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-  .reveal{opacity:0}
-  .hl{background:linear-gradient(transparent 60%, rgba(196,100,79,.28) 60%)}
-  .marquee{animation:slide 28s linear infinite}
-  @keyframes slide{to{transform:translateX(-50%)}}
-  @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important}.marquee{animation:none}}
+:root{
+  --paper:#f1e7d4; --paper2:#eaddc4; --cream:#f8f1e3;
+  --espresso:#211913; --espresso2:#2c221a;
+  --ink:#2a2018; --ink-soft:#6f6253; --faint:#9c8e79;
+  --line:#d9c9ad; --line-dk:rgba(244,236,222,.16);
+  --terra:#c8553d; --terra2:#d8693f; --ochre:#b07d3a; --olive:#7d8a4f; --scent:#4a5e94; --plum:#93577f;
+  --disp:'Fraunces',Georgia,serif; --body:'Bricolage Grotesque',-apple-system,sans-serif;
+  --maxw:1200px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+/* grain */
+body::after{content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+::selection{background:var(--terra);color:#fff}
+
+/* ribbon */
+.ribbon{background:var(--terra);color:#fff;text-align:center;font-size:12px;letter-spacing:.04em;padding:7px 16px;font-weight:500}
+
+/* ---------- HERO (dark) ---------- */
+.hero{position:relative;background:var(--espresso);color:var(--cream);overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(60% 50% at 82% 18%, rgba(216,105,63,.22), transparent 70%),
+  radial-gradient(50% 40% at 10% 90%, rgba(74,94,148,.16), transparent 70%);}
+.hero .grid{position:absolute;inset:0;opacity:.5;background-image:repeating-linear-gradient(90deg,transparent 0,transparent calc(12.5% - 1px),var(--line-dk) calc(12.5% - 1px),var(--line-dk) 12.5%)}
+.hero .grain{position:absolute;inset:0;opacity:.06;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='m'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E")}
+
+/* top bar */
+.topbar{position:relative;z-index:5}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:78px}
+.brand{font-family:var(--disp);font-weight:600;font-size:22px;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
+.brand .star{color:var(--terra2);font-size:15px}
+.nav{display:flex;gap:26px;align-items:center;font-size:13.5px;font-weight:500;color:rgba(248,241,227,.66)}
+.nav a:hover{color:var(--cream)}
+.nav .cta{border:1px solid rgba(248,241,227,.3);border-radius:40px;padding:8px 17px;color:var(--cream)}
+.nav .cta:hover{background:var(--terra);border-color:var(--terra)}
+
+.hero-main{position:relative;z-index:5}
+.hero-main .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center;padding:60px 32px 86px}
+.kicker{display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:rgba(248,241,227,.55);font-weight:500}
+.kicker .ln{height:1px;width:46px;background:rgba(248,241,227,.3)}
+h1.title{font-family:var(--disp);font-weight:340;font-size:clamp(44px,6.6vw,86px);line-height:.97;letter-spacing:-.02em;margin:26px 0 0}
+h1.title em{font-style:italic;color:var(--terra2)}
+.line{display:block;overflow:hidden}
+.line>span{display:block;transform:translateY(115%);animation:lineUp 1.05s cubic-bezier(.16,1,.3,1) forwards}
+.hero .sub{font-size:18px;line-height:1.65;color:rgba(248,241,227,.74);margin-top:30px;max-width:540px}
+.hero-cta{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-weight:600;font-size:15px;padding:14px 28px;border-radius:4px;transition:transform .2s,background .25s,color .25s,border-color .25s;cursor:pointer;border:none}
+.btn .ar{transition:transform .25s}.btn:hover .ar{transform:translateX(5px)}
+.btn-solid{background:var(--cream);color:var(--espresso)}
+.btn-solid:hover{background:var(--terra2);color:#fff;transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--cream);border:1px solid rgba(248,241,227,.35)}
+.btn-ghost:hover{border-color:var(--cream);transform:translateY(-2px)}
+
+.portrait{position:relative;justify-self:center}
+.portrait .frame{position:relative;width:min(360px,80vw);aspect-ratio:4/5;border-radius:230px 230px 8px 8px;overflow:hidden;border:1px solid rgba(248,241,227,.25);box-shadow:0 40px 80px rgba(0,0,0,.4)}
+.portrait .frame img{width:100%;height:100%;object-fit:cover}
+.portrait .tape{position:absolute;-z-index:2}
+.chip{position:absolute;bottom:24px;left:-22px;background:var(--cream);color:var(--ink);border-radius:4px;padding:10px 16px;font-size:13px;font-weight:600;box-shadow:0 14px 30px rgba(0,0,0,.3);display:flex;align-items:center;gap:8px}
+.chip .dot{width:8px;height:8px;border-radius:50%;background:var(--terra);box-shadow:0 0 0 4px rgba(200,85,61,.2)}
+.vlabel{position:absolute;top:50%;right:-54px;transform:translateY(-50%) rotate(90deg);font-size:11px;letter-spacing:.4em;text-transform:uppercase;color:rgba(248,241,227,.4)}
+
+/* load orchestration */
+.load{opacity:0;animation:rise 1s cubic-bezier(.16,1,.3,1) forwards}
+.d1{animation-delay:.1s}.d2{animation-delay:.55s}.d3{animation-delay:.7s}.d4{animation-delay:.85s}.d5{animation-delay:1s}
+.line:nth-child(1)>span{animation-delay:.18s}.line:nth-child(2)>span{animation-delay:.30s}.line:nth-child(3)>span{animation-delay:.42s}.line:nth-child(4)>span{animation-delay:.54s}
+@keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+@keyframes lineUp{from{transform:translateY(115%)}to{transform:translateY(0)}}
+
+/* ---------- sections ---------- */
+.sec{position:relative;padding:104px 0}
+.idx{display:flex;align-items:baseline;gap:16px;font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--faint);font-weight:600}
+.idx .no{font-family:var(--disp);font-style:italic;font-size:30px;letter-spacing:0;color:var(--terra);line-height:1}
+.h2{font-family:var(--disp);font-weight:360;font-size:clamp(30px,4.6vw,52px);line-height:1.03;letter-spacing:-.018em;margin-top:22px;max-width:13ch}
+.h2 em{font-style:italic;color:var(--terra)}
+.prose{margin-top:30px;max-width:620px}
+.prose p{font-size:17.5px;line-height:1.72;color:#41372b;margin-bottom:20px}
+.mark{background:linear-gradient(transparent 58%, rgba(200,85,61,.26) 58%);padding:0 2px}
+.faintword{position:absolute;font-family:var(--disp);font-style:italic;font-size:clamp(120px,22vw,300px);color:#000;opacity:.03;right:-10px;top:-30px;pointer-events:none;line-height:1}
+
+/* quests as editorial index */
+.quests{margin-top:54px;border-top:1px solid var(--line)}
+.q{display:grid;grid-template-columns:64px 1fr auto;gap:28px;align-items:center;padding:26px 8px;border-bottom:1px solid var(--line);position:relative;transition:padding-left .3s,background .3s}
+.q:hover{padding-left:22px;background:rgba(200,85,61,.04)}
+.q .qno{font-family:var(--disp);font-style:italic;font-size:24px;color:var(--faint)}
+.q:hover .qno{color:var(--terra)}
+.q .qmid{min-width:0}
+.q .qverb{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--qc,var(--terra))}
+.q h3{font-family:var(--disp);font-weight:500;font-size:clamp(24px,3vw,34px);line-height:1.08;margin:5px 0 4px;letter-spacing:-.01em}
+.q p{font-size:15px;color:var(--ink-soft);max-width:62ch}
+.q .qthumb{width:124px;height:84px;border-radius:6px;overflow:hidden;flex:none;filter:grayscale(.25);transition:filter .4s,transform .4s;box-shadow:0 8px 20px rgba(60,45,30,.12)}
+.q:hover .qthumb{filter:none;transform:scale(1.04) rotate(-1deg)}
+.q .qthumb img{width:100%;height:100%;object-fit:cover}
+.q .qgo{font-size:20px;color:var(--faint);transition:transform .3s,color .3s}
+.q:hover .qgo{color:var(--terra);transform:translateX(6px)}
+@media(max-width:720px){.q{grid-template-columns:40px 1fr;gap:14px}.q .qthumb,.q .qgo{display:none}}
+
+/* proof marquee (dark) */
+.proof{background:var(--espresso);color:var(--cream);padding:34px 0;overflow:hidden;position:relative}
+.proof .lbl{text-align:center;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:rgba(248,241,227,.45);margin-bottom:20px;font-weight:600}
+.mq{display:flex;gap:40px;width:max-content;animation:slide 30s linear infinite;align-items:center}
+.mq span{font-family:var(--disp);font-style:italic;font-size:26px;color:rgba(248,241,227,.85);white-space:nowrap}
+.mq .sep{color:var(--terra2);font-style:normal}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* about split */
+.split{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center}
+.split .media{position:relative}
+.split .media img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:6px;filter:grayscale(.15)}
+.split .media::before{content:"";position:absolute;inset:14px -14px -14px 14px;border:1px solid var(--line);border-radius:6px;z-index:-1}
+
+/* connect band */
+.connect{background:var(--paper2);border-radius:10px;padding:64px 40px;text-align:center;max-width:880px;margin:0 auto}
+.connect .big{font-family:var(--disp);font-style:italic;font-size:clamp(24px,3.4vw,34px);line-height:1.32;letter-spacing:-.01em}
+.connect .big b{font-style:normal;color:var(--terra)}
+
+/* footer */
+footer{background:var(--espresso);color:var(--cream);padding:76px 0 40px;margin-top:0}
+.fgrid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px}
+footer h4{font-family:var(--disp);font-weight:400;font-size:32px;line-height:1.12}
+footer h4 em{font-style:italic;color:var(--terra2)}
+footer h5{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(248,241,227,.45);margin-bottom:15px;font-weight:600}
+footer a.fl{display:block;color:rgba(248,241,227,.82);font-size:15px;margin-bottom:10px}
+footer a.fl:hover{color:var(--terra2)}
+.fbot{display:flex;justify-content:space-between;margin-top:52px;padding-top:24px;border-top:1px solid var(--line-dk);font-size:13px;color:rgba(248,241,227,.45);flex-wrap:wrap;gap:8px}
+
+/* scroll reveal */
+.rv{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+.rv.in{opacity:1;transform:none}
+.rv.s1{transition-delay:.08s}.rv.s2{transition-delay:.16s}.rv.s3{transition-delay:.24s}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.load,.rv,.line>span{opacity:1!important;transform:none!important}}
+
+@media(max-width:860px){
+  .nav{display:none}
+  .hero-main .wrap{grid-template-columns:1fr;gap:44px;padding:30px 32px 64px}
+  .split{grid-template-columns:1fr;gap:30px}
+  .fgrid{grid-template-columns:1fr 1fr}footer h4{grid-column:1/-1}
+  .faintword{display:none}
+}
 </style>
 </head>
-<body class="antialiased overflow-x-hidden">
-
-<!-- preview ribbon -->
-<div class="bg-ink text-paper text-center text-[12px] tracking-wide py-2 px-4">Design preview · same content &amp; branding, new look — your live site is untouched</div>
-
-<!-- NAV -->
-<nav class="sticky top-0 z-50 backdrop-blur-md bg-paper/80 border-b border-transparent" id="nav">
-  <div class="max-w-6xl mx-auto px-7 h-[72px] flex items-center justify-between">
-    <a href="#" class="font-disp font-semibold text-xl tracking-tight">Jocelyn Lim<span class="text-bloom">.</span></a>
-    <div class="hidden md:flex items-center gap-7 text-[13.5px] font-medium text-inksoft">
-      <a class="relative text-ink after:absolute after:left-0 after:-bottom-1.5 after:h-[1.5px] after:w-full after:bg-bloom" href="#">What I'm building</a>
-      <a class="hover:text-ink transition" href="#">Hosting</a>
-      <a class="hover:text-ink transition" href="#">Facilitation</a>
-      <a class="hover:text-ink transition" href="#">Scentura</a>
-      <a class="hover:text-ink transition" href="#">letsbloom</a>
-      <a class="hover:text-ink transition" href="#">Stories</a>
-      <a class="bg-ink text-paper px-[18px] py-[9px] rounded-full text-[13px] font-semibold hover:bg-bloom transition" href="#">Let's connect</a>
-    </div>
-  </div>
-</nav>
+<body>
+<div class="ribbon">Design preview · same content &amp; branding intent, bold new look — your live site is untouched</div>
 
 <!-- HERO -->
-<header class="relative overflow-hidden">
-  <!-- soft gradient blobs -->
-  <div class="pointer-events-none absolute -top-24 -right-24 w-[34rem] h-[34rem] rounded-full bg-bloom/20 blur-3xl"></div>
-  <div class="pointer-events-none absolute top-40 -left-32 w-[30rem] h-[30rem] rounded-full bg-scent/15 blur-3xl"></div>
-  <div class="relative max-w-6xl mx-auto px-7 pt-16 pb-12 grid md:grid-cols-[1.15fr_.85fr] gap-14 items-center">
+<section class="hero">
+  <div class="grid"></div><div class="grain"></div>
+  <div class="topbar"><div class="wrap">
+    <a class="brand" href="#"><span class="star">✳</span>Jocelyn Lim</a>
+    <nav class="nav">
+      <a href="#">What I'm building</a><a href="#">Hosting</a><a href="#">Facilitation</a><a href="#">Scentura</a><a href="#">letsbloom</a><a href="#">Stories</a>
+      <a class="cta" href="#">Let's connect</a>
+    </nav>
+  </div></div>
+
+  <div class="hero-main"><div class="wrap">
     <div>
-      <div class="reveal text-[12px] tracking-[.24em] uppercase text-faint font-semibold mb-5">Singapore · host · facilitator · founder</div>
-      <h1 class="reveal font-disp font-semibold leading-[.98] tracking-[-.025em] text-[clamp(40px,6.4vw,76px)]">I help people feel a little more <span class="italic text-bloom">human</span> — in a world that keeps going digital.</h1>
-      <p class="reveal mt-7 text-[19px] leading-relaxed text-inksoft max-w-[30rem]">While AI scales the virtual world, my rebellion is in scaling the physical one. I host rooms, run workshops, build Scentura, and create craft spaces where people make something by hand — and feel a little closer.</p>
-      <div class="reveal mt-9 flex flex-wrap gap-3.5">
-        <a href="#" class="group inline-flex items-center gap-2 bg-ink text-paper font-semibold text-[15px] px-7 py-3.5 rounded-full hover:bg-bloom hover:-translate-y-0.5 transition shadow-sm">See what I'm building <span class="group-hover:translate-x-1 transition">→</span></a>
-        <a href="#" class="inline-flex items-center gap-2 border-[1.5px] border-line text-ink font-semibold text-[15px] px-7 py-3.5 rounded-full hover:border-ink hover:-translate-y-0.5 transition">Work with me</a>
+      <div class="kicker load d1"><span class="ln"></span>Singapore · host · facilitator · founder</div>
+      <h1 class="title">
+        <span class="line"><span>I help people feel</span></span>
+        <span class="line"><span>a little more <em>human</em> —</span></span>
+        <span class="line"><span>in a world that keeps</span></span>
+        <span class="line"><span>going digital.</span></span>
+      </h1>
+      <p class="sub load d2">While AI scales the virtual world, my rebellion is in scaling the physical one. I host rooms, run workshops, build Scentura, and create craft spaces where people make something by hand — and feel a little closer. Different projects, same quiet obsession: keeping people close.</p>
+      <div class="hero-cta load d3">
+        <a class="btn btn-solid" href="#">See what I'm building <span class="ar">→</span></a>
+        <a class="btn btn-ghost" href="#">Work with me</a>
       </div>
     </div>
-    <div class="reveal relative max-w-[380px] mx-auto md:mx-0" data-parallax>
-      <div class="absolute -inset-4 border border-line rounded-[210px_210px_30px_30px] -z-10"></div>
-      <img src="assets/jocelyn-portrait.jpg" alt="Jocelyn Lim" class="w-full object-cover aspect-[4/5] rounded-[200px_200px_22px_22px] shadow-2xl">
-      <div class="absolute bottom-6 -left-4 bg-card border border-line rounded-full px-4 py-2.5 text-[13px] font-semibold shadow-sm flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-bloom"></span>Now: just graduated &amp; building in public</div>
+    <div class="portrait load d2">
+      <div class="frame"><img src="assets/jocelyn-portrait.jpg" alt="Jocelyn Lim"></div>
+      <div class="chip"><span class="dot"></span>Now: just graduated &amp; building in public</div>
+      <div class="vlabel">est. 2026 — Singapore</div>
     </div>
-  </div>
-</header>
+  </div></div>
+</section>
 
 <!-- THE WHY -->
-<section class="relative max-w-6xl mx-auto px-7 py-24">
-  <div class="reveal text-[12px] tracking-[.24em] uppercase text-faint font-semibold">the why</div>
-  <h2 class="reveal font-disp font-semibold text-[clamp(28px,4.4vw,46px)] leading-[1.05] tracking-tight mt-3">Lots of side quests. <span class="italic text-bloom">One</span> reason.</h2>
-  <div class="mt-7 max-w-[660px] space-y-5 text-[17.5px] leading-relaxed text-[#43392f]">
-    <p class="reveal">On paper, my week makes no sense. One day I'm holding a mic in front of a room. The next I'm rewriting a pitch, prepping for a facilitation session, or cutting pipe cleaners into petals at my kitchen table. People keep telling me to pick one thing.</p>
-    <p class="reveal">I'm graduating into a lot of noise — the job market is brutal, AI is coming for the work. But here's the quieter thing I believe: there are still some things AI can't take from us. <span class="hl">The comfort of making things with people, by people, for people?</span> That.</p>
-    <p class="reveal">That's the thread connecting it all: <span class="hl">meet people, go deeper, and stay connected.</span></p>
+<section class="sec">
+  <span class="faintword">why</span>
+  <div class="wrap">
+    <div class="idx rv"><span class="no">01</span> the why</div>
+    <h2 class="h2 rv s1">Lots of side quests. <em>One</em> reason.</h2>
+    <div class="prose">
+      <p class="rv s1">On paper, my week makes no sense. One day I'm holding a mic in front of a room. The next I'm rewriting a pitch, prepping for a facilitation session, or cutting pipe cleaners into petals at my kitchen table. People keep telling me to pick one thing.</p>
+      <p class="rv s2">I'm graduating into a lot of noise — the job market is brutal, AI is coming for the work. But here's the quieter thing I believe: there are still some things AI can't take from us. <span class="mark">The comfort of making things with people, by people, for people?</span> That.</p>
+      <p class="rv s2">That's the thread connecting it all: <span class="mark">meet people, go deeper, and stay connected.</span></p>
+    </div>
   </div>
 </section>
 
 <!-- SIDE QUESTS -->
-<section class="relative max-w-6xl mx-auto px-7 pb-24">
-  <div class="reveal text-[12px] tracking-[.24em] uppercase text-faint font-semibold">the side quests</div>
-  <h2 class="reveal font-disp font-semibold text-[clamp(28px,4.4vw,46px)] leading-tight tracking-tight mt-3">What I'm building <span class="italic text-bloom">right now</span></h2>
-  <div class="grid md:grid-cols-2 gap-5 mt-11" data-stagger>
-    <!-- card -->
-    <a data-card href="#" class="group block bg-card border border-line rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300" style="border-top:4px solid #b07d3a">
-      <div class="h-52 overflow-hidden"><img src="assets/demo-day.jpg" class="w-full h-full object-cover group-hover:scale-105 transition duration-700"></div>
-      <div class="p-6"><div class="text-[11px] tracking-[.14em] uppercase font-bold text-host">hold the room</div><h3 class="font-disp font-semibold text-[23px] mt-1.5">Hosting &amp; Emceeing</h3><p class="text-[14.5px] text-inksoft mt-2 leading-snug">Events, demo days and panels — from an 80-person company event to startup demo days.</p><span class="inline-flex items-center gap-1.5 mt-4 font-semibold text-[14px]">Explore <span class="group-hover:translate-x-1 transition">→</span></span></div>
-    </a>
-    <a data-card href="#" class="group block bg-card border border-line rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300" style="border-top:4px solid #93577f">
-      <div class="h-52 overflow-hidden"><img src="assets/facilitation-ai-hero.jpg" class="w-full h-full object-cover group-hover:scale-105 transition duration-700"></div>
-      <div class="p-6"><div class="text-[11px] tracking-[.14em] uppercase font-bold text-hub">guide the room</div><h3 class="font-disp font-semibold text-[23px] mt-1.5">Facilitation</h3><p class="text-[14.5px] text-inksoft mt-2 leading-snug">Guiding students and young leaders to their own aha — in schools, community projects and youth programmes.</p><span class="inline-flex items-center gap-1.5 mt-4 font-semibold text-[14px]">Explore <span class="group-hover:translate-x-1 transition">→</span></span></div>
-    </a>
-    <a data-card href="#" class="group block bg-card border border-line rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300" style="border-top:4px solid #4a5e94">
-      <div class="h-52 overflow-hidden"><img src="assets/scentura-cofounders.jpg" class="w-full h-full object-cover group-hover:scale-105 transition duration-700"></div>
-      <div class="p-6"><div class="text-[11px] tracking-[.14em] uppercase font-bold text-scent">sense connection</div><h3 class="font-disp font-semibold text-[23px] mt-1.5">Scentura</h3><p class="text-[14.5px] text-inksoft mt-2 leading-snug">Helping cold-food brands — ice cream, bakeries, snacks — create atmosphere through scent. Now piloting.</p><span class="inline-flex items-center gap-1.5 mt-4 font-semibold text-[14px]">Explore <span class="group-hover:translate-x-1 transition">→</span></span></div>
-    </a>
-    <a data-card href="#" class="group block bg-card border border-line rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300" style="border-top:4px solid #c4644f">
-      <div class="h-52 overflow-hidden"><img src="assets/bloom-ai-hero.jpg" class="w-full h-full object-cover group-hover:scale-105 transition duration-700"></div>
-      <div class="p-6"><div class="text-[11px] tracking-[.14em] uppercase font-bold text-bloom">grow connection</div><h3 class="font-disp font-semibold text-[23px] mt-1.5">letsbloom</h3><p class="text-[14.5px] text-inksoft mt-2 leading-snug">Handmade flowers and craft sessions — a way to make things by hand and keep friendships close.</p><span class="inline-flex items-center gap-1.5 mt-4 font-semibold text-[14px]">Explore <span class="group-hover:translate-x-1 transition">→</span></span></div>
-    </a>
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="idx rv"><span class="no">02</span> what I'm building right now</div>
+    <div class="quests">
+      <a class="q rv" href="#" style="--qc:var(--ochre)">
+        <div class="qno">01</div>
+        <div class="qmid"><div class="qverb">hold the room</div><h3>Hosting &amp; Emceeing</h3><p>Events, demo days and panels — from an 80-person company event to startup demo days.</p></div>
+        <div class="qthumb"><img src="assets/demo-day.jpg" alt=""></div><div class="qgo">→</div>
+      </a>
+      <a class="q rv" href="#" style="--qc:var(--plum)">
+        <div class="qno">02</div>
+        <div class="qmid"><div class="qverb">guide the room</div><h3>Facilitation</h3><p>Guiding students and young leaders to their own aha — in schools, community projects and youth programmes.</p></div>
+        <div class="qthumb"><img src="assets/facilitation-ai-hero.jpg" alt=""></div><div class="qgo">→</div>
+      </a>
+      <a class="q rv" href="#" style="--qc:var(--scent)">
+        <div class="qno">03</div>
+        <div class="qmid"><div class="qverb">sense connection</div><h3>Scentura</h3><p>Helping cold-food brands — ice cream, bakeries, snacks — create atmosphere through scent. Now piloting.</p></div>
+        <div class="qthumb"><img src="assets/scentura-hero.jpg" alt=""></div><div class="qgo">→</div>
+      </a>
+      <a class="q rv" href="#" style="--qc:var(--terra)">
+        <div class="qno">04</div>
+        <div class="qmid"><div class="qverb">grow connection</div><h3>letsbloom</h3><p>Handmade flowers and craft sessions — a way to make things by hand and keep friendships close.</p></div>
+        <div class="qthumb"><img src="assets/bloom-community.jpg" alt=""></div><div class="qgo">→</div>
+      </a>
+      <a class="q rv" href="#" style="--qc:var(--olive)">
+        <div class="qno">05</div>
+        <div class="qmid"><div class="qverb">share the journey</div><h3>Stories &amp; Writing</h3><p>Honest notes on the work — startups, rejection, solo travel, and figuring it out. On Medium.</p></div>
+        <div class="qthumb"><img src="assets/aylep-mbs.jpg" alt=""></div><div class="qgo">→</div>
+      </a>
+    </div>
   </div>
 </section>
 
 <!-- PROOF -->
-<div class="bg-ink text-paper py-8 overflow-hidden">
-  <div class="text-center text-[11.5px] tracking-[.2em] uppercase text-paper/50 font-semibold mb-4">where I've been learning &amp; showing up</div>
-  <div class="flex gap-14 w-max marquee whitespace-nowrap">
-    <span class="font-disp text-2xl text-paper/80">NUS Business School</span><span class="font-disp text-2xl text-paper/30">·</span>
-    <span class="font-disp text-2xl text-paper/80">NUS Overseas Colleges</span><span class="font-disp text-2xl text-paper/30">·</span>
-    <span class="font-disp text-2xl text-paper/80">Ngee Ann Poly GEIP</span><span class="font-disp text-2xl text-paper/30">·</span>
-    <span class="font-disp text-2xl text-paper/80">Scentura — 1st Runner-Up</span><span class="font-disp text-2xl text-paper/30">·</span>
-    <span class="font-disp text-2xl text-paper/80">Toastmasters</span><span class="font-disp text-2xl text-paper/30">·</span>
-    <span class="font-disp text-2xl text-paper/80">ASEAN Youth Exchange Delegate</span><span class="font-disp text-2xl text-paper/30">·</span>
-    <span class="font-disp text-2xl text-paper/80">NUS Business School</span><span class="font-disp text-2xl text-paper/30">·</span>
-    <span class="font-disp text-2xl text-paper/80">NUS Overseas Colleges</span><span class="font-disp text-2xl text-paper/30">·</span>
-    <span class="font-disp text-2xl text-paper/80">Ngee Ann Poly GEIP</span><span class="font-disp text-2xl text-paper/30">·</span>
-    <span class="font-disp text-2xl text-paper/80">Scentura — 1st Runner-Up</span><span class="font-disp text-2xl text-paper/30">·</span>
-    <span class="font-disp text-2xl text-paper/80">Toastmasters</span><span class="font-disp text-2xl text-paper/30">·</span>
-    <span class="font-disp text-2xl text-paper/80">ASEAN Youth Exchange Delegate</span><span class="font-disp text-2xl text-paper/30">·</span>
+<div class="proof">
+  <div class="lbl">where I've been learning &amp; showing up</div>
+  <div class="mq" id="mq">
+    <span>NUS Business School</span><span class="sep">✳</span><span>NUS Overseas Colleges</span><span class="sep">✳</span><span>Ngee Ann Poly GEIP</span><span class="sep">✳</span><span>Scentura — 1st Runner-Up</span><span class="sep">✳</span><span>Toastmasters</span><span class="sep">✳</span><span>ASEAN Youth Exchange Delegate</span><span class="sep">✳</span>
   </div>
 </div>
 
-<div class="max-w-6xl mx-auto px-7 py-16 text-center text-inksoft text-[14px]">↑ Scroll back up to feel the motion · This is just the homepage, in the new style.</div>
+<!-- ABOUT -->
+<section class="sec">
+  <div class="wrap split">
+    <div class="media rv"><img src="assets/aylep-homestay.jpg" alt="Jocelyn at a homestay meal during an ASEAN youth exchange"></div>
+    <div>
+      <div class="idx rv"><span class="no">03</span> the human behind it</div>
+      <h2 class="h2 rv s1">Hi, I'm <em>Jocelyn</em>.</h2>
+      <div class="prose">
+        <p class="rv s1">I studied Marketing at NUS Business School, but a lot of the real learning happened between countries — growing up across Singapore, Indonesia and Canada, doing homestays and farm stays through ASEAN youth exchanges, and living far from family (sharing a place with friends in Toronto) for a startup stint through NUS Overseas Colleges.</p>
+        <p class="rv s2">I don't travel to collect stamps. I travel because I'm endlessly curious about how people live, connect and make meaning — and that same curiosity is the muscle behind everything on this page.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-<script type="module">
-  import { animate, inView, stagger, scroll } from "https://cdn.jsdelivr.net/npm/motion@11.11.13/+esm";
-  // scroll-triggered reveals (spring-like ease)
-  inView("[data-reveal], .reveal", (info)=>{
-    animate(info.target, { opacity:[0,1], y:[28,0] }, { duration:.8, easing:[.2,.8,.2,1] });
-  }, { margin:"0px 0px -8% 0px" });
-  // staggered cards
-  inView("[data-stagger]", (info)=>{
-    animate(info.target.querySelectorAll("[data-card]"), { opacity:[0,1], y:[34,0] }, { delay: stagger(.09), duration:.7, easing:[.2,.8,.2,1] });
-  }, { margin:"0px 0px -12% 0px" });
-  // gentle hero parallax
-  const p=document.querySelector("[data-parallax]");
-  if(p && !matchMedia("(prefers-reduced-motion: reduce)").matches){
-    scroll(animate(p,{ y:[-10,40] },{ easing:"linear" }), { target: document.querySelector("header"), offset:["start start","end start"] });
-  }
-  // nav border on scroll
-  const nav=document.getElementById("nav");
-  addEventListener("scroll",()=>{ nav.style.borderColor = scrollY>12 ? "#e2d8c6" : "transparent"; });
+<!-- CONNECT -->
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="connect rv">
+      <div class="idx" style="justify-content:center"><span class="no">04</span> let's stay in touch</div>
+      <div class="big" style="margin-top:18px">Hosting an event, planning a workshop, curious about Scentura — <b>or just want to say hi?</b> I'm early in this and genuinely excited. My inbox is open.</div>
+      <div class="hero-cta" style="justify-content:center;margin-top:30px">
+        <a class="btn btn-solid" style="background:var(--espresso);color:var(--cream)" href="#">Email me <span class="ar">→</span></a>
+        <a class="btn btn-ghost" style="color:var(--ink);border-color:var(--line)" href="#">LinkedIn</a>
+        <a class="btn btn-ghost" style="color:var(--ink);border-color:var(--line)" href="#">Medium</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div><h4>Meet people.<br><em>Go deeper.</em><br>Stay connected.</h4></div>
+      <div><h5>Explore</h5><a class="fl" href="#">Hosting &amp; Emceeing</a><a class="fl" href="#">Facilitation</a><a class="fl" href="#">Scentura</a><a class="fl" href="#">letsbloom</a><a class="fl" href="#">Stories</a></div>
+      <div><h5>Elsewhere</h5><a class="fl" href="#">LinkedIn</a><a class="fl" href="#">Medium</a><a class="fl" href="#">Instagram</a><a class="fl" href="#">Email</a></div>
+    </div>
+    <div class="fbot"><span>© 2026 Jocelyn Lim · jocelynlim.space</span><span>Made with care in Singapore</span></div>
+  </div>
+</footer>
+
+<script>
+  // duplicate marquee for seamless loop
+  const mq=document.getElementById('mq'); if(mq) mq.innerHTML+=mq.innerHTML;
+  // scroll reveals
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 </script>
 </body>
 </html>
