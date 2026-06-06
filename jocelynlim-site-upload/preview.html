@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Preview — Jocelyn Lim</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={theme:{extend:{
+  colors:{paper:'#f6f0e6',paper2:'#efe7d8',ink:'#2c2420',inksoft:'#6f655c',faint:'#9a9085',line:'#e2d8c6',card:'#fffdf8',bloom:'#c4644f',host:'#b07d3a',scent:'#4a5e94',blog:'#7d8a4f',hub:'#93577f'},
+  fontFamily:{disp:['Fraunces','Georgia','serif'],body:['"DM Sans"','ui-sans-serif','sans-serif']},
+  borderRadius:{'4xl':'2rem'}
+}}}
+</script>
+<style>
+  body{background:#f6f0e6;color:#2c2420;font-family:'DM Sans',sans-serif}
+  .font-disp{font-family:'Fraunces',Georgia,serif}
+  /* grain */
+  body::before{content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .reveal{opacity:0}
+  .hl{background:linear-gradient(transparent 60%, rgba(196,100,79,.28) 60%)}
+  .marquee{animation:slide 28s linear infinite}
+  @keyframes slide{to{transform:translateX(-50%)}}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important}.marquee{animation:none}}
+</style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+<!-- preview ribbon -->
+<div class="bg-ink text-paper text-center text-[12px] tracking-wide py-2 px-4">Design preview · same content &amp; branding, new look — your live site is untouched</div>
+
+<!-- NAV -->
+<nav class="sticky top-0 z-50 backdrop-blur-md bg-paper/80 border-b border-transparent" id="nav">
+  <div class="max-w-6xl mx-auto px-7 h-[72px] flex items-center justify-between">
+    <a href="#" class="font-disp font-semibold text-xl tracking-tight">Jocelyn Lim<span class="text-bloom">.</span></a>
+    <div class="hidden md:flex items-center gap-7 text-[13.5px] font-medium text-inksoft">
+      <a class="relative text-ink after:absolute after:left-0 after:-bottom-1.5 after:h-[1.5px] after:w-full after:bg-bloom" href="#">What I'm building</a>
+      <a class="hover:text-ink transition" href="#">Hosting</a>
+      <a class="hover:text-ink transition" href="#">Facilitation</a>
+      <a class="hover:text-ink transition" href="#">Scentura</a>
+      <a class="hover:text-ink transition" href="#">letsbloom</a>
+      <a class="hover:text-ink transition" href="#">Stories</a>
+      <a class="bg-ink text-paper px-[18px] py-[9px] rounded-full text-[13px] font-semibold hover:bg-bloom transition" href="#">Let's connect</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="relative overflow-hidden">
+  <!-- soft gradient blobs -->
+  <div class="pointer-events-none absolute -top-24 -right-24 w-[34rem] h-[34rem] rounded-full bg-bloom/20 blur-3xl"></div>
+  <div class="pointer-events-none absolute top-40 -left-32 w-[30rem] h-[30rem] rounded-full bg-scent/15 blur-3xl"></div>
+  <div class="relative max-w-6xl mx-auto px-7 pt-16 pb-12 grid md:grid-cols-[1.15fr_.85fr] gap-14 items-center">
+    <div>
+      <div class="reveal text-[12px] tracking-[.24em] uppercase text-faint font-semibold mb-5">Singapore · host · facilitator · founder</div>
+      <h1 class="reveal font-disp font-semibold leading-[.98] tracking-[-.025em] text-[clamp(40px,6.4vw,76px)]">I help people feel a little more <span class="italic text-bloom">human</span> — in a world that keeps going digital.</h1>
+      <p class="reveal mt-7 text-[19px] leading-relaxed text-inksoft max-w-[30rem]">While AI scales the virtual world, my rebellion is in scaling the physical one. I host rooms, run workshops, build Scentura, and create craft spaces where people make something by hand — and feel a little closer.</p>
+      <div class="reveal mt-9 flex flex-wrap gap-3.5">
+        <a href="#" class="group inline-flex items-center gap-2 bg-ink text-paper font-semibold text-[15px] px-7 py-3.5 rounded-full hover:bg-bloom hover:-translate-y-0.5 transition shadow-sm">See what I'm building <span class="group-hover:translate-x-1 transition">→</span></a>
+        <a href="#" class="inline-flex items-center gap-2 border-[1.5px] border-line text-ink font-semibold text-[15px] px-7 py-3.5 rounded-full hover:border-ink hover:-translate-y-0.5 transition">Work with me</a>
+      </div>
+    </div>
+    <div class="reveal relative max-w-[380px] mx-auto md:mx-0" data-parallax>
+      <div class="absolute -inset-4 border border-line rounded-[210px_210px_30px_30px] -z-10"></div>
+      <img src="assets/jocelyn-portrait.jpg" alt="Jocelyn Lim" class="w-full object-cover aspect-[4/5] rounded-[200px_200px_22px_22px] shadow-2xl">
+      <div class="absolute bottom-6 -left-4 bg-card border border-line rounded-full px-4 py-2.5 text-[13px] font-semibold shadow-sm flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-bloom"></span>Now: just graduated &amp; building in public</div>
+    </div>
+  </div>
+</header>
+
+<!-- THE WHY -->
+<section class="relative max-w-6xl mx-auto px-7 py-24">
+  <div class="reveal text-[12px] tracking-[.24em] uppercase text-faint font-semibold">the why</div>
+  <h2 class="reveal font-disp font-semibold text-[clamp(28px,4.4vw,46px)] leading-[1.05] tracking-tight mt-3">Lots of side quests. <span class="italic text-bloom">One</span> reason.</h2>
+  <div class="mt-7 max-w-[660px] space-y-5 text-[17.5px] leading-relaxed text-[#43392f]">
+    <p class="reveal">On paper, my week makes no sense. One day I'm holding a mic in front of a room. The next I'm rewriting a pitch, prepping for a facilitation session, or cutting pipe cleaners into petals at my kitchen table. People keep telling me to pick one thing.</p>
+    <p class="reveal">I'm graduating into a lot of noise — the job market is brutal, AI is coming for the work. But here's the quieter thing I believe: there are still some things AI can't take from us. <span class="hl">The comfort of making things with people, by people, for people?</span> That.</p>
+    <p class="reveal">That's the thread connecting it all: <span class="hl">meet people, go deeper, and stay connected.</span></p>
+  </div>
+</section>
+
+<!-- SIDE QUESTS -->
+<section class="relative max-w-6xl mx-auto px-7 pb-24">
+  <div class="reveal text-[12px] tracking-[.24em] uppercase text-faint font-semibold">the side quests</div>
+  <h2 class="reveal font-disp font-semibold text-[clamp(28px,4.4vw,46px)] leading-tight tracking-tight mt-3">What I'm building <span class="italic text-bloom">right now</span></h2>
+  <div class="grid md:grid-cols-2 gap-5 mt-11" data-stagger>
+    <!-- card -->
+    <a data-card href="#" class="group block bg-card border border-line rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300" style="border-top:4px solid #b07d3a">
+      <div class="h-52 overflow-hidden"><img src="assets/demo-day.jpg" class="w-full h-full object-cover group-hover:scale-105 transition duration-700"></div>
+      <div class="p-6"><div class="text-[11px] tracking-[.14em] uppercase font-bold text-host">hold the room</div><h3 class="font-disp font-semibold text-[23px] mt-1.5">Hosting &amp; Emceeing</h3><p class="text-[14.5px] text-inksoft mt-2 leading-snug">Events, demo days and panels — from an 80-person company event to startup demo days.</p><span class="inline-flex items-center gap-1.5 mt-4 font-semibold text-[14px]">Explore <span class="group-hover:translate-x-1 transition">→</span></span></div>
+    </a>
+    <a data-card href="#" class="group block bg-card border border-line rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300" style="border-top:4px solid #93577f">
+      <div class="h-52 overflow-hidden"><img src="assets/facilitation-ai-hero.jpg" class="w-full h-full object-cover group-hover:scale-105 transition duration-700"></div>
+      <div class="p-6"><div class="text-[11px] tracking-[.14em] uppercase font-bold text-hub">guide the room</div><h3 class="font-disp font-semibold text-[23px] mt-1.5">Facilitation</h3><p class="text-[14.5px] text-inksoft mt-2 leading-snug">Guiding students and young leaders to their own aha — in schools, community projects and youth programmes.</p><span class="inline-flex items-center gap-1.5 mt-4 font-semibold text-[14px]">Explore <span class="group-hover:translate-x-1 transition">→</span></span></div>
+    </a>
+    <a data-card href="#" class="group block bg-card border border-line rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300" style="border-top:4px solid #4a5e94">
+      <div class="h-52 overflow-hidden"><img src="assets/scentura-cofounders.jpg" class="w-full h-full object-cover group-hover:scale-105 transition duration-700"></div>
+      <div class="p-6"><div class="text-[11px] tracking-[.14em] uppercase font-bold text-scent">sense connection</div><h3 class="font-disp font-semibold text-[23px] mt-1.5">Scentura</h3><p class="text-[14.5px] text-inksoft mt-2 leading-snug">Helping cold-food brands — ice cream, bakeries, snacks — create atmosphere through scent. Now piloting.</p><span class="inline-flex items-center gap-1.5 mt-4 font-semibold text-[14px]">Explore <span class="group-hover:translate-x-1 transition">→</span></span></div>
+    </a>
+    <a data-card href="#" class="group block bg-card border border-line rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300" style="border-top:4px solid #c4644f">
+      <div class="h-52 overflow-hidden"><img src="assets/bloom-ai-hero.jpg" class="w-full h-full object-cover group-hover:scale-105 transition duration-700"></div>
+      <div class="p-6"><div class="text-[11px] tracking-[.14em] uppercase font-bold text-bloom">grow connection</div><h3 class="font-disp font-semibold text-[23px] mt-1.5">letsbloom</h3><p class="text-[14.5px] text-inksoft mt-2 leading-snug">Handmade flowers and craft sessions — a way to make things by hand and keep friendships close.</p><span class="inline-flex items-center gap-1.5 mt-4 font-semibold text-[14px]">Explore <span class="group-hover:translate-x-1 transition">→</span></span></div>
+    </a>
+  </div>
+</section>
+
+<!-- PROOF -->
+<div class="bg-ink text-paper py-8 overflow-hidden">
+  <div class="text-center text-[11.5px] tracking-[.2em] uppercase text-paper/50 font-semibold mb-4">where I've been learning &amp; showing up</div>
+  <div class="flex gap-14 w-max marquee whitespace-nowrap">
+    <span class="font-disp text-2xl text-paper/80">NUS Business School</span><span class="font-disp text-2xl text-paper/30">·</span>
+    <span class="font-disp text-2xl text-paper/80">NUS Overseas Colleges</span><span class="font-disp text-2xl text-paper/30">·</span>
+    <span class="font-disp text-2xl text-paper/80">Ngee Ann Poly GEIP</span><span class="font-disp text-2xl text-paper/30">·</span>
+    <span class="font-disp text-2xl text-paper/80">Scentura — 1st Runner-Up</span><span class="font-disp text-2xl text-paper/30">·</span>
+    <span class="font-disp text-2xl text-paper/80">Toastmasters</span><span class="font-disp text-2xl text-paper/30">·</span>
+    <span class="font-disp text-2xl text-paper/80">ASEAN Youth Exchange Delegate</span><span class="font-disp text-2xl text-paper/30">·</span>
+    <span class="font-disp text-2xl text-paper/80">NUS Business School</span><span class="font-disp text-2xl text-paper/30">·</span>
+    <span class="font-disp text-2xl text-paper/80">NUS Overseas Colleges</span><span class="font-disp text-2xl text-paper/30">·</span>
+    <span class="font-disp text-2xl text-paper/80">Ngee Ann Poly GEIP</span><span class="font-disp text-2xl text-paper/30">·</span>
+    <span class="font-disp text-2xl text-paper/80">Scentura — 1st Runner-Up</span><span class="font-disp text-2xl text-paper/30">·</span>
+    <span class="font-disp text-2xl text-paper/80">Toastmasters</span><span class="font-disp text-2xl text-paper/30">·</span>
+    <span class="font-disp text-2xl text-paper/80">ASEAN Youth Exchange Delegate</span><span class="font-disp text-2xl text-paper/30">·</span>
+  </div>
+</div>
+
+<div class="max-w-6xl mx-auto px-7 py-16 text-center text-inksoft text-[14px]">↑ Scroll back up to feel the motion · This is just the homepage, in the new style.</div>
+
+<script type="module">
+  import { animate, inView, stagger, scroll } from "https://cdn.jsdelivr.net/npm/motion@11.11.13/+esm";
+  // scroll-triggered reveals (spring-like ease)
+  inView("[data-reveal], .reveal", (info)=>{
+    animate(info.target, { opacity:[0,1], y:[28,0] }, { duration:.8, easing:[.2,.8,.2,1] });
+  }, { margin:"0px 0px -8% 0px" });
+  // staggered cards
+  inView("[data-stagger]", (info)=>{
+    animate(info.target.querySelectorAll("[data-card]"), { opacity:[0,1], y:[34,0] }, { delay: stagger(.09), duration:.7, easing:[.2,.8,.2,1] });
+  }, { margin:"0px 0px -12% 0px" });
+  // gentle hero parallax
+  const p=document.querySelector("[data-parallax]");
+  if(p && !matchMedia("(prefers-reduced-motion: reduce)").matches){
+    scroll(animate(p,{ y:[-10,40] },{ easing:"linear" }), { target: document.querySelector("header"), offset:["start start","end start"] });
+  }
+  // nav border on scroll
+  const nav=document.getElementById("nav");
+  addEventListener("scroll",()=>{ nav.style.borderColor = scrollY>12 ? "#e2d8c6" : "transparent"; });
+</script>
+</body>
+</html>
