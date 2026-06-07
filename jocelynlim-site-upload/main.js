@@ -56,63 +56,79 @@ document.addEventListener('click', function (e) {
 }, true);
 
 // ============================================================
-//  Conversion funnel: Calendly + Work-With-Me modal + contact form
+//  Conversion funnel: message-first contact, with optional Calendly
 // ============================================================
 (function () {
   var CAL_URL = 'https://calendly.com/jocelyn-limjy/15-minute-meeting';
   var FORM_ENDPOINT = 'https://formsubmit.co/ajax/limjy.jocelyn@gmail.com';
 
-  // --- load Calendly assets once, on every page ---
-  if (!document.getElementById('calendly-css')) {
-    var cl = document.createElement('link');
-    cl.id = 'calendly-css'; cl.rel = 'stylesheet';
-    cl.href = 'https://assets.calendly.com/assets/external/widget.css';
-    document.head.appendChild(cl);
-    var cs = document.createElement('script');
-    cs.src = 'https://assets.calendly.com/assets/external/widget.js'; cs.async = true;
-    document.head.appendChild(cs);
-  }
+  // preconnect → shaves the handshake time off the form submit + Calendly open
+  ['https://formsubmit.co', 'https://assets.calendly.com', 'https://calendly.com'].forEach(function (h) {
+    var l = document.createElement('link'); l.rel = 'preconnect'; l.href = h; l.crossOrigin = ''; document.head.appendChild(l);
+  });
 
+  // load Calendly assets once, on every page
+  if (!document.getElementById('calendly-css')) {
+    var cl = document.createElement('link'); cl.id = 'calendly-css'; cl.rel = 'stylesheet';
+    cl.href = 'https://assets.calendly.com/assets/external/widget.css'; document.head.appendChild(cl);
+    var cs = document.createElement('script'); cs.src = 'https://assets.calendly.com/assets/external/widget.js'; cs.async = true; document.head.appendChild(cs);
+  }
   function openCal() {
     if (window.Calendly && Calendly.initPopupWidget) { Calendly.initPopupWidget({ url: CAL_URL }); }
     else { window.open(CAL_URL, '_blank', 'noopener'); }
     if (window.gtag) gtag('event', 'contact_click', { method: 'calendly' });
   }
 
-  // --- inject modals once ---
+  // each "room" pre-fills the message form so Jocelyn knows the context
+  var TOPICS = {
+    emcee:        { chip: 'Hosting & Emceeing', subject: 'New emcee enquiry — jocelynlim.space', sub: 'Tell me about your event — the date, the audience, and the energy you want in the room.' },
+    scentura:     { chip: 'Scentura', subject: 'New Scentura enquiry — jocelynlim.space', sub: 'Tell me about your brand or space, and what you’d want scent to do for it.' },
+    workshop:     { chip: 'letsbloom workshop', subject: 'New letsbloom enquiry — jocelynlim.space', sub: 'Tell me about your team or guests, the occasion, and a rough group size.' },
+    facilitation: { chip: 'Facilitation', subject: 'New facilitation enquiry — jocelynlim.space', sub: 'Tell me about your group and what you’d like the session to do.' },
+    general:      { chip: '', subject: 'New enquiry from jocelynlim.space', sub: 'Tell me about your event, your brand, or your idea — I read every one.' }
+  };
+
+  // inject modal shells once
   var wrap = document.createElement('div');
-  wrap.innerHTML = [
-    '<div class="wm-overlay" id="wmWork" role="dialog" aria-modal="true" aria-label="Work with me">',
-    '  <div class="wm-modal">',
-    '    <button class="wm-close" data-close aria-label="Close">✕</button>',
-    '    <div class="wm-eyebrow">work with me</div>',
-    '    <h3>What can I help with?</h3>',
-    '    <p class="wm-sub">Pick the room you want to fill — I’ll take it from there.</p>',
-    '    <button class="wm-route" data-route="emcee"><span class="wr-ic">🎤</span><span><span class="wr-t">Hire me to host / emcee</span><span class="wr-d">Events, panels &amp; demo days</span></span><span class="wr-arrow">→</span></button>',
-    '    <button class="wm-route" data-route="scent"><span class="wr-ic">🌸</span><span><span class="wr-t">Partner on Scentura</span><span class="wr-d">Scent for F&amp;B brands &amp; spaces</span></span><span class="wr-arrow">→</span></button>',
-    '    <button class="wm-route" data-route="other"><span class="wr-ic">✉️</span><span><span class="wr-t">Something else</span><span class="wr-d">Workshops, collabs, or a quick hello</span></span><span class="wr-arrow">→</span></button>',
-    '  </div>',
-    '</div>',
-    '<div class="wm-overlay" id="wmContact" role="dialog" aria-modal="true" aria-label="Send a message">',
-    '  <div class="wm-modal">',
-    '    <button class="wm-close" data-close aria-label="Close">✕</button>',
-    '    <div id="wmContactBody">',
-    '      <div class="wm-eyebrow">say hello</div>',
-    '      <h3>Send me a message</h3>',
-    '      <p class="wm-sub">Tell me about your event, your brand, or your idea — I read every one.</p>',
-    '      <form id="wmForm" novalidate>',
-    '        <input type="text" name="_honey" class="wm-hp" tabindex="-1" autocomplete="off" aria-hidden="true">',
-    '        <div class="wm-field"><label for="wmName">Your name</label><input id="wmName" type="text" name="name" required></div>',
-    '        <div class="wm-field"><label for="wmEmail">Your email</label><input id="wmEmail" type="email" name="email" required></div>',
-    '        <div class="wm-field"><label for="wmMsg">Message</label><textarea id="wmMsg" name="message" required placeholder="A line or two about what you’re planning…"></textarea></div>',
-    '        <button type="submit" class="btn btn-primary wm-submit">Send message <span class="arrow">→</span></button>',
-    '        <div class="wm-msg" id="wmMsgOut" hidden></div>',
-    '      </form>',
-    '    </div>',
-    '  </div>',
-    '</div>'
-  ].join('');
+  wrap.innerHTML =
+    '<div class="wm-overlay" id="wmWork" role="dialog" aria-modal="true" aria-label="Work with me">' +
+    '  <div class="wm-modal">' +
+    '    <button class="wm-close" data-close aria-label="Close">✕</button>' +
+    '    <div class="wm-eyebrow">work with me</div>' +
+    '    <h3>What can I help with?</h3>' +
+    '    <p class="wm-sub">Pick what fits and I’ll open a quick note you can send me — or book a call instead, totally up to you.</p>' +
+    '    <button class="wm-route" data-route="emcee"><span class="wr-ic">🎤</span><span><span class="wr-t">Hire me to host / emcee</span><span class="wr-d">Events, panels &amp; demo days</span></span><span class="wr-arrow">→</span></button>' +
+    '    <button class="wm-route" data-route="scentura"><span class="wr-ic">🌸</span><span><span class="wr-t">Partner on Scentura</span><span class="wr-d">Scent for F&amp;B brands &amp; spaces</span></span><span class="wr-arrow">→</span></button>' +
+    '    <button class="wm-route" data-route="general"><span class="wr-ic">✉️</span><span><span class="wr-t">Something else</span><span class="wr-d">Workshops, collabs, or a quick hello</span></span><span class="wr-arrow">→</span></button>' +
+    '  </div>' +
+    '</div>' +
+    '<div class="wm-overlay" id="wmContact" role="dialog" aria-modal="true" aria-label="Send a message">' +
+    '  <div class="wm-modal">' +
+    '    <button class="wm-close" data-close aria-label="Close">✕</button>' +
+    '    <div id="wmContactBody"></div>' +
+    '  </div>' +
+    '</div>';
   document.body.appendChild(wrap);
+
+  function esc(s) { return (s || '').replace(/"/g, '&quot;'); }
+  function contactHTML(t) {
+    var c = TOPICS[t] || TOPICS.general;
+    return '' +
+      '<div class="wm-eyebrow">say hello</div>' +
+      '<h3>Send me a message</h3>' +
+      (c.chip ? '<div class="wm-topic">About&nbsp;·&nbsp;<b>' + c.chip + '</b></div>' : '') +
+      '<p class="wm-sub">' + c.sub + '</p>' +
+      '<form id="wmForm" novalidate>' +
+      '  <input type="text" name="_honey" class="wm-hp" tabindex="-1" autocomplete="off" aria-hidden="true">' +
+      '  <input type="hidden" name="_subject" value="' + esc(c.subject) + '">' +
+      '  <div class="wm-field"><label for="wmName">Your name</label><input id="wmName" type="text" name="name" required></div>' +
+      '  <div class="wm-field"><label for="wmEmail">Your email</label><input id="wmEmail" type="email" name="email" required></div>' +
+      '  <div class="wm-field"><label for="wmMsg">Message</label><textarea id="wmMsg" name="message" required placeholder="A line or two about what you’re planning…"></textarea></div>' +
+      '  <button type="submit" class="btn btn-primary wm-submit">Send message <span class="arrow">→</span></button>' +
+      '  <div class="wm-msg" id="wmMsgOut" hidden></div>' +
+      '</form>' +
+      '<div class="wm-alt">Prefer to talk live? <a href="#" data-open="calendly">Book a 15-min call →</a></div>';
+  }
 
   var last;
   function open(id) {
@@ -126,6 +142,12 @@ document.addEventListener('click', function (e) {
     document.body.style.overflow = '';
     if (last && last.focus) last.focus();
   }
+  function openContact(t) {
+    document.getElementById('wmContactBody').innerHTML = contactHTML(t);
+    bindForm();
+    closeAll(); open('wmContact');
+    if (window.gtag) gtag('event', 'open_contact', { topic: t || 'general' });
+  }
 
   // backdrop + close-button + esc
   document.querySelectorAll('.wm-overlay').forEach(function (o) {
@@ -133,14 +155,9 @@ document.addEventListener('click', function (e) {
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
 
-  // chooser routes
+  // chooser routes -> pre-filled message form (NOT straight to Calendly)
   document.querySelectorAll('#wmWork .wm-route').forEach(function (b) {
-    b.addEventListener('click', function () {
-      var r = b.getAttribute('data-route');
-      closeAll();
-      if (r === 'other') { open('wmContact'); }
-      else { openCal(); }
-    });
+    b.addEventListener('click', function () { openContact(b.getAttribute('data-route')); });
   });
 
   // triggers anywhere on the site
@@ -150,36 +167,47 @@ document.addEventListener('click', function (e) {
     e.preventDefault();
     var what = t.getAttribute('data-open');
     if (what === 'work') { open('wmWork'); if (window.gtag) gtag('event', 'cta_click', { cta: 'work_with_me' }); }
-    else if (what === 'contact') { open('wmContact'); }
+    else if (what === 'contact') { openContact(t.getAttribute('data-topic') || 'general'); }
     else if (what === 'calendly') { openCal(); }
   });
 
-  // contact form -> Formsubmit (AJAX, stays on page)
-  var form = document.getElementById('wmForm');
-  if (form) {
+  // (re)bind the message form each time it's rendered
+  function bindForm() {
+    var form = document.getElementById('wmForm'); if (!form) return;
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (form._honey && form._honey.value) return; // bot trap
       var out = document.getElementById('wmMsgOut');
       var btn = form.querySelector('button[type=submit]');
       out.hidden = true; out.classList.remove('err');
-      btn.disabled = true; btn.textContent = 'Sending…';
+      btn.disabled = true; btn.classList.add('loading');
+      btn.innerHTML = '<span class="wm-spin" aria-hidden="true"></span> Sending…';
+      var ctrl = ('AbortController' in window) ? new AbortController() : null;
+      var killed = false;
+      var timer = setTimeout(function () { killed = true; if (ctrl) ctrl.abort(); }, 12000);
       fetch(FORM_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
           name: form.name.value, email: form.email.value, message: form.message.value,
-          _subject: 'New enquiry from jocelynlim.space', _template: 'table', _captcha: 'false'
-        })
-      }).then(function (r) { return r.json(); }).then(function () {
+          _subject: form._subject ? form._subject.value : 'New enquiry from jocelynlim.space',
+          _template: 'table', _captcha: 'false'
+        }),
+        signal: ctrl ? ctrl.signal : undefined
+      }).then(function (r) { return r.json().catch(function () { return {}; }); }).then(function () {
+        clearTimeout(timer);
         document.getElementById('wmContactBody').innerHTML =
           '<div class="wm-success"><div class="ws-ic">✓</div><h3>Message sent</h3>' +
-          '<p>Thank you — it’s landed in my inbox and I’ll get back to you personally, usually within a day or two.</p></div>';
+          '<p>Thank you — it’s on its way to my inbox and I’ll reply personally, usually within a day or two.</p>' +
+          '<div class="wm-alt" style="margin-top:18px">Want to lock in a time now? <a href="#" data-open="calendly">Book a 15-min call →</a></div></div>';
         if (window.gtag) gtag('event', 'generate_lead', { method: 'contact_form' });
       }).catch(function () {
+        clearTimeout(timer);
         out.hidden = false; out.classList.add('err');
-        out.textContent = 'Something went wrong sending that. Please try again, or reach me on Telegram.';
-        btn.disabled = false; btn.innerHTML = 'Send message <span class="arrow">→</span>';
+        out.textContent = killed
+          ? 'That’s taking longer than usual — please try again, or reach me on Telegram.'
+          : 'Something went wrong sending that. Please try again, or reach me on Telegram.';
+        btn.disabled = false; btn.classList.remove('loading'); btn.innerHTML = 'Send message <span class="arrow">→</span>';
       });
     });
   }
