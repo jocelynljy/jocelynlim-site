@@ -290,3 +290,66 @@ body{background:radial-gradient(125% 85% at 50% -12%, #f9f3e7 0%, #f3ecde 55%, #
 @media(max-width:920px){
   #why::before, #about::before{display:none}
 }
+
+/* ============================================================
+   v6 — conversion funnel: router, modals, contact form, CTA hierarchy
+   ============================================================ */
+
+/* --- self-segmentation router --- */
+.router{margin-top:14px}
+.router-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+.rcard{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px 24px;box-shadow:var(--shadow-sm);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s;border-top:4px solid var(--rc,var(--accent))}
+.rcard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+.rcard .ric{width:50px;height:50px;border-radius:15px;background:var(--paper-2);display:grid;place-items:center;font-size:24px;margin-bottom:16px}
+.rcard .raud{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--rc,var(--accent));margin-bottom:7px}
+.rcard h3{font-family:var(--disp);font-weight:600;font-size:21px;line-height:1.15;margin-bottom:8px}
+.rcard p{font-size:14px;color:var(--ink-soft);line-height:1.55;margin-bottom:20px;flex:1}
+.rcard .ract{display:flex;flex-direction:column;gap:9px;align-items:flex-start}
+.rcard .rlink{font-size:13.5px;font-weight:600;color:var(--ink-soft);display:inline-flex;gap:5px;align-items:center}
+.rcard .rlink:hover{color:var(--ink)}
+@media(max-width:880px){.router-grid{grid-template-columns:1fr;gap:14px}}
+
+/* --- CTA hierarchy --- */
+.btn-xl{font-size:17px;padding:17px 38px;box-shadow:0 10px 26px rgba(168,70,47,.28)}
+.cta-stack{display:flex;flex-direction:column;align-items:center;gap:18px;margin-top:30px}
+.cta-secondary{display:inline-flex;gap:6px;align-items:center;font-weight:600;color:var(--ink-soft);font-size:15px}
+.cta-secondary:hover{color:var(--accent)}
+.cta-tertiary{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+.cta-tertiary a{font-size:13.5px;color:var(--faint);font-weight:600;letter-spacing:.02em}
+.cta-tertiary a:hover{color:var(--ink-soft)}
+.copy-email{background:none;border:none;font:inherit;cursor:pointer;color:var(--ink-soft);font-size:13.5px;display:inline-flex;gap:7px;align-items:center;padding:6px 0}
+.copy-email b{color:var(--accent);font-weight:600}
+.copy-email .ce-done{color:#2f9460;font-weight:600}
+
+/* --- modal system --- */
+.wm-overlay{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(36,26,18,.55);backdrop-filter:blur(4px);opacity:0;transition:opacity .25s}
+.wm-overlay.open{display:flex;opacity:1}
+.wm-modal{position:relative;width:100%;max-width:480px;background:var(--paper);border-radius:24px;padding:38px 34px;box-shadow:0 30px 80px rgba(0,0,0,.32);transform:translateY(14px) scale(.98);transition:transform .3s cubic-bezier(.2,.9,.2,1);max-height:90vh;overflow-y:auto}
+.wm-overlay.open .wm-modal{transform:none}
+.wm-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;border:none;background:var(--paper-2);color:var(--ink-soft);font-size:18px;cursor:pointer;display:grid;place-items:center;line-height:1}
+.wm-close:hover{background:var(--line);color:var(--ink)}
+.wm-modal .wm-eyebrow{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--accent)}
+.wm-modal h3{font-family:var(--disp);font-weight:600;font-size:27px;line-height:1.1;margin:8px 0 6px}
+.wm-modal .wm-sub{font-size:14.5px;color:var(--ink-soft);line-height:1.55;margin-bottom:24px}
+/* chooser routes */
+.wm-route{display:flex;gap:15px;align-items:center;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:12px;cursor:pointer;transition:border-color .2s,transform .2s,box-shadow .2s;font:inherit}
+.wm-route:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+.wm-route .wr-ic{font-size:22px;width:44px;height:44px;border-radius:12px;background:var(--paper-2);display:grid;place-items:center;flex-shrink:0}
+.wm-route .wr-t{font-family:var(--disp);font-weight:600;font-size:17px;color:var(--ink)}
+.wm-route .wr-d{font-size:13px;color:var(--ink-soft);margin-top:2px}
+.wm-route .wr-arrow{margin-left:auto;color:var(--accent);font-size:18px}
+/* contact form */
+.wm-field{display:block;margin-bottom:14px}
+.wm-field label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:6px}
+.wm-field input,.wm-field textarea{width:100%;font:inherit;font-size:15px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;transition:border-color .2s,box-shadow .2s}
+.wm-field input:focus,.wm-field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(196,100,79,.14)}
+.wm-field textarea{resize:vertical;min-height:110px}
+.wm-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.wm-submit{width:100%;justify-content:center;margin-top:4px}
+.wm-msg{font-size:13.5px;margin-top:12px;text-align:center}
+.wm-msg.err{color:#c0392b}
+.wm-success{text-align:center;padding:14px 0}
+.wm-success .ws-ic{width:64px;height:64px;border-radius:50%;background:rgba(63,174,116,.14);color:#2f9460;display:grid;place-items:center;font-size:30px;margin:0 auto 16px}
+.wm-success h3{margin-bottom:8px}
+.wm-success p{font-size:14.5px;color:var(--ink-soft);line-height:1.55}
+@media(max-width:480px){.wm-modal{padding:32px 22px}.wm-modal h3{font-size:23px}}

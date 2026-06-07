@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
-<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<link id="calendly-css" href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
@@ -58,8 +58,8 @@
       <h1 class="reveal d1">I help people feel a little more <em>human</em><span class="tail" style="color:var(--ink)">— in a world that is increasingly digital.</span></h1>
       <p class="sub reveal d2">While AI scales the virtual world, my rebellion is scaling the physical one. I design offline experiences for a hyper-digital world. I host, facilitate, and design experiences that engage with the rest of your senses.</p>
       <div class="cta-row reveal d3">
-        <a class="btn btn-primary" href="#quests">View My Ventures <span class="arrow">→</span></a>
-        <a class="btn btn-ghost" href="https://www.linkedin.com/in/jocelynlimjinyan/" target="_blank" rel="noopener">Let's Grab Coffee</a>
+        <a class="btn btn-primary" data-open="work" href="#start">Work with me <span class="arrow">→</span></a>
+        <a class="btn btn-ghost" data-open="calendly" href="#">Let's grab a coffee</a>
       </div>
     </div>
     <div class="portrait reveal d2">
@@ -68,6 +68,47 @@
     </div>
   </div>
 </header>
+
+<!-- ROUTER / SELF-SEGMENTATION -->
+<section class="section router" id="start" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="eyebrow reveal" style="text-align:center">start here</div>
+    <h2 class="section-h reveal d1" style="text-align:center">What brings you <em>here</em>?</h2>
+    <p class="lead reveal d2" style="margin:16px auto 0;text-align:center;max-width:600px">Three doors, one me. Pick the one that fits — and skip straight to it.</p>
+    <div class="router-grid reveal d2">
+      <div class="rcard" style="--rc:var(--host)">
+        <div class="ric">🎤</div>
+        <div class="raud">for event planners</div>
+        <h3>Hire an Emcee</h3>
+        <p>You need a host who keeps the room warm, the timing tight, and people actually present.</p>
+        <div class="ract">
+          <a class="btn btn-primary" data-open="calendly" href="#">Check availability <span class="arrow">→</span></a>
+          <a class="rlink" href="hosting.html">See the work →</a>
+        </div>
+      </div>
+      <div class="rcard" style="--rc:var(--scent)">
+        <div class="ric">🌸</div>
+        <div class="raud">for F&amp;B brands</div>
+        <h3>Design a Scent</h3>
+        <p>Turn passing foot traffic into hungry customers with engineered food aromas — with Scentura.</p>
+        <div class="ract">
+          <a class="btn btn-primary" data-open="calendly" href="#">Book a scent audit <span class="arrow">→</span></a>
+          <a class="rlink" href="scentura.html">See the work →</a>
+        </div>
+      </div>
+      <div class="rcard" style="--rc:var(--bloom)">
+        <div class="ric">💐</div>
+        <div class="raud">for teams &amp; socials</div>
+        <h3>Join a Workshop</h3>
+        <p>Hands-on floral creation as the icebreaker — team-building and curated mixers, with letsbloom.</p>
+        <div class="ract">
+          <a class="btn btn-primary" data-open="contact" href="#">Plan a workshop <span class="arrow">→</span></a>
+          <a class="rlink" href="letsbloom.html">See the work →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- THE WHY -->
 <section class="section" id="why">
@@ -431,27 +472,21 @@
     .collab-email{margin-top:22px;font-size:13.5px;color:var(--faint)}
     @media(max-width:680px){.collab-grid{grid-template-columns:1fr;gap:14px}.collab-card{padding:24px 22px}}
     </style>
-    <div class="tieback reveal collab">
-      <div class="eyebrow">work with me</div>
+    <div class="tieback reveal collab" style="max-width:720px">
+      <div class="eyebrow">let's build something offline</div>
       <h2 class="section-h" style="margin-top:8px"><em>Let's</em> collaborate</h2>
-      <p class="lead" style="margin:16px auto 0;max-width:600px">My week is split between building my venture and holding space for others. Here's how we can work together right now.</p>
-      <div class="collab-grid">
-        <div class="collab-card">
-          <div class="collab-ic">🎤</div>
-          <h3>Hire me to hold the room</h3>
-          <p>Freelance Emcee, Moderator &amp; Facilitator — for events that actually matter.</p>
-          <a class="btn btn-primary" href="mailto:limjy.jocelyn@gmail.com?subject=Your%20event%20%E2%80%94%20emcee%20%2F%20facilitator">Email me about your event <span class="arrow">→</span></a>
-        </div>
-        <div class="collab-card">
-          <div class="collab-ic">🌸</div>
-          <h3>Partner with Scentura</h3>
-          <p>Bring a multi-sensory floral experience — scent, craft &amp; connection — to your space.</p>
-          <a class="btn btn-primary" href="mailto:limjy.jocelyn@gmail.com?subject=Scentura%20%E2%80%94%20multi-sensory%20experience">Email me about Scentura <span class="arrow">→</span></a>
+      <p class="lead" style="margin:16px auto 0;max-width:560px">Planning an event, building a brand, or just want to swap notes? There's one button for that — tell me what you need and I'll point us the right way.</p>
+      <div class="cta-stack">
+        <a class="btn btn-primary btn-xl" data-open="work" href="#">Work with me <span class="arrow">→</span></a>
+        <a class="cta-secondary" href="https://medium.com/@jocelynlimjy" target="_blank" rel="noopener">Not ready yet? Follow the journey on Medium →</a>
+        <div class="cta-tertiary">
+          <a href="https://www.linkedin.com/in/jocelynlimjinyan/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://instagram.com/letsbloom.space" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://t.me/jyjocelyn" target="_blank" rel="noopener">Telegram</a>
+          <button class="copy-email" data-email="limjy.jocelyn@gmail.com" type="button"><span class="ce-label">Copy email</span></button>
         </div>
       </div>
-      <p class="collab-aside"><b style="color:var(--ink)">Just want to connect?</b> Building something cool, want to swap startup notes, or grab a coffee? Skip the inbox — <a href="https://t.me/jyjocelyn" target="_blank" rel="noopener">text me on Telegram (@jyjocelyn)</a>.</p>
-      <p class="collab-aside collab-ps"><b style="font-style:normal;color:var(--ink)">P.S.</b> Curious how a non-technical founder built this whole ecosystem with AI? <a href="#" onclick="if(window.Calendly){Calendly.initPopupWidget({url:'https://calendly.com/jocelyn-limjy/15-minute-meeting'});}if(window.gtag){gtag('event','contact_click',{method:'calendly'});}return false;" style="font-style:normal">Grab a coffee or a 15-min call.</a></p>
-      <p class="collab-aside collab-email">Or email me directly at <a href="mailto:limjy.jocelyn@gmail.com" style="text-decoration:none">limjy.jocelyn@gmail.com</a></p>
+      <p class="collab-aside collab-ps" style="margin-top:36px"><b style="font-style:normal;color:var(--ink)">P.S.</b> Curious how a non-technical founder built this whole ecosystem with AI? <a data-open="calendly" href="#" style="font-style:normal">Grab a coffee or a 15-min call.</a></p>
     </div>
   </div>
 </section>
@@ -472,7 +507,7 @@
         <a href="https://medium.com/@jocelynlimjy" target="_blank" rel="noopener">Medium</a>
         <a href="https://instagram.com/letsbloom.space" target="_blank" rel="noopener">Instagram</a>
         <a href="https://t.me/jyjocelyn" target="_blank" rel="noopener">Telegram</a>
-        <a href="mailto:limjy.jocelyn@gmail.com">Email</a>
+        <a href="#" data-open="contact">Email</a>
       </div>
     </div>
     <div class="fbot"><span>© <span class="year"></span> Jocelyn Lim · jocelynlim.space</span><span>Made with care in Singapore</span></div>
