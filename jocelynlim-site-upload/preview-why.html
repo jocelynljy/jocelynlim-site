@@ -18,7 +18,8 @@ body{background:#f3ecde;font-family:'DM Sans',sans-serif;-webkit-font-smoothing:
 .bgfx{position:absolute;inset:0;background:radial-gradient(56% 50% at 50% 34%,#34261a,#1a120c 58%,#0e0906 100%)}
 .vis{position:absolute;inset:0;opacity:0;transition:opacity .45s ease}
 .vis.on{opacity:1}
-.vis svg{width:100%;height:100%;display:block}
+.vis svg{width:100%;height:100%;display:block;transform-origin:50% 44%;animation:kb 5.5s ease-out both}
+@keyframes kb{from{transform:scale(1.08)}to{transform:scale(1)}}
 .vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 120% at 50% 42%,transparent 50%,rgba(0,0,0,.55))}
 .cap{position:absolute;left:0;right:0;bottom:0;padding:18% 8% 7%;text-align:center;background:linear-gradient(0deg,rgba(15,10,7,.78),rgba(15,10,7,.35) 60%,transparent);pointer-events:none}
 #capt{color:var(--cream);font-family:'Fraunces',serif;font-weight:340;font-size:clamp(24px,4vw,46px);line-height:1.12;letter-spacing:-.01em;text-shadow:0 2px 24px rgba(0,0,0,.6)}
@@ -30,6 +31,9 @@ body{background:#f3ecde;font-family:'DM Sans',sans-serif;-webkit-font-smoothing:
 .cIn{animation:cap .55s cubic-bezier(.2,.9,.2,1) both}
 @keyframes cap{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 @keyframes uw{to{transform:scaleX(1)}}
+.w{display:inline-block;opacity:0;will-change:transform,opacity}
+@keyframes aWord{0%{opacity:0;transform:translateY(34px) scale(.82);filter:blur(5px)}55%{opacity:1;filter:blur(0)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes aPopWord{0%{opacity:0;transform:translateY(10px) scale(.45)}65%{opacity:1;transform:translateY(0) scale(1.16)}100%{opacity:1;transform:scale(1)}}
 /* svg shared */
 svg .a{transform-box:fill-box;transform-origin:center}
 .dr{stroke-dasharray:480;stroke-dashoffset:480;animation:dr 1s ease forwards}
@@ -82,7 +86,7 @@ svg .a{transform-box:fill-box;transform-origin:center}
     <div class="cap"><div id="capt"></div></div>
   </div>
   <div class="bar"><i id="prog"></i></div>
-  <div class="controls"><button class="btn" id="replay">▶ Replay</button><span class="note">~28s · each scene is its own illustration.</span></div>
+  <div class="controls"><button class="btn" id="replay">▶ Replay</button><button class="btn" id="snd" style="background:#2a2018">🔊 Music</button><span class="note">~28s · tap Music for sound. Swap in your own track / voiceover later.</span></div>
 </div>
 <script>
 const C='#7fb6e6',CD='#3f6fa0',Wm='#ffb24d',T='#f2724f',CR='#f7eddb';
@@ -143,13 +147,30 @@ function play(i){if(i>=SC.length)return;const s=SC[i];
   vis.classList.remove('on');
   setTimeout(()=>{vis.innerHTML=SV[s.v]();vis.classList.add('on');},120);
   if(s.cap.indexOf("class='huge'")>=0){capt.innerHTML=`<div class="cIn">${s.cap}</div>`;}
-  else{const wr=s.cap.replace(/(<em[^>]*>.*?<\/em>|[^<\s]+)(\s*)/g,(m,w,sp)=>`<span class="w">${w}</span>${sp}`);capt.innerHTML=`<div>${wr}</div>`;capt.querySelectorAll('.w').forEach((k,idx)=>{k.style.animation='aWord .55s cubic-bezier(.2,.9,.2,1) both';k.style.animationDelay=(idx*0.07)+'s';});}
+  else{const wr=s.cap.replace(/(<em[^>]*>.*?<\/em>|[^<\s]+)(\s*)/g,(m,w,sp)=>`<span class="w">${w}</span>${sp}`);capt.innerHTML=`<div>${wr}</div>`;const ws=capt.querySelectorAll('.w');ws.forEach((k,idx)=>{const key=!!k.querySelector('em');k.style.animation=(key?'aPopWord .62s cubic-bezier(.2,1.3,.3,1) both':'aWord .52s cubic-bezier(.2,.9,.2,1) both');k.style.animationDelay=((idx*0.12)+(key?0.1:0))+'s';});}
   timers.push(setTimeout(()=>play(i+1),s.d));
 }
 function run(){timers.forEach(clearTimeout);timers=[];
   prog.style.transition='none';prog.style.width='0';void prog.offsetWidth;prog.style.transition='width '+(total/1000)+'s linear';prog.style.width='100%';
   play(0);}
-document.getElementById('replay').onclick=run;
+document.getElementById('replay').onclick=()=>{run();};
+/* --- ambient music (generated, royalty-free) --- */
+let actx,musicOn=false,mnodes=[],chordTimer=null;
+const CHORDS=[[174.61,261.63,329.63,392.00],[146.83,220.00,293.66,349.23],[196.00,293.66,349.23,440.00],[164.81,246.94,329.63,392.00]];
+function setChord(master,notes){mnodes.forEach(n=>{try{n.stop(actx.currentTime+1.6)}catch(e){}});mnodes=[];const t=actx.currentTime;
+  notes.forEach((f,i)=>{const o=actx.createOscillator();o.type=i<2?'sawtooth':'triangle';o.frequency.value=f;
+    const g=actx.createGain();g.gain.value=0;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(0.16/notes.length,t+1.4);
+    const lp=actx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=820;lp.Q.value=0.7;
+    const lfo=actx.createOscillator();lfo.frequency.value=0.07+i*0.015;const lg=actx.createGain();lg.gain.value=2.2;lfo.connect(lg);lg.connect(o.frequency);lfo.start();
+    o.connect(g);g.connect(lp);lp.connect(master);o.start();mnodes.push(o,lfo);});}
+function startMusic(){if(musicOn)return;musicOn=true;
+  actx=new (window.AudioContext||window.webkitAudioContext)();
+  const master=actx.createGain();master.gain.value=0.0;master.connect(actx.destination);
+  master.gain.linearRampToValueAtTime(0.9,actx.currentTime+2.5);
+  let ci=0;setChord(master,CHORDS[0]);chordTimer=setInterval(()=>{ci=(ci+1)%CHORDS.length;setChord(master,CHORDS[ci]);},6500);
+  window._mm=master;run();}
+function stopMusic(){if(!musicOn)return;musicOn=false;clearInterval(chordTimer);if(window._mm)window._mm.gain.linearRampToValueAtTime(0,actx.currentTime+0.6);setTimeout(()=>{mnodes.forEach(n=>{try{n.stop()}catch(e){}});try{actx.close()}catch(e){}mnodes=[];},800);}
+document.getElementById('snd').onclick=function(){if(musicOn){stopMusic();this.textContent='🔊 Music';this.style.background='#2a2018';}else{startMusic();this.textContent='🔇 Mute';this.style.background='linear-gradient(135deg,#c8674f,#a8462f)';}};
 new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)run();})},{threshold:.4}).observe(document.getElementById('stage'));
 </script>
 </body>
