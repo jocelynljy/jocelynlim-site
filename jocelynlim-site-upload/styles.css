@@ -237,7 +237,9 @@ body{background:radial-gradient(125% 85% at 50% -12%, #f9f3e7 0%, #f3ecde 55%, #
   .section{padding:60px 0}
   .hero{padding:40px 0 24px}
   .hero .cta-row{margin-top:28px}
-  .quests{gap:18px}
+  .quests{grid-template-columns:1fr; gap:18px}
+  /* cancel the Stories card's desktop 2-col span so every card stacks in one column */
+  .quests .quest{grid-column:auto !important}
 }
 /* phones */
 @media(max-width:600px){
