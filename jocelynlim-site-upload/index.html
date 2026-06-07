@@ -50,6 +50,7 @@
       <div class="eyebrow reveal">Host, Facilitator, &amp; Experience Designer</div>
       <h1 class="reveal d1">I help people feel a little more <em>human</em><span class="tail" style="color:var(--ink)">— in a world that is increasingly digital.</span></h1>
       <p class="sub reveal d2">While AI scales the virtual world, my rebellion is scaling the physical one. I design experiences, facilitate conversations, and build ventures that bring people back together in the real world.</p>
+      <p class="reveal d2" style="margin-top:16px;font-size:15px;line-height:1.6;color:#6f6253;max-width:560px"><b style="color:#2a2018">P.S.</b> How do I find time to do all that? I let AI handle the digital grunt work — including coding this entire site. <a href="#connect" style="color:#b8533a;font-weight:600;text-decoration:underline;text-underline-offset:2px">Scroll to the bottom to find out more!</a></p>
       <div class="cta-row reveal d3">
         <a class="btn btn-primary" href="#connect">Book me to host <span class="arrow">→</span></a>
         <a class="btn btn-ghost" href="#quests">Explore my ventures</a>
@@ -71,7 +72,8 @@
     <style>
     #whyvid{--terra:#f2724f;--amber:#ffb24d;--cool:#7fb6e6;--cream:#f7eddb;--soft:#cdbda6;margin-top:30px}
     #whyvid .stage{position:relative;height:60vh;min-height:430px;max-height:660px;overflow:hidden;border-radius:22px;background:#120d09;box-shadow:0 30px 70px rgba(40,25,15,.25)}
-    #whyvid .bgfx{position:absolute;inset:0;background:radial-gradient(56% 50% at 50% 34%,#34261a,#1a120c 58%,#0e0906 100%)}
+    #whyvid .bgfx{position:absolute;inset:0;background:radial-gradient(62% 56% at 50% 36%,#4a3422,#2c1d12 56%,#1a110a 100%)}
+    #whyvid .grain{position:absolute;inset:0;pointer-events:none;opacity:.09;mix-blend-mode:soft-light;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:170px 170px}
     #whyvid .vis{position:absolute;inset:0;opacity:0;transition:opacity .45s ease}
     #whyvid .vis.on{opacity:1}
     #whyvid .vis svg{width:100%;height:100%;display:block;transform-origin:50% 44%;animation:wvkb 5.5s ease-out both}
@@ -137,6 +139,7 @@
         <div class="bgfx"></div>
         <div class="vis" id="vis"></div>
         <div class="vig"></div>
+        <div class="grain"></div>
         <div class="cap"><div id="capt"></div></div>
       </div>
       <div class="bar" id="bar"><i id="prog"></i><span id="thumb"></span></div>
@@ -144,7 +147,7 @@
         <button class="wvbtn ic" id="pp" aria-label="Play / pause">❚❚</button>
         <button class="wvbtn ic" id="rp" aria-label="Restart">↺</button>
         <span class="time"><span id="tcur">0:00</span> / <span id="tdur">0:28</span></span>
-        <button class="wvbtn" id="snd" style="background:#2a2018">🔊 Music</button>
+        <button class="wvbtn" id="snd" style="background:#e3d8c4;color:#5c5142">🔇 Sound off</button>
       </div>
       <div class="sr-only">
         <p>On paper, my week makes no sense. One day I'm holding a mic in front of a room. The next I'm designing a workshop, rewriting a pitch, or prepping for a facilitation session. People keep telling me to pick one thing.</p>
@@ -283,7 +286,7 @@
     function stopMusic(){if(!musicOn)return;musicOn=false;clearTimeout(schTimer);try{ac.resume();master.gain.exponentialRampToValueAtTime(0.0001,ac.currentTime+0.4);}catch(_){}setTimeout(()=>{try{ac.close();}catch(_){}},600);}
     function musicSetPlaying(p){if(!musicOn||!ac)return;if(p){ac.resume().then(()=>{nextT=ac.currentTime+0.06;}).catch(()=>{});}else{try{ac.suspend();}catch(_){}}}
     function musicReplay(){if(!musicOn||!ac)return;step16=0;nextT=ac.currentTime+0.06;}
-    document.getElementById('snd').onclick=function(){if(musicOn){stopMusic();this.textContent='🔊 Music';this.style.background='#2a2018';}else{startMusic(elapsed);musicSetPlaying(playing);this.textContent='🔇 Mute';this.style.background='linear-gradient(135deg,#c8674f,#a8462f)';}};
+    document.getElementById('snd').onclick=function(){if(musicOn){stopMusic();this.textContent='🔇 Sound off';this.style.background='#e3d8c4';this.style.color='#5c5142';}else{startMusic(elapsed);musicSetPlaying(playing);this.textContent='🔊 Sound on';this.style.background='linear-gradient(135deg,#3fae74,#2f9460)';this.style.color='#fff';}};
     })();
     </script>
   </div>
@@ -375,6 +378,10 @@
           <span style="font-weight:600;font-size:15.5px">Just want to say hi or talk startups?</span>
           <a class="btn btn-ghost" href="mailto:hello@jocelynlim.space?subject=Hi%20Jocelyn">Drop into my inbox</a>
         </div>
+      </div>
+      <div class="reveal" style="max-width:660px;margin:30px auto 0;text-align:left;background:var(--card);border:1px dashed var(--line);border-radius:16px;padding:22px 24px">
+        <div style="font-size:15px;line-height:1.65;color:#2a2018"><b>Fun fact:</b> I can't write a single line of code. I had Claude build this entire website. I automate my digital workflow so I can spend my time where it matters — with real people, in physical rooms.</div>
+        <div style="font-size:15px;line-height:1.65;margin-top:12px;color:#2a2018">Want to copy the exact prompts I used to build this? <a href="https://www.linkedin.com/in/jocelynlimjinyan/" target="_blank" rel="noopener" style="color:#b8533a;font-weight:600;text-decoration:underline;text-underline-offset:2px">Connect on LinkedIn</a> and DM me 'Claude'. I'll send you the blueprint.</div>
       </div>
     </div>
   </div>
