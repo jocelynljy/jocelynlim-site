@@ -91,7 +91,7 @@
         <h3>Design a Scent</h3>
         <p>Turn passing foot traffic into hungry customers with engineered food aromas — with Scentura.</p>
         <div class="ract">
-          <a class="btn btn-primary" data-open="contact" data-topic="scentura" href="#">Tell me about your brand <span class="arrow">→</span></a>
+          <a class="btn btn-primary" data-open="contact" data-topic="scentura" href="#">Book a scent analysis <span class="arrow">→</span></a>
           <a class="rlink" href="scentura.html">See the work →</a>
         </div>
       </div>
@@ -118,11 +118,12 @@
     #whyvid{--terra:#f2724f;--amber:#ffb24d;--cool:#7fb6e6;--cream:#f7eddb;--soft:#cdbda6;margin-top:30px;max-width:76%}
     @media (max-width:860px){#whyvid{max-width:100%}}
     @media (max-width:600px){
-      #whyvid .stage{min-height:340px;height:54vh}
+      /* hug the graphic to the caption — kills the empty gap on phones (desktop unaffected) */
+      #whyvid .stage{height:auto;min-height:0;max-height:none;aspect-ratio:4/3}
       #whyvid #capt{font-size:clamp(19px,5.6vw,26px)}
       #whyvid .huge{font-size:clamp(30px,9.5vw,46px)}
       #whyvid .lead{font-size:clamp(14px,4vw,18px)}
-      #whyvid .cap{padding:24% 6% 9%}
+      #whyvid .cap{padding:13% 6% 8%}
       #whyvid .controls{gap:8px}
       #whyvid .time{min-width:62px;font-size:12px}
       #whyvid .wvbtn{font-size:13px;padding:9px 14px}
@@ -212,7 +213,7 @@
         <span class="time"><span id="tcur">0:00</span> / <span id="tdur">0:28</span></span>
         <button class="wvbtn" id="snd" style="background:#e3d8c4;color:#5c5142">🔇 Sound off</button>
       </div>
-      <audio id="vo" src="assets/voiceover.mp3" preload="auto" playsinline></audio>
+      <audio id="vo" src="assets/voiceover-v3.mp3" preload="auto" playsinline></audio>
       <div class="sr-only">
         <p>On paper, my week makes no sense. One day I'm holding a mic in front of a room. The next I'm designing a workshop, rewriting a pitch, or prepping for a facilitation session. People keep telling me to pick one thing.</p>
         <p>I'm graduating into a lot of noise — the job market is brutal, AI is coming for the work. But here's the quieter thing I believe: there are still some things AI can't take from us. The energy of a room when strangers actually connect. You know the way a room shifts when someone shares something personal, honest, or how the entire room is laughing together? I don't think AI will be able to create those environments at all.</p>
@@ -351,7 +352,7 @@
       if(s.lead&&st===0)lead(t,P.ch[2]*2,barLen*0.5);
     }
     function schLoop(){if(ac&&ac.state==='running'){while(nextT<ac.currentTime+0.12){const b=Math.floor(step16/16);mschedule(nextT,step16%16,b);nextT+=S16;step16++;if(step16>=16*14)step16=16*8;}}schTimer=setTimeout(schLoop,25);}
-    function startMusic(syncMs){if(musicReady)return;musicReady=true;ac=new (window.AudioContext||window.webkitAudioContext)();
+    function startMusic(syncMs){return; /* music is now baked into the voiceover track — engine disabled so it always plays in sync and never doubles */ if(musicReady)return;musicReady=true;ac=new (window.AudioContext||window.webkitAudioContext)();
       const comp=ac.createDynamicsCompressor();comp.threshold.value=-16;comp.ratio.value=3;comp.connect(ac.destination);
       master=ac.createGain();master.gain.value=0.0001;master.connect(comp);master.gain.exponentialRampToValueAtTime(MUSVOL,ac.currentTime+1.4);
       drum=ac.createGain();drum.gain.value=0.85;drum.connect(master);

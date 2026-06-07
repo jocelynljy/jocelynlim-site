@@ -82,7 +82,7 @@ document.addEventListener('click', function (e) {
   // each "room" pre-fills the message form so Jocelyn knows the context
   var TOPICS = {
     emcee:        { chip: 'Hosting & Emceeing', subject: 'New emcee enquiry — jocelynlim.space', sub: 'Tell me about your event — the date, the audience, and the energy you want in the room.' },
-    scentura:     { chip: 'Scentura', subject: 'New Scentura enquiry — jocelynlim.space', sub: 'Tell me about your brand or space, and what you’d want scent to do for it.' },
+    scentura:     { chip: 'Scentura', head: 'Book a free scent analysis', subject: 'New Scentura scent-analysis enquiry — jocelynlim.space', sub: 'Tell me a little about your brand or space and I’ll put together a complimentary scent analysis — no cost, no obligation.' },
     workshop:     { chip: 'letsbloom workshop', subject: 'New letsbloom enquiry — jocelynlim.space', sub: 'Tell me about your team or guests, the occasion, and a rough group size.' },
     facilitation: { chip: 'Facilitation', subject: 'New facilitation enquiry — jocelynlim.space', sub: 'Tell me about your group and what you’d like the session to do.' },
     general:      { chip: '', subject: 'New enquiry from jocelynlim.space', sub: 'Tell me about your event, your brand, or your idea — I read every one.' }
@@ -115,7 +115,7 @@ document.addEventListener('click', function (e) {
     var c = TOPICS[t] || TOPICS.general;
     return '' +
       '<div class="wm-eyebrow">say hello</div>' +
-      '<h3>Send me a message</h3>' +
+      '<h3>' + (c.head || 'Send me a message') + '</h3>' +
       (c.chip ? '<div class="wm-topic">About&nbsp;·&nbsp;<b>' + c.chip + '</b></div>' : '') +
       '<p class="wm-sub">' + c.sub + '</p>' +
       '<form id="wmForm" novalidate>' +
