@@ -50,7 +50,6 @@
       <div class="eyebrow reveal">Host, Facilitator, &amp; Experience Designer</div>
       <h1 class="reveal d1">I help people feel a little more <em>human</em><span class="tail" style="color:var(--ink)">— in a world that is increasingly digital.</span></h1>
       <p class="sub reveal d2">While AI scales the virtual world, my rebellion is scaling the physical one. I design experiences, facilitate conversations, and build ventures that bring people back together in the real world.</p>
-      <p class="reveal d2" style="margin-top:16px;font-size:15px;line-height:1.6;color:#6f6253;max-width:560px"><b style="color:#2a2018">P.S.</b> How do I juggle all of this? Honestly — I don't. AI does the digital grunt work; it even coded this entire site and the explainer video below, without me writing a single line. Curious how? <b style="color:#b8533a">Keep scrolling 👇</b></p>
       <div class="cta-row reveal d3">
         <a class="btn btn-primary" href="#connect">Book me to host <span class="arrow">→</span></a>
         <a class="btn btn-ghost" href="#quests">Explore my ventures</a>
@@ -244,29 +243,72 @@
       if(soundOn&&vo){vo.currentTime=(from||0)/1000;vo.play().catch(()=>{});}
       playing=true;setPP();}
     function toggle(){
-      if(soundOn&&vo){if(vo.ended||elapsed>=total-30){vo.currentTime=0;vo.play().catch(()=>{});}else if(vo.paused){vo.play().catch(()=>{});}else{vo.pause();}return;}
+      if(soundOn&&vo){if(vo.ended||elapsed>=total-30){vo.currentTime=0;vo.play().catch(()=>{});musicReplay();musicResume();}else if(vo.paused){vo.play().catch(()=>{});musicResume();}else{vo.pause();musicSuspend();}return;}
       if(elapsed>=total){start(0);return;}
       playing=!playing;lastTs=0;setPP();}
     pp.onclick=toggle;
-    rp.onclick=()=>{cur=-1;if(soundOn&&vo){vo.currentTime=0;vo.play().catch(()=>{});}else{start(0);}};
+    rp.onclick=()=>{cur=-1;if(soundOn&&vo){vo.currentTime=0;vo.play().catch(()=>{});musicReplay();musicResume();}else{start(0);}};
     function seekR(r){r=Math.max(0,Math.min(1,r));elapsed=r*total;lastTs=0;if(soundOn&&vo)vo.currentTime=elapsed/1000;const i=sceneAt(elapsed);if(i!==cur)renderScene(i);paint();}
     let dragging=false,wasPlay=false;
     function rEv(e){const b=bar.getBoundingClientRect();return (e.clientX-b.left)/b.width;}
-    bar.addEventListener('pointerdown',e=>{dragging=true;wasPlay=(soundOn&&vo)?!vo.paused:playing;if(soundOn&&vo)vo.pause();else playing=false;setPP();try{bar.setPointerCapture(e.pointerId);}catch(_){}seekR(rEv(e));});
+    bar.addEventListener('pointerdown',e=>{dragging=true;wasPlay=(soundOn&&vo)?!vo.paused:playing;if(soundOn&&vo){vo.pause();musicSuspend();}else playing=false;setPP();try{bar.setPointerCapture(e.pointerId);}catch(_){}seekR(rEv(e));});
     bar.addEventListener('pointermove',e=>{if(dragging)seekR(rEv(e));});
-    bar.addEventListener('pointerup',e=>{if(!dragging)return;dragging=false;lastTs=0;if(soundOn&&vo){if(wasPlay)vo.play().catch(()=>{});}else playing=wasPlay;setPP();});
+    bar.addEventListener('pointerup',e=>{if(!dragging)return;dragging=false;lastTs=0;if(soundOn&&vo){if(wasPlay){vo.play().catch(()=>{});musicResume();}}else playing=wasPlay;setPP();});
     requestAnimationFrame(frame);
     let started=false;
     new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting&&!started){started=true;start(0);}})},{threshold:.4}).observe(document.getElementById('stage'));
 
-    /* sound = the voiceover; turning it on makes the voice the master clock so the words lock to the narration */
+    /* ===== music bed — generated, ducked under the voiceover, builds with the timeline ===== */
+    let ac,musicReady=false,schTimer=null,nextT=0,step16=0,master,drum,bassBus,melBus,padBus,noise;
+    const BPM=112,SPB=60/BPM,S16=SPB/4,barLen=SPB*4,MUSVOL=0.26;
+    const NT={C2:65.41,F2:87.31,G2:98.0,A2:110.0,F3:174.61,G3:196.0,A3:220.0,B3:246.94,C4:261.63,D4:293.66,E4:329.63,F4:349.23,G4:392.0,A4:440.0,C5:523.25};
+    const PROG=[{r:NT.C2,ch:[NT.C4,NT.E4,NT.G4],ar:[NT.C4,NT.E4,NT.G4,NT.C5]},{r:NT.G2,ch:[NT.G3,NT.B3,NT.D4],ar:[NT.G3,NT.B3,NT.D4,NT.G4]},{r:NT.A2,ch:[NT.A3,NT.C4,NT.E4],ar:[NT.A3,NT.C4,NT.E4,NT.A4]},{r:NT.F2,ch:[NT.F3,NT.A3,NT.C4],ar:[NT.F3,NT.A3,NT.C4,NT.F4]}];
+    function sect(b){return{pluck:true,bass:b>=1,kick:b>=1,clap:b>=2,hat:b>=2,hat16:b>=4,lead:b>=6,bright:b>=8};}
+    function mkNoise(){const len=ac.sampleRate*0.4,buf=ac.createBuffer(1,len,ac.sampleRate),d=buf.getChannelData(0);for(let i=0;i<len;i++)d[i]=Math.random()*2-1;return buf;}
+    function kick(t){const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.setValueAtTime(150,t);o.frequency.exponentialRampToValueAtTime(48,t+0.12);g.gain.setValueAtTime(0.85,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.22);o.connect(g);g.connect(drum);o.start(t);o.stop(t+0.24);}
+    function clap(t){const s=ac.createBufferSource();s.buffer=noise;const bp=ac.createBiquadFilter();bp.type='bandpass';bp.frequency.value=1700;bp.Q.value=0.7;const g=ac.createGain();g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(0.4,t+0.005);g.gain.exponentialRampToValueAtTime(0.001,t+0.16);s.connect(bp);bp.connect(g);g.connect(drum);s.start(t);s.stop(t+0.18);}
+    function hat(t,v){const s=ac.createBufferSource();s.buffer=noise;const hp=ac.createBiquadFilter();hp.type='highpass';hp.frequency.value=7200;const g=ac.createGain();g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.05);s.connect(hp);hp.connect(g);g.connect(drum);s.start(t);s.stop(t+0.06);}
+    function bassN(t,f,d){const o=ac.createOscillator(),g=ac.createGain(),lp=ac.createBiquadFilter();o.type='sawtooth';o.frequency.value=f;lp.type='lowpass';lp.frequency.value=440;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(0.3,t+0.008);g.gain.exponentialRampToValueAtTime(0.001,t+d);o.connect(lp);lp.connect(g);g.connect(bassBus);o.start(t);o.stop(t+d+0.02);}
+    function pluck(t,f,v){const o=ac.createOscillator(),g=ac.createGain(),lp=ac.createBiquadFilter();o.type='triangle';o.frequency.value=f;lp.type='lowpass';lp.frequency.setValueAtTime(2700,t);lp.frequency.exponentialRampToValueAtTime(720,t+0.18);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+0.004);g.gain.exponentialRampToValueAtTime(0.001,t+0.2);o.connect(lp);lp.connect(g);g.connect(melBus);o.start(t);o.stop(t+0.22);}
+    function lead(t,f,d){const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(0.13,t+0.01);g.gain.exponentialRampToValueAtTime(0.001,t+d);o.connect(g);g.connect(melBus);o.start(t);o.stop(t+d+0.02);}
+    function pad(t,fr,d,vol){fr.forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain(),lp=ac.createBiquadFilter();o.type='sawtooth';o.frequency.value=f;o.detune.value=(i-1)*7;lp.type='lowpass';lp.frequency.value=1300;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+0.35);g.gain.linearRampToValueAtTime(0.0001,t+d);o.connect(lp);lp.connect(g);g.connect(padBus);o.start(t);o.stop(t+d+0.05);});}
+    function mschedule(t,st,b){const s=sect(Math.min(b,12)),P=PROG[b%4];
+      if(st===0)pad(t,P.ch,barLen*0.98,s.bright?0.05:0.038);
+      if(s.bass&&st%2===0)bassN(t,P.r,S16*1.8);
+      if(s.kick&&(st===0||st===8))kick(t);
+      if(s.bright&&(st===4||st===12))kick(t);
+      if(s.clap&&(st===4||st===12))clap(t);
+      if(s.hat&&st%2===0)hat(t,st%8===0?0.2:0.12);
+      if(s.hat16&&st%2===1)hat(t,0.06);
+      if(s.pluck&&st%2===0){const a=P.ar,oct=(st>=8&&s.bright)?2:1;pluck(t,a[(st/2)%4]*oct,s.bright?0.16:0.11);}
+      if(s.lead&&st===0)lead(t,P.ch[2]*2,barLen*0.5);
+    }
+    function schLoop(){if(ac&&ac.state==='running'){while(nextT<ac.currentTime+0.12){const b=Math.floor(step16/16);mschedule(nextT,step16%16,b);nextT+=S16;step16++;if(step16>=16*14)step16=16*8;}}schTimer=setTimeout(schLoop,25);}
+    function startMusic(syncMs){if(musicReady)return;musicReady=true;ac=new (window.AudioContext||window.webkitAudioContext)();
+      const comp=ac.createDynamicsCompressor();comp.threshold.value=-16;comp.ratio.value=3;comp.connect(ac.destination);
+      master=ac.createGain();master.gain.value=0.0001;master.connect(comp);master.gain.exponentialRampToValueAtTime(MUSVOL,ac.currentTime+1.4);
+      drum=ac.createGain();drum.gain.value=0.85;drum.connect(master);
+      bassBus=ac.createGain();bassBus.gain.value=0.85;bassBus.connect(master);
+      padBus=ac.createGain();padBus.gain.value=0.8;padBus.connect(master);
+      melBus=ac.createGain();melBus.gain.value=0.8;melBus.connect(master);
+      const dl=ac.createDelay();dl.delayTime.value=SPB*0.75;const fb=ac.createGain();fb.gain.value=0.26;const wet=ac.createGain();wet.gain.value=0.2;dl.connect(fb);fb.connect(dl);dl.connect(wet);wet.connect(master);melBus.connect(dl);
+      noise=mkNoise();
+      step16=syncMs?Math.floor((syncMs/1000)/S16):0;nextT=ac.currentTime+0.1;schLoop();
+    }
+    function stopMusic(){if(!musicReady)return;musicReady=false;clearTimeout(schTimer);var a=ac;try{a.resume();master.gain.cancelScheduledValues(a.currentTime);master.gain.setValueAtTime(Math.max(master.gain.value,0.0001),a.currentTime);master.gain.exponentialRampToValueAtTime(0.0001,a.currentTime+0.4);}catch(_){}setTimeout(()=>{try{a.close();}catch(_){}},600);ac=null;}
+    function musicResume(){if(!musicReady||!ac)return;ac.resume().then(()=>{nextT=ac.currentTime+0.06;try{master.gain.cancelScheduledValues(ac.currentTime);master.gain.setValueAtTime(Math.max(master.gain.value,0.0001),ac.currentTime);master.gain.exponentialRampToValueAtTime(MUSVOL,ac.currentTime+0.5);}catch(_){}}).catch(()=>{});}
+    function musicSuspend(){if(!musicReady||!ac)return;try{ac.suspend();}catch(_){}}
+    function musicReplay(){if(!musicReady||!ac)return;step16=0;nextT=ac.currentTime+0.06;}
+    function musicFadeOut(){if(!musicReady||!ac)return;try{master.gain.cancelScheduledValues(ac.currentTime);master.gain.setValueAtTime(Math.max(master.gain.value,0.0001),ac.currentTime);master.gain.exponentialRampToValueAtTime(0.0001,ac.currentTime+2.2);}catch(_){}clearTimeout(window._wvF);window._wvF=setTimeout(()=>{musicSuspend();},2300);}
+    /* sound = crisp voiceover (master clock) + music bed underneath */
     const snd=document.getElementById('snd');
-    if(vo){vo.addEventListener('ended',()=>{playing=false;setPP();});}
+    if(vo){vo.addEventListener('ended',()=>{playing=false;setPP();musicFadeOut();});}
     snd.onclick=function(){
-      if(soundOn){soundOn=false;if(vo)vo.pause();playing=true;lastTs=0;
+      if(soundOn){soundOn=false;if(vo)vo.pause();stopMusic();playing=true;lastTs=0;
         this.textContent='🔇 Sound off';this.style.background='#e3d8c4';this.style.color='#5c5142';}
       else{soundOn=true;
         if(vo){vo.currentTime=Math.min(Math.max(elapsed,0)/1000,total/1000-0.05);vo.play().catch(()=>{});}
+        startMusic(elapsed);
         this.textContent='🔊 Sound on';this.style.background='linear-gradient(135deg,#3fae74,#2f9460)';this.style.color='#fff';}
     };
     })();
@@ -362,8 +404,8 @@
         </div>
       </div>
       <div class="reveal" style="max-width:660px;margin:30px auto 0;text-align:left;background:var(--card);border:1px dashed var(--line);border-radius:16px;padding:22px 24px">
-        <div style="font-size:15.5px;line-height:1.65;color:#2a2018">🤖 <b>Confession:</b> I can't write a single line of code — yet this entire site (explainer video and all) was built by AI. That's the whole point. I let it handle the digital grunt work so I can pour my hours into what actually counts: real people, in real rooms.</div>
-        <div style="font-size:15.5px;line-height:1.65;margin-top:14px;color:#2a2018">Want the exact prompts behind this site? <a href="https://www.linkedin.com/in/jocelynlimjinyan/" target="_blank" rel="noopener" style="color:#b8533a;font-weight:600;text-decoration:underline;text-underline-offset:2px">Connect with me on LinkedIn</a> and DM me one word — <b>"Claude"</b> — and I'll send you the full blueprint, free.</div>
+        <div style="font-size:15.5px;line-height:1.65;color:#2a2018">🤖 <b>Confession:</b> I can't write a single line of code — yet this entire site and video is built by AI. That's the whole point. I let it handle the digital grunt work so I can pour my hours into what actually counts: real people, in real rooms.</div>
+        <div style="font-size:15.5px;line-height:1.65;margin-top:14px;color:#2a2018">Want to know how I built this? <a href="mailto:hello@jocelynlim.space?subject=Coffee%20%26%20how%20you%20built%20this" style="color:#b8533a;font-weight:600;text-decoration:underline;text-underline-offset:2px">Let's grab a coffee or jump on a 15-minute call.</a></div>
       </div>
     </div>
   </div>
