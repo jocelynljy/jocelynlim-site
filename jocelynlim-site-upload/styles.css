@@ -335,8 +335,8 @@ body{background:radial-gradient(125% 85% at 50% -12%, #f9f3e7 0%, #f3ecde 55%, #
 .wm-route{display:flex;gap:15px;align-items:center;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:12px;cursor:pointer;transition:border-color .2s,transform .2s,box-shadow .2s;font:inherit}
 .wm-route:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
 .wm-route .wr-ic{font-size:22px;width:44px;height:44px;border-radius:12px;background:var(--paper-2);display:grid;place-items:center;flex-shrink:0}
-.wm-route .wr-t{font-family:var(--disp);font-weight:600;font-size:17px;color:var(--ink)}
-.wm-route .wr-d{font-size:13px;color:var(--ink-soft);margin-top:2px}
+.wm-route .wr-t{display:block;font-family:var(--disp);font-weight:600;font-size:17px;color:var(--ink)}
+.wm-route .wr-d{display:block;font-size:13px;color:var(--ink-soft);margin-top:3px}
 .wm-route .wr-arrow{margin-left:auto;color:var(--accent);font-size:18px}
 /* contact form */
 .wm-field{display:block;margin-bottom:14px}
