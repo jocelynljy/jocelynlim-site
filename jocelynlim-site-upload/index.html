@@ -230,8 +230,8 @@
     const bar=document.getElementById('bar'),thumb=document.getElementById('thumb'),tcur=document.getElementById('tcur'),tdur=document.getElementById('tdur'),pp=document.getElementById('pp'),rp=document.getElementById('rp');
     const vo=document.getElementById('vo');
     /* scene start times (ms), aligned to the voiceover phrasing */
-    const ST=[450,3170,6640,9780,11970,14140,16690,19500,21500,26240];
-    const total=29610, HUGE_DELAY=1.7, STAGGER=0.15;
+    const ST=[250,2930,6970,9980,12370,14690,17010,20040,21700,26780];
+    const total=30220, HUGE_DELAY=2.85, STAGGER=0.15;
     function fmt(ms){ms=Math.max(0,ms);const s=Math.round(ms/1000);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
     tdur.textContent=fmt(total);
     function sceneAt(ms){let i=0;for(let k=0;k<ST.length;k++){if(ms>=ST[k])i=k;}return i;}
@@ -276,7 +276,7 @@
 
     /* ===== music bed — generated, ducked under the voiceover, builds with the timeline ===== */
     let ac,musicReady=false,schTimer=null,nextT=0,step16=0,master,drum,bassBus,melBus,padBus,noise;
-    const BPM=112,SPB=60/BPM,S16=SPB/4,barLen=SPB*4,MUSVOL=0.26;
+    const BPM=112,SPB=60/BPM,S16=SPB/4,barLen=SPB*4,MUSVOL=0.35;
     const NT={C2:65.41,F2:87.31,G2:98.0,A2:110.0,F3:174.61,G3:196.0,A3:220.0,B3:246.94,C4:261.63,D4:293.66,E4:329.63,F4:349.23,G4:392.0,A4:440.0,C5:523.25};
     const PROG=[{r:NT.C2,ch:[NT.C4,NT.E4,NT.G4],ar:[NT.C4,NT.E4,NT.G4,NT.C5]},{r:NT.G2,ch:[NT.G3,NT.B3,NT.D4],ar:[NT.G3,NT.B3,NT.D4,NT.G4]},{r:NT.A2,ch:[NT.A3,NT.C4,NT.E4],ar:[NT.A3,NT.C4,NT.E4,NT.A4]},{r:NT.F2,ch:[NT.F3,NT.A3,NT.C4],ar:[NT.F3,NT.A3,NT.C4,NT.F4]}];
     function sect(b){return{pluck:true,bass:b>=1,kick:b>=1,clap:b>=2,hat:b>=2,hat16:b>=4,lead:b>=6,bright:b>=8};}
