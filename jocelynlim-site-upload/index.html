@@ -116,19 +116,6 @@
     <h2 class="section-h reveal d1">Many ventures. <em>One</em> reason.</h2>
     <style>
     #whyvid{--terra:#f2724f;--amber:#ffb24d;--cool:#7fb6e6;--cream:#f7eddb;--soft:#cdbda6;margin-top:30px;max-width:76%}
-    @media (max-width:860px){#whyvid{max-width:100%}}
-    @media (max-width:600px){
-      /* hug the graphic to the caption — kills the empty gap on phones (desktop unaffected) */
-      #whyvid .stage{height:auto;min-height:0;max-height:none;aspect-ratio:4/3}
-      #whyvid #capt{font-size:clamp(19px,5.6vw,26px)}
-      #whyvid .huge{font-size:clamp(30px,9.5vw,46px)}
-      #whyvid .lead{font-size:clamp(14px,4vw,18px)}
-      #whyvid .cap{padding:13% 6% 8%}
-      #whyvid .controls{gap:8px}
-      #whyvid .time{min-width:62px;font-size:12px}
-      #whyvid .wvbtn{font-size:13px;padding:9px 14px}
-      #whyvid .wvbtn.ic{width:40px;height:40px}
-    }
     #whyvid .stage{position:relative;height:60vh;min-height:430px;max-height:660px;overflow:hidden;border-radius:22px;background:#120d09;box-shadow:0 30px 70px rgba(40,25,15,.25)}
     #whyvid .bgfx{position:absolute;inset:0;background:radial-gradient(62% 56% at 50% 36%,#4a3422,#2c1d12 56%,#1a110a 100%)}
     #whyvid .grain{position:absolute;inset:0;pointer-events:none;opacity:.09;mix-blend-mode:soft-light;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:170px 170px}
@@ -197,6 +184,21 @@
     @keyframes wvswell{0%{opacity:0;transform:scale(.4)}68%{opacity:1;transform:scale(1.1)}100%{opacity:1;transform:scale(1)}}
     @keyframes wvgiggle{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-7px) scale(1.06)}}
     @media (prefers-reduced-motion: reduce){#whyvid .vis svg{animation:none}}
+    /* ===== responsive overrides — placed LAST so they win the cascade over the base rules above ===== */
+    @media (max-width:860px){ #whyvid{max-width:100%} }
+    @media (max-width:600px){
+      /* phone: shrink the stage to hug the graphic + caption, killing the big empty gap */
+      #whyvid .stage{height:auto;min-height:0;max-height:none;aspect-ratio:4/3}
+      #whyvid .vis svg{transform-origin:50% 42%}
+      #whyvid .cap{padding:11% 6% 7%}
+      #whyvid #capt{font-size:clamp(19px,5.6vw,25px)}
+      #whyvid .huge{font-size:clamp(28px,8.8vw,42px)}
+      #whyvid .lead{font-size:clamp(13px,3.8vw,17px)}
+      #whyvid .controls{gap:8px}
+      #whyvid .time{min-width:60px;font-size:12px}
+      #whyvid .wvbtn{font-size:13px;padding:9px 14px}
+      #whyvid .wvbtn.ic{width:40px;height:40px}
+    }
     </style>
     <div id="whyvid" class="reveal d2">
       <div class="stage" id="stage">
@@ -213,7 +215,7 @@
         <span class="time"><span id="tcur">0:00</span> / <span id="tdur">0:28</span></span>
         <button class="wvbtn" id="snd" style="background:#e3d8c4;color:#5c5142">🔇 Sound off</button>
       </div>
-      <audio id="vo" src="assets/voiceover-v3.mp3" preload="auto" playsinline></audio>
+      <audio id="vo" src="assets/voiceover.mp3" preload="auto" playsinline></audio>
       <div class="sr-only">
         <p>On paper, my week makes no sense. One day I'm holding a mic in front of a room. The next I'm designing a workshop, rewriting a pitch, or prepping for a facilitation session. People keep telling me to pick one thing.</p>
         <p>I'm graduating into a lot of noise — the job market is brutal, AI is coming for the work. But here's the quieter thing I believe: there are still some things AI can't take from us. The energy of a room when strangers actually connect. You know the way a room shifts when someone shares something personal, honest, or how the entire room is laughing together? I don't think AI will be able to create those environments at all.</p>
@@ -352,7 +354,7 @@
       if(s.lead&&st===0)lead(t,P.ch[2]*2,barLen*0.5);
     }
     function schLoop(){if(ac&&ac.state==='running'){while(nextT<ac.currentTime+0.12){const b=Math.floor(step16/16);mschedule(nextT,step16%16,b);nextT+=S16;step16++;if(step16>=16*14)step16=16*8;}}schTimer=setTimeout(schLoop,25);}
-    function startMusic(syncMs){return; /* music is now baked into the voiceover track — engine disabled so it always plays in sync and never doubles */ if(musicReady)return;musicReady=true;ac=new (window.AudioContext||window.webkitAudioContext)();
+    function startMusic(syncMs){if(musicReady)return;musicReady=true;ac=new (window.AudioContext||window.webkitAudioContext)();try{ac.resume();}catch(_){}
       const comp=ac.createDynamicsCompressor();comp.threshold.value=-16;comp.ratio.value=3;comp.connect(ac.destination);
       master=ac.createGain();master.gain.value=0.0001;master.connect(comp);master.gain.exponentialRampToValueAtTime(MUSVOL,ac.currentTime+1.4);
       drum=ac.createGain();drum.gain.value=0.85;drum.connect(master);
