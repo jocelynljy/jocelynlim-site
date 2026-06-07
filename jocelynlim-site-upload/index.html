@@ -50,7 +50,7 @@
       <div class="eyebrow reveal">Host, Facilitator, &amp; Experience Designer</div>
       <h1 class="reveal d1">I help people feel a little more <em>human</em><span class="tail" style="color:var(--ink)">— in a world that is increasingly digital.</span></h1>
       <p class="sub reveal d2">While AI scales the virtual world, my rebellion is scaling the physical one. I design experiences, facilitate conversations, and build ventures that bring people back together in the real world.</p>
-      <p class="reveal d2" style="margin-top:16px;font-size:15px;line-height:1.6;color:#6f6253;max-width:560px"><b style="color:#2a2018">P.S.</b> How do I find time to do all that? I let AI handle the digital grunt work — including coding this entire site. <a href="#connect" style="color:#b8533a;font-weight:600;text-decoration:underline;text-underline-offset:2px">Scroll to the bottom to find out more!</a></p>
+      <p class="reveal d2" style="margin-top:16px;font-size:15px;line-height:1.6;color:#6f6253;max-width:560px"><b style="color:#2a2018">P.S.</b> How do I find time to do all that? I let AI handle the digital grunt work — including coding this entire site. <b style="color:#b8533a">Find out more below!</b></p>
       <div class="cta-row reveal d3">
         <a class="btn btn-primary" href="#connect">Book me to host <span class="arrow">→</span></a>
         <a class="btn btn-ghost" href="#quests">Explore my ventures</a>
@@ -70,7 +70,8 @@
     <div class="eyebrow reveal">the why</div>
     <h2 class="section-h reveal d1">Many ventures. <em>One</em> reason.</h2>
     <style>
-    #whyvid{--terra:#f2724f;--amber:#ffb24d;--cool:#7fb6e6;--cream:#f7eddb;--soft:#cdbda6;margin-top:30px}
+    #whyvid{--terra:#f2724f;--amber:#ffb24d;--cool:#7fb6e6;--cream:#f7eddb;--soft:#cdbda6;margin-top:30px;max-width:76%}
+    @media (max-width:860px){#whyvid{max-width:100%}}
     #whyvid .stage{position:relative;height:60vh;min-height:430px;max-height:660px;overflow:hidden;border-radius:22px;background:#120d09;box-shadow:0 30px 70px rgba(40,25,15,.25)}
     #whyvid .bgfx{position:absolute;inset:0;background:radial-gradient(62% 56% at 50% 36%,#4a3422,#2c1d12 56%,#1a110a 100%)}
     #whyvid .grain{position:absolute;inset:0;pointer-events:none;opacity:.09;mix-blend-mode:soft-light;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:170px 170px}
@@ -227,7 +228,7 @@
     function paint(){const pct=elapsed/total*100;prog.style.width=pct+'%';thumb.style.left=pct+'%';tcur.textContent=fmt(elapsed);}
     function frame(ts){
       if(playing){if(!lastTs)lastTs=ts;elapsed+=ts-lastTs;lastTs=ts;
-        if(elapsed>=total){elapsed=total;playing=false;setPP();musicSetPlaying(false);}}
+        if(elapsed>=total){elapsed=total;playing=false;setPP();musicFadeOut();}}
       else lastTs=0;
       const i=sceneAt(elapsed);if(i!==cur)renderScene(i);
       paint();requestAnimationFrame(frame);
@@ -284,8 +285,9 @@
       if(!playing){try{ac.suspend();}catch(_){}}
     }
     function stopMusic(){if(!musicOn)return;musicOn=false;clearTimeout(schTimer);try{ac.resume();master.gain.exponentialRampToValueAtTime(0.0001,ac.currentTime+0.4);}catch(_){}setTimeout(()=>{try{ac.close();}catch(_){}},600);}
-    function musicSetPlaying(p){if(!musicOn||!ac)return;if(p){ac.resume().then(()=>{nextT=ac.currentTime+0.06;}).catch(()=>{});}else{try{ac.suspend();}catch(_){}}}
+    function musicSetPlaying(p){if(!musicOn||!ac)return;if(p){ac.resume().then(()=>{nextT=ac.currentTime+0.06;try{master.gain.cancelScheduledValues(ac.currentTime);master.gain.setValueAtTime(Math.max(master.gain.value,0.0001),ac.currentTime);master.gain.exponentialRampToValueAtTime(0.5,ac.currentTime+0.4);}catch(_){}}).catch(()=>{});}else{try{ac.suspend();}catch(_){}}}
     function musicReplay(){if(!musicOn||!ac)return;step16=0;nextT=ac.currentTime+0.06;}
+    function musicFadeOut(){if(!musicOn||!ac)return;try{master.gain.cancelScheduledValues(ac.currentTime);master.gain.setValueAtTime(Math.max(master.gain.value,0.0001),ac.currentTime);master.gain.exponentialRampToValueAtTime(0.0001,ac.currentTime+2.4);}catch(_){}clearTimeout(window._wvFade);window._wvFade=setTimeout(()=>{try{if(!playing)ac.suspend();}catch(_){}},2500);}
     document.getElementById('snd').onclick=function(){if(musicOn){stopMusic();this.textContent='🔇 Sound off';this.style.background='#e3d8c4';this.style.color='#5c5142';}else{startMusic(elapsed);musicSetPlaying(playing);this.textContent='🔊 Sound on';this.style.background='linear-gradient(135deg,#3fae74,#2f9460)';this.style.color='#fff';}};
     })();
     </script>
@@ -320,7 +322,7 @@
       </a>
       <a class="quest reveal d4" href="letsbloom.html" style="--qc:var(--bloom)">
         <div class="ph"><img src="assets/bloom-community.jpg" alt="Friends making handmade flowers together at a letsbloom event"></div>
-        <div class="body"><div class="verb">gather the room</div><h3>letsbloom</h3>
+        <div class="body"><div class="verb">cultivate connection</div><h3>letsbloom</h3>
           <p>Experiential events &amp; mingling — hands-on floral creation as the icebreaker, for corporate workshops and curated social mixers.</p>
           <span class="go">Explore <span class="arrow">→</span></span></div>
       </a>
