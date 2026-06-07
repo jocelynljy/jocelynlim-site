@@ -68,11 +68,224 @@
   <div class="wrap">
     <div class="eyebrow reveal">the why</div>
     <h2 class="section-h reveal d1">Many ventures. <em>One</em> reason.</h2>
-    <div class="prose reveal d2" style="margin-top:28px">
-      <p>On paper, my week makes no sense. One day I'm holding a mic in front of a room. The next I'm designing a workshop, rewriting a pitch, or prepping for a facilitation session. People keep telling me to pick one thing.</p>
-      <p>I'm graduating into a lot of noise — the job market is brutal, AI is coming for the work. But here's the quieter thing I believe: there are still some things AI can't take from us. The energy of a room when strangers actually connect. You know the way a room shifts when someone shares something personal, honest, or how the entire room is laughing together? <span class="hl">I don't think AI will be able to create those environments at all.</span></p>
-      <p>And I'm not anti-AI, haha — I actually love it. It saves me hours (it's part of why you're even reading this site). But in a world obsessed with artificial intelligence, I am dedicating this season of my life to building the exact opposite: experiences, ventures and spaces that are <span class="hl">aggressively human.</span> That's the thread connecting it all: meet people, go deeper, and stay connected.</p>
+    <style>
+    #whyvid{--terra:#f2724f;--amber:#ffb24d;--cool:#7fb6e6;--cream:#f7eddb;--soft:#cdbda6;margin-top:30px}
+    #whyvid .stage{position:relative;height:60vh;min-height:430px;max-height:660px;overflow:hidden;border-radius:22px;background:#120d09;box-shadow:0 30px 70px rgba(40,25,15,.25)}
+    #whyvid .bgfx{position:absolute;inset:0;background:radial-gradient(56% 50% at 50% 34%,#34261a,#1a120c 58%,#0e0906 100%)}
+    #whyvid .vis{position:absolute;inset:0;opacity:0;transition:opacity .45s ease}
+    #whyvid .vis.on{opacity:1}
+    #whyvid .vis svg{width:100%;height:100%;display:block;transform-origin:50% 44%;animation:wvkb 5.5s ease-out both}
+    #whyvid .vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 120% at 50% 42%,transparent 50%,rgba(0,0,0,.55))}
+    #whyvid .cap{position:absolute;left:0;right:0;bottom:0;padding:18% 8% 7%;text-align:center;background:linear-gradient(0deg,rgba(15,10,7,.78),rgba(15,10,7,.35) 60%,transparent);pointer-events:none}
+    #whyvid #capt{color:var(--cream);font-family:'Fraunces',serif;font-weight:340;font-size:clamp(22px,3.4vw,44px);line-height:1.12;letter-spacing:-.01em;text-shadow:0 2px 24px rgba(0,0,0,.6)}
+    #whyvid #capt em{font-style:italic;color:var(--terra)}
+    #whyvid #capt .u{position:relative;white-space:nowrap}
+    #whyvid #capt .u::after{content:"";position:absolute;left:-2px;right:-2px;bottom:-.07em;height:.085em;border-radius:3px;background:linear-gradient(90deg,#ffb24d,#f2643c);transform:scaleX(0);transform-origin:left;animation:wvuw .5s .25s cubic-bezier(.3,1,.3,1) forwards}
+    #whyvid .huge{display:inline-block;font-weight:400;font-style:italic;font-size:clamp(36px,6vw,80px);letter-spacing:-.025em;line-height:1;background:linear-gradient(100deg,#ffd27a,#ff8a4c 55%,#f2643c);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 30px rgba(242,114,79,.5))}
+    #whyvid .lead{display:block;font-style:italic;font-size:clamp(16px,2.2vw,26px);color:var(--soft);margin-bottom:.06em}
+    #whyvid .cIn{animation:wvcap .55s cubic-bezier(.2,.9,.2,1) both}
+    #whyvid .w{display:inline-block;opacity:0;will-change:transform,opacity}
+    #whyvid svg .a{transform-box:fill-box;transform-origin:center}
+    #whyvid .dr{stroke-dasharray:480;stroke-dashoffset:480;animation:wvdr 1s ease forwards}
+    #whyvid .pp{animation:wvpp .55s cubic-bezier(.2,1.4,.3,1) both}
+    #whyvid .fi{animation:wvfi .6s ease both}
+    #whyvid .up{animation:wvup .6s ease both}
+    #whyvid .sL{animation:wvsL .8s cubic-bezier(.2,.9,.2,1) both}
+    #whyvid .sR{animation:wvsR .8s cubic-bezier(.2,.9,.2,1) both}
+    #whyvid .spin{animation:wvspin 6s linear infinite}
+    #whyvid .float{animation:wvfloat 2.4s ease-in-out infinite}
+    #whyvid .away{animation:wvaway 1.6s 0.5s ease-in forwards}
+    #whyvid .ring{transform-box:fill-box;transform-origin:center;animation:wvring 1.8s ease-out infinite}
+    #whyvid .scan{animation:wvscan 2.2s ease-in-out infinite}
+    #whyvid .fall{animation:wvfall 1.1s .3s cubic-bezier(.4,0,1,.6) forwards}
+    #whyvid .zoom{animation:wvzoom 1.4s linear infinite}
+    #whyvid .grow{animation:wvgrow .7s cubic-bezier(.2,1.3,.3,1) both}
+    #whyvid .flip{animation:wvflip 1s cubic-bezier(.4,0,.2,1) both}
+    #whyvid .bar{position:relative;height:8px;background:#e2d8c6;border-radius:6px;margin-top:16px;cursor:pointer;touch-action:none}
+    #whyvid .bar>i{position:absolute;left:0;top:0;height:100%;width:0;border-radius:6px;background:linear-gradient(90deg,#ffb24d,#c8553d);pointer-events:none}
+    #whyvid #thumb{position:absolute;top:50%;left:0;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:#fff;box-shadow:0 1px 5px rgba(0,0,0,.35);transform:translateY(-50%);pointer-events:none}
+    #whyvid .controls{display:flex;gap:10px;align-items:center;margin:14px 0 0;flex-wrap:wrap}
+    #whyvid .wvbtn{font-weight:600;font-size:14px;border:none;background:linear-gradient(135deg,#c8674f,#a8462f);color:#fff;border-radius:40px;padding:10px 18px;cursor:pointer;font-family:inherit}
+    #whyvid .wvbtn.ic{width:42px;height:42px;padding:0;border-radius:50%;font-size:15px;display:flex;align-items:center;justify-content:center}
+    #whyvid .time{font-size:13px;color:#6f6253;font-variant-numeric:tabular-nums;min-width:74px}
+    #whyvid .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    @keyframes wvkb{from{transform:scale(1.08)}to{transform:scale(1)}}
+    @keyframes wvcap{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+    @keyframes wvuw{to{transform:scaleX(1)}}
+    @keyframes wvaWord{0%{opacity:0;transform:translateY(34px) scale(.82);filter:blur(5px)}55%{opacity:1;filter:blur(0)}100%{opacity:1;transform:translateY(0) scale(1)}}
+    @keyframes wvaPopWord{0%{opacity:0;transform:translateY(10px) scale(.45)}65%{opacity:1;transform:translateY(0) scale(1.16)}100%{opacity:1;transform:scale(1)}}
+    @keyframes wvdr{to{stroke-dashoffset:0}}
+    @keyframes wvpp{0%{opacity:0;transform:scale(.3)}100%{opacity:1;transform:scale(1)}}
+    @keyframes wvfi{from{opacity:0}to{opacity:1}}
+    @keyframes wvup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+    @keyframes wvsL{from{opacity:0;transform:translateX(-180px)}to{opacity:1;transform:none}}
+    @keyframes wvsR{from{opacity:0;transform:translateX(180px)}to{opacity:1;transform:none}}
+    @keyframes wvspin{to{transform:rotate(360deg)}}
+    @keyframes wvfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    @keyframes wvaway{to{opacity:0;transform:translate(60px,-90px) scale(.7)}}
+    @keyframes wvring{0%{transform:scale(.1);opacity:.7}100%{transform:scale(1);opacity:0}}
+    @keyframes wvscan{0%{transform:translateX(-140px)}100%{transform:translateX(1140px)}}
+    @keyframes wvfall{to{opacity:0;transform:translateY(140px) rotate(40deg)}}
+    @keyframes wvzoom{from{transform:translateX(-260px);opacity:0}20%{opacity:1}100%{transform:translateX(260px);opacity:0}}
+    @keyframes wvgrow{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:scale(1)}}
+    @keyframes wvflip{from{transform:scaleX(-1) translateX(80px);opacity:.4}to{transform:scaleX(-1) translateX(0);opacity:1}}
+    @keyframes wvturn{from{transform:rotate(0)}to{transform:rotate(180deg)}}
+    @media (prefers-reduced-motion: reduce){#whyvid .vis svg{animation:none}}
+    </style>
+    <div id="whyvid" class="reveal d2">
+      <div class="stage" id="stage">
+        <div class="bgfx"></div>
+        <div class="vis" id="vis"></div>
+        <div class="vig"></div>
+        <div class="cap"><div id="capt"></div></div>
+      </div>
+      <div class="bar" id="bar"><i id="prog"></i><span id="thumb"></span></div>
+      <div class="controls">
+        <button class="wvbtn ic" id="pp" aria-label="Play / pause">❚❚</button>
+        <button class="wvbtn ic" id="rp" aria-label="Restart">↺</button>
+        <span class="time"><span id="tcur">0:00</span> / <span id="tdur">0:28</span></span>
+        <button class="wvbtn" id="snd" style="background:#2a2018">🔊 Music</button>
+      </div>
+      <div class="sr-only">
+        <p>On paper, my week makes no sense. One day I'm holding a mic in front of a room. The next I'm designing a workshop, rewriting a pitch, or prepping for a facilitation session. People keep telling me to pick one thing.</p>
+        <p>I'm graduating into a lot of noise — the job market is brutal, AI is coming for the work. But here's the quieter thing I believe: there are still some things AI can't take from us. The energy of a room when strangers actually connect. You know the way a room shifts when someone shares something personal, honest, or how the entire room is laughing together? I don't think AI will be able to create those environments at all.</p>
+        <p>And I'm not anti-AI, haha — I actually love it. It saves me hours (it's part of why you're even reading this site). But in a world obsessed with artificial intelligence, I am dedicating this season of my life to building the exact opposite: experiences, ventures and spaces that are aggressively human. That's the thread connecting it all: meet people, go deeper, and stay connected.</p>
+      </div>
     </div>
+    <script>
+    (function(){
+    const C='#7fb6e6',CD='#3f6fa0',Wm='#ffb24d',T='#f2724f',CR='#f7eddb';
+    function person(x,c,cls,dl){return `<g class="a ${cls}" style="animation-delay:${dl}s"><circle cx="${x}" cy="248" r="17" fill="${c}"/><path d="M${x-26} 300 a26 30 0 0 1 52 0 z" fill="${c}"/></g>`;}
+    function smiley(x,y,r,cls,dl){return `<g class="a ${cls}" style="animation-delay:${dl}s"><circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="${Wm}" stroke-width="5"/><circle cx="${x-r*0.35}" cy="${y-r*0.15}" r="3.5" fill="${Wm}"/><circle cx="${x+r*0.35}" cy="${y-r*0.15}" r="3.5" fill="${Wm}"/><path d="M${x-r*0.45} ${y+r*0.25} q${r*0.45} ${r*0.5} ${r*0.9} 0" fill="none" stroke="${Wm}" stroke-width="5" stroke-linecap="round"/></g>`;}
+    const SV={
+     ai(){let p='';for(let i=0;i<5;i++){const x=300+i*100;p+=person(x,C,'fi',i*0.08);p+=`<rect class="a pp" style="animation-delay:${0.9+i*0.12}s" x="${x-20}" y="228" width="40" height="56" rx="4" fill="${CD}"/>`;}
+       return `<svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">${p}<rect class="scan" x="0" y="120" width="70" height="320" fill="url(#sg)"/><defs><linearGradient id="sg"><stop offset="0" stop-color="${C}" stop-opacity="0"/><stop offset=".5" stop-color="${C}" stop-opacity=".5"/><stop offset="1" stop-color="${C}" stop-opacity="0"/></linearGradient></defs></svg>`;},
+     cant(){return `<svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">
+       <g class="a sL"><rect x="300" y="210" width="120" height="120" rx="14" fill="none" stroke="${C}" stroke-width="5"/><circle cx="338" cy="252" r="7" fill="${C}"/><circle cx="382" cy="252" r="7" fill="${C}"/><path d="M334 296 h52" stroke="${C}" stroke-width="5" stroke-linecap="round"/><path d="M300 240 h-26 M300 300 h-26 M420 240 h26 M420 300 h26" stroke="${C}" stroke-width="5"/></g>
+       <path class="a dr" d="M430 270 q120 -10 210 -30" fill="none" stroke="${CD}" stroke-width="4" stroke-dasharray="10 12"/>
+       <g class="a away"><path d="M660 250 c-30 -34 -78 -2 0 46 c78 -48 30 -80 0 -46z" fill="${Wm}"/></g></svg>`;},
+     connect(){const cx=500,cy=250,R=160;let ring=[];for(let i=0;i<6;i++){const a=-Math.PI/2+i/6*6.2832;ring.push([Math.round(cx+Math.cos(a)*R),Math.round(cy+Math.sin(a)*R)]);}
+       const ln=(a,b,dl)=>`<line class="a dr" style="animation-delay:${dl}s" x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="${Wm}" stroke-width="3" stroke-dasharray="480" stroke-dashoffset="480" opacity=".85"/>`;
+       let l='',d='',k=0;for(let i=0;i<6;i++){l+=ln([cx,cy],ring[i],.3+(k++)*.05);}for(let i=0;i<6;i++){l+=ln(ring[i],ring[(i+1)%6],.3+(k++)*.05);}
+       d+=`<circle class="a pp" cx="${cx}" cy="${cy}" r="15" fill="${Wm}"/>`;ring.forEach((p,i)=>{d+=`<circle class="a pp" style="animation-delay:${.1+i*.08}s" cx="${p[0]}" cy="${p[1]}" r="12" fill="${Wm}"/>`;});
+       return `<svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">${l}${d}</svg>`;},
+     laugh(){let s=smiley(360,250,46,'pp',0)+smiley(520,220,52,'pp',0.15)+smiley(660,260,46,'pp',0.3)+smiley(440,330,40,'pp',0.45)+smiley(600,340,40,'pp',0.6);
+       let r='';for(let i=0;i<3;i++)r+=`<circle class="ring" style="animation-delay:${i*0.6}s" cx="510" cy="280" r="120" fill="none" stroke="${Wm}" stroke-width="3"/>`;
+       return `<svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">${r}${s}</svg>`;},
+     friend(){return `<svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">
+       <g class="a sL">${person(380,C,'',0).replace('class="a "','')}</g>
+       <g class="a sR">${person(620,Wm,'',0).replace('class="a "','')}</g>
+       <line class="a dr" style="animation-delay:.7s" x1="402" y1="270" x2="598" y2="270" stroke="${Wm}" stroke-width="4" stroke-dasharray="480" stroke-dashoffset="480"/>
+       <path class="a grow" style="animation-delay:1s" d="M500 175 c-22 -26 -58 -2 0 34 c58 -36 22 -60 0 -34z" fill="${T}"/></svg>`;},
+     fail(){let seg='';const cx=500,cy=270;for(let i=0;i<8;i++){const a=i/8*Math.PI*2;const x=cx+Math.cos(a)*70,y=cy+Math.sin(a)*70;seg+=`<rect class="a fall" style="animation-delay:${0.2+i*0.06}s" x="${x-9}" y="${y-9}" width="18" height="18" rx="3" fill="${C}"/>`;}
+       return `<svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet"><g class="a fi"><rect x="300" y="220" width="100" height="100" rx="12" fill="none" stroke="${CD}" stroke-width="5"/><circle cx="332" cy="258" r="6" fill="${CD}"/><circle cx="368" cy="258" r="6" fill="${CD}"/><path d="M330 296 q20 -16 40 0" fill="none" stroke="${CD}" stroke-width="5"/></g>${seg}</svg>`;},
+     race(){let z='';for(let i=0;i<7;i++)z+=`<line class="zoom" style="animation-delay:${i*0.18}s" x1="0" y1="${130+i*45}" x2="220" y2="${130+i*45}" stroke="${C}" stroke-width="3" stroke-linecap="round"/>`;
+       let st='';for(let i=0;i<4;i++)st+=`<rect class="a up" style="animation-delay:${i*0.15}s" x="${430+i*40}" y="${330-i*52}" width="120" height="40" rx="8" fill="none" stroke="${C}" stroke-width="4"/>`;
+       return `<svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">${z}${st}</svg>`;},
+     opposite(){return `<svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">
+       <circle class="a grow" style="animation-delay:.5s" cx="360" cy="250" r="46" fill="${T}"/>
+       <g style="animation:wvturn 1.1s cubic-bezier(.4,0,.2,1) both;transform-origin:500px 250px"><line x1="392" y1="250" x2="640" y2="250" stroke="${Wm}" stroke-width="9" stroke-linecap="round"/><path d="M640 220 L690 250 L640 280 z" fill="${Wm}"/></g></svg>`;},
+     human(){let r='';for(let i=0;i<4;i++)r+=`<circle class="ring" style="animation-delay:${i*0.4}s" cx="500" cy="250" r="150" fill="none" stroke="${T}" stroke-width="4"/>`;
+       return `<svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">${r}<circle class="a grow" style="animation-delay:.15s" cx="500" cy="250" r="92" fill="none" stroke="${Wm}" stroke-width="3" opacity=".55"/><circle class="a grow" cx="500" cy="250" r="46" fill="${Wm}"/></svg>`;},
+     connch(){const pts=[[500,160],[372,255],[628,255],[432,360],[568,360]];const E=[[0,1],[0,2],[1,2],[1,3],[2,4],[3,4],[0,3],[0,4]];
+       const ln=(a,b,dl)=>`<line class="a dr" style="animation-delay:${dl}s" x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="${Wm}" stroke-width="3" stroke-dasharray="480" stroke-dashoffset="480" opacity=".8"/>`;
+       let l='',d='';E.forEach((e,i)=>{l+=ln(pts[e[0]],pts[e[1]],.4+i*.1);});
+       pts.forEach((p,i)=>{d+=`<circle class="a pp" style="animation-delay:${i*.13}s" cx="${p[0]}" cy="${p[1]}" r="18" fill="${Wm}"/>`;});
+       let r='';for(let i=0;i<2;i++)r+=`<circle class="ring" style="animation-delay:${1+i*.6}s" cx="500" cy="280" r="180" fill="none" stroke="${T}" stroke-width="3"/>`;
+       return `<svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">${r}${l}${d}</svg>`;},
+    };
+    const SC=[
+     {d:2800,cap:"They say AI is coming for our jobs.",v:'ai'},
+     {d:2600,cap:"Maybe. But some things it simply <em class='u'>can't</em> replace.",v:'cant'},
+     {d:3000,cap:"The energy of a room when strangers <em class='u'>actually connect.</em>",v:'connect'},
+     {d:2600,cap:"The whole room — <em class='u'>laughing together.</em>",v:'laugh'},
+     {d:2600,cap:"A stranger who becomes a <em class='u'>friend.</em>",v:'friend'},
+     {d:2600,cap:"AI can't build those moments at all.",v:'fail'},
+     {d:2600,cap:"So while the world races to scale the virtual —",v:'race'},
+     {d:2200,cap:"I'm building the <em class='u'>opposite</em>.",v:'opposite'},
+     {d:3400,cap:"<span class='lead'>experiences, ventures &amp; spaces that are</span><span class='huge'>aggressively human.</span>",v:'human'},
+     {d:3200,cap:"Meet people. Go deeper. <em class='u'>Stay connected.</em>",v:'connch'},
+    ];
+    const vis=document.getElementById('vis'),capt=document.getElementById('capt'),prog=document.getElementById('prog');
+    const bar=document.getElementById('bar'),thumb=document.getElementById('thumb'),tcur=document.getElementById('tcur'),tdur=document.getElementById('tdur'),pp=document.getElementById('pp'),rp=document.getElementById('rp');
+    const starts=[];let acc=0;SC.forEach(s=>{starts.push(acc);acc+=s.d;});const total=acc;
+    function fmt(ms){ms=Math.max(0,ms);const s=Math.round(ms/1000);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+    tdur.textContent=fmt(total);
+    function sceneAt(ms){let i=0;for(let k=0;k<SC.length;k++){if(ms>=starts[k])i=k;}return i;}
+    let visT;
+    function renderScene(i){cur=i;const s=SC[i];
+      clearTimeout(visT);vis.classList.remove('on');
+      visT=setTimeout(()=>{vis.innerHTML=SV[s.v]();vis.classList.add('on');},110);
+      if(s.cap.indexOf("class='huge'")>=0){capt.innerHTML=`<div class="cIn">${s.cap}</div>`;}
+      else{const wr=s.cap.replace(/(<em[^>]*>.*?<\/em>|[^<\s]+)(\s*)/g,(m,w,sp)=>`<span class="w">${w}</span>${sp}`);capt.innerHTML=`<div>${wr}</div>`;const ws=capt.querySelectorAll('.w');ws.forEach((k,idx)=>{const key=!!k.querySelector('em');k.style.animation=(key?'wvaPopWord .62s cubic-bezier(.2,1.3,.3,1) both':'wvaWord .52s cubic-bezier(.2,.9,.2,1) both');k.style.animationDelay=((idx*0.12)+(key?0.1:0))+'s';});}
+    }
+    let elapsed=0,playing=false,cur=-1,lastTs=0;
+    function setPP(){pp.textContent=playing?'❚❚':'▶';}
+    function paint(){const pct=elapsed/total*100;prog.style.width=pct+'%';thumb.style.left=pct+'%';tcur.textContent=fmt(elapsed);}
+    function frame(ts){
+      if(playing){if(!lastTs)lastTs=ts;elapsed+=ts-lastTs;lastTs=ts;
+        if(elapsed>=total){elapsed=total;playing=false;setPP();musicSetPlaying(false);}}
+      else lastTs=0;
+      const i=sceneAt(elapsed);if(i!==cur)renderScene(i);
+      paint();requestAnimationFrame(frame);
+    }
+    function start(from){elapsed=from||0;cur=-1;playing=true;lastTs=0;setPP();if(musicOn){musicReplay();musicSetPlaying(true);}}
+    function toggle(){if(elapsed>=total){start(0);return;}playing=!playing;lastTs=0;setPP();musicSetPlaying(playing);}
+    pp.onclick=toggle;rp.onclick=()=>start(0);
+    function seekR(r){elapsed=Math.max(0,Math.min(1,r))*total;lastTs=0;const i=sceneAt(elapsed);if(i!==cur)renderScene(i);paint();}
+    let dragging=false,wasPlay=false;
+    function rEv(e){const b=bar.getBoundingClientRect();return (e.clientX-b.left)/b.width;}
+    bar.addEventListener('pointerdown',e=>{dragging=true;wasPlay=playing;playing=false;setPP();try{bar.setPointerCapture(e.pointerId);}catch(_){}seekR(rEv(e));});
+    bar.addEventListener('pointermove',e=>{if(dragging)seekR(rEv(e));});
+    bar.addEventListener('pointerup',e=>{if(!dragging)return;dragging=false;playing=wasPlay;lastTs=0;setPP();if(musicOn)musicSetPlaying(playing);});
+    requestAnimationFrame(frame);
+    let started=false;
+    new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting&&!started){started=true;start(0);}})},{threshold:.4}).observe(document.getElementById('stage'));
+
+    /* upbeat generative score — royalty-free, built in-page, builds with the video */
+    let ac,musicOn=false,schTimer=null,nextT=0,step16=0,master,drum,bassBus,melBus,padBus,noise;
+    const BPM=112,SPB=60/BPM,S16=SPB/4,barLen=SPB*4;
+    const N={C2:65.41,F2:87.31,G2:98.0,A2:110.0,F3:174.61,G3:196.0,A3:220.0,B3:246.94,C4:261.63,D4:293.66,E4:329.63,F4:349.23,G4:392.0,A4:440.0,C5:523.25,E5:659.25};
+    const PROG=[{r:N.C2,ch:[N.C4,N.E4,N.G4],ar:[N.C4,N.E4,N.G4,N.C5]},{r:N.G2,ch:[N.G3,N.B3,N.D4],ar:[N.G3,N.B3,N.D4,N.G4]},{r:N.A2,ch:[N.A3,N.C4,N.E4],ar:[N.A3,N.C4,N.E4,N.A4]},{r:N.F2,ch:[N.F3,N.A3,N.C4],ar:[N.F3,N.A3,N.C4,N.F4]}];
+    function sect(b){return{pluck:true,bass:b>=1,kick:b>=1,clap:b>=2,hat:b>=2,hat16:b>=4,lead:b>=6,bright:b>=8};}
+    function mkNoise(){const len=ac.sampleRate*0.4,buf=ac.createBuffer(1,len,ac.sampleRate),d=buf.getChannelData(0);for(let i=0;i<len;i++)d[i]=Math.random()*2-1;return buf;}
+    function kick(t){const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.setValueAtTime(150,t);o.frequency.exponentialRampToValueAtTime(48,t+0.12);g.gain.setValueAtTime(0.85,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.22);o.connect(g);g.connect(drum);o.start(t);o.stop(t+0.24);}
+    function clap(t){const s=ac.createBufferSource();s.buffer=noise;const bp=ac.createBiquadFilter();bp.type='bandpass';bp.frequency.value=1700;bp.Q.value=0.7;const g=ac.createGain();g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(0.45,t+0.005);g.gain.exponentialRampToValueAtTime(0.001,t+0.16);s.connect(bp);bp.connect(g);g.connect(drum);s.start(t);s.stop(t+0.18);}
+    function hat(t,v){const s=ac.createBufferSource();s.buffer=noise;const hp=ac.createBiquadFilter();hp.type='highpass';hp.frequency.value=7200;const g=ac.createGain();g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.05);s.connect(hp);hp.connect(g);g.connect(drum);s.start(t);s.stop(t+0.06);}
+    function bassN(t,f,d){const o=ac.createOscillator(),g=ac.createGain(),lp=ac.createBiquadFilter();o.type='sawtooth';o.frequency.value=f;lp.type='lowpass';lp.frequency.value=440;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(0.3,t+0.008);g.gain.exponentialRampToValueAtTime(0.001,t+d);o.connect(lp);lp.connect(g);g.connect(bassBus);o.start(t);o.stop(t+d+0.02);}
+    function pluck(t,f,v){const o=ac.createOscillator(),g=ac.createGain(),lp=ac.createBiquadFilter();o.type='triangle';o.frequency.value=f;lp.type='lowpass';lp.frequency.setValueAtTime(2700,t);lp.frequency.exponentialRampToValueAtTime(720,t+0.18);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+0.004);g.gain.exponentialRampToValueAtTime(0.001,t+0.2);o.connect(lp);lp.connect(g);g.connect(melBus);o.start(t);o.stop(t+0.22);}
+    function lead(t,f,d){const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(0.14,t+0.01);g.gain.exponentialRampToValueAtTime(0.001,t+d);o.connect(g);g.connect(melBus);o.start(t);o.stop(t+d+0.02);}
+    function pad(t,fr,d,vol){fr.forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain(),lp=ac.createBiquadFilter();o.type='sawtooth';o.frequency.value=f;o.detune.value=(i-1)*7;lp.type='lowpass';lp.frequency.value=1300;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+0.35);g.gain.linearRampToValueAtTime(0.0001,t+d);o.connect(lp);lp.connect(g);g.connect(padBus);o.start(t);o.stop(t+d+0.05);});}
+    function schedule(t,st,b){const s=sect(Math.min(b,12)),P=PROG[b%4];
+      if(st===0)pad(t,P.ch,barLen*0.98,s.bright?0.05:0.038);
+      if(s.bass&&st%2===0)bassN(t,P.r,S16*1.8);
+      if(s.kick&&(st===0||st===8))kick(t);
+      if(s.bright&&(st===4||st===12))kick(t);
+      if(s.clap&&(st===4||st===12))clap(t);
+      if(s.hat&&st%2===0)hat(t,st%8===0?0.22:0.13);
+      if(s.hat16&&st%2===1)hat(t,0.07);
+      if(s.pluck&&st%2===0){const a=P.ar,oct=(st>=8&&s.bright)?2:1;pluck(t,a[(st/2)%4]*oct,s.bright?0.17:0.12);}
+      if(s.lead&&st===0)lead(t,P.ch[2]*2,barLen*0.5);
+    }
+    function schLoop(){if(ac&&ac.state==='running'){while(nextT<ac.currentTime+0.12){const b=Math.floor(step16/16);schedule(nextT,step16%16,b);nextT+=S16;step16++;if(step16>=16*14)step16=16*8;}}schTimer=setTimeout(schLoop,25);}
+    function startMusic(syncMs){if(musicOn)return;musicOn=true;ac=new (window.AudioContext||window.webkitAudioContext)();
+      const comp=ac.createDynamicsCompressor();comp.threshold.value=-14;comp.ratio.value=3;comp.connect(ac.destination);
+      master=ac.createGain();master.gain.value=0.0001;master.connect(comp);master.gain.exponentialRampToValueAtTime(0.5,ac.currentTime+1.2);
+      drum=ac.createGain();drum.gain.value=0.9;drum.connect(master);
+      bassBus=ac.createGain();bassBus.gain.value=0.9;bassBus.connect(master);
+      padBus=ac.createGain();padBus.gain.value=0.8;padBus.connect(master);
+      melBus=ac.createGain();melBus.gain.value=0.8;melBus.connect(master);
+      const dl=ac.createDelay();dl.delayTime.value=SPB*0.75;const fb=ac.createGain();fb.gain.value=0.26;const wet=ac.createGain();wet.gain.value=0.22;dl.connect(fb);fb.connect(dl);dl.connect(wet);wet.connect(master);melBus.connect(dl);
+      noise=mkNoise();
+      step16=syncMs?Math.floor((syncMs/1000)/S16):0;nextT=ac.currentTime+0.1;schLoop();
+      if(!playing){try{ac.suspend();}catch(_){}}
+    }
+    function stopMusic(){if(!musicOn)return;musicOn=false;clearTimeout(schTimer);try{ac.resume();master.gain.exponentialRampToValueAtTime(0.0001,ac.currentTime+0.4);}catch(_){}setTimeout(()=>{try{ac.close();}catch(_){}},600);}
+    function musicSetPlaying(p){if(!musicOn||!ac)return;if(p){ac.resume().then(()=>{nextT=ac.currentTime+0.06;}).catch(()=>{});}else{try{ac.suspend();}catch(_){}}}
+    function musicReplay(){if(!musicOn||!ac)return;step16=0;nextT=ac.currentTime+0.06;}
+    document.getElementById('snd').onclick=function(){if(musicOn){stopMusic();this.textContent='🔊 Music';this.style.background='#2a2018';}else{startMusic(elapsed);musicSetPlaying(playing);this.textContent='🔇 Mute';this.style.background='linear-gradient(135deg,#c8674f,#a8462f)';}};
+    })();
+    </script>
   </div>
 </section>
 
