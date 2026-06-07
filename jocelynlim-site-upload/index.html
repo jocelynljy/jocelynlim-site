@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jocelyn Lim — Host, Facilitator &amp; Experience Designer in Singapore</title>
-<meta name="description" content="Jocelyn Lim is a Singapore-based host, facilitator and experience designer. I design experiences, facilitate conversations, and build ventures — Scentura and letsbloom — that bring people back together in the real world.">
+<title>Jocelyn Lim | Emcee, Facilitator &amp; Founder</title>
+<meta name="description" content="Portfolio of Jocelyn Lim. Founder of Scentura, freelance event emcee, and facilitator based in Singapore. Let's build physical connections.">
 <meta name="keywords" content="Jocelyn Lim, Lim Jin Yan, Jocelyn Lim NUS, Jocelyn Lim emcee, Jocelyn Lim marketing, Jocelyn Lim NOC, experience designer Singapore, host Singapore, emcee Singapore, facilitator Singapore, marketing, NUS Business School, NUS Overseas Colleges, NOC, Scentura, letsbloom, events Singapore">
 <link rel="canonical" href="https://jocelynlim.space/">
 <meta name="robots" content="index, follow">
@@ -33,7 +33,7 @@
 
 <nav class="nav">
   <div class="wrap">
-    <a class="brand" href="index.html">Jocelyn Lim<span class="d">.</span></a>
+    <a class="brand" href="/">Jocelyn Lim<span class="d">.</span></a>
     <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
     <div class="nav-links">
       <a href="#quests" class="active">Ventures</a>
@@ -148,6 +148,7 @@
     @keyframes wvgrow{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:scale(1)}}
     @keyframes wvflip{from{transform:scaleX(-1) translateX(80px);opacity:.4}to{transform:scaleX(-1) translateX(0);opacity:1}}
     @keyframes wvturn{from{transform:rotate(0)}to{transform:rotate(180deg)}}
+    @keyframes wvflip180{0%{transform:rotate(180deg)}60%{transform:rotate(0deg)}72%{transform:rotate(-12deg)}100%{transform:rotate(0deg)}}
     @media (prefers-reduced-motion: reduce){#whyvid .vis svg{animation:none}}
     </style>
     <div id="whyvid" class="reveal d2">
@@ -203,8 +204,11 @@
        let st='';for(let i=0;i<4;i++)st+=`<rect class="a up" style="animation-delay:${i*0.15}s" x="${430+i*40}" y="${330-i*52}" width="120" height="40" rx="8" fill="none" stroke="${C}" stroke-width="4"/>`;
        return `<svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">${z}${st}</svg>`;},
      opposite(){return `<svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">
-       <circle class="a grow" style="animation-delay:.5s" cx="360" cy="250" r="46" fill="${T}"/>
-       <g style="animation:wvturn 1.1s cubic-bezier(.4,0,.2,1) both;transform-origin:500px 250px"><line x1="392" y1="250" x2="640" y2="250" stroke="${Wm}" stroke-width="9" stroke-linecap="round"/><path d="M640 220 L690 250 L640 280 z" fill="${Wm}"/></g></svg>`;},
+       <g style="animation:wvflip180 1.2s cubic-bezier(.45,0,.2,1) both;transform-origin:500px 250px">
+         <line x1="372" y1="250" x2="628" y2="250" stroke="${Wm}" stroke-width="11" stroke-linecap="round"/>
+         <path d="M372 250 l50 -36 M372 250 l50 36" stroke="${Wm}" stroke-width="11" stroke-linecap="round" fill="none"/>
+       </g>
+       <circle class="a grow" style="animation-delay:.2s" cx="500" cy="250" r="10" fill="${T}"/></svg>`;},
      human(){let r='';for(let i=0;i<4;i++)r+=`<circle class="ring" style="animation-delay:${i*0.4}s" cx="500" cy="250" r="150" fill="none" stroke="${T}" stroke-width="4"/>`;
        return `<svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">${r}<circle class="a grow" style="animation-delay:.15s" cx="500" cy="250" r="92" fill="none" stroke="${Wm}" stroke-width="3" opacity=".55"/><circle class="a grow" cx="500" cy="250" r="46" fill="${Wm}"/></svg>`;},
      connch(){const pts=[[500,160],[372,255],[628,255],[432,360],[568,360]];const E=[[0,1],[0,2],[1,2],[1,3],[2,4],[3,4],[0,3],[0,4]];
@@ -276,7 +280,7 @@
 
     /* ===== music bed — generated, ducked under the voiceover, builds with the timeline ===== */
     let ac,musicReady=false,schTimer=null,nextT=0,step16=0,master,drum,bassBus,melBus,padBus,noise;
-    const BPM=112,SPB=60/BPM,S16=SPB/4,barLen=SPB*4,MUSVOL=0.35;
+    const BPM=112,SPB=60/BPM,S16=SPB/4,barLen=SPB*4,MUSVOL=0.42;
     const NT={C2:65.41,F2:87.31,G2:98.0,A2:110.0,F3:174.61,G3:196.0,A3:220.0,B3:246.94,C4:261.63,D4:293.66,E4:329.63,F4:349.23,G4:392.0,A4:440.0,C5:523.25};
     const PROG=[{r:NT.C2,ch:[NT.C4,NT.E4,NT.G4],ar:[NT.C4,NT.E4,NT.G4,NT.C5]},{r:NT.G2,ch:[NT.G3,NT.B3,NT.D4],ar:[NT.G3,NT.B3,NT.D4,NT.G4]},{r:NT.A2,ch:[NT.A3,NT.C4,NT.E4],ar:[NT.A3,NT.C4,NT.E4,NT.A4]},{r:NT.F2,ch:[NT.F3,NT.A3,NT.C4],ar:[NT.F3,NT.A3,NT.C4,NT.F4]}];
     function sect(b){return{pluck:true,bass:b>=1,kick:b>=1,clap:b>=2,hat:b>=2,hat16:b>=4,lead:b>=6,bright:b>=8};}
@@ -307,7 +311,7 @@
       bassBus=ac.createGain();bassBus.gain.value=0.85;bassBus.connect(master);
       padBus=ac.createGain();padBus.gain.value=0.8;padBus.connect(master);
       melBus=ac.createGain();melBus.gain.value=0.8;melBus.connect(master);
-      const dl=ac.createDelay();dl.delayTime.value=SPB*0.75;const fb=ac.createGain();fb.gain.value=0.26;const wet=ac.createGain();wet.gain.value=0.2;dl.connect(fb);fb.connect(dl);dl.connect(wet);wet.connect(master);melBus.connect(dl);
+      const dl=ac.createDelay();dl.delayTime.value=SPB*0.75;const fb=ac.createGain();fb.gain.value=0.08;const wet=ac.createGain();wet.gain.value=0.06;dl.connect(fb);fb.connect(dl);dl.connect(wet);wet.connect(master);melBus.connect(dl);
       noise=mkNoise();
       step16=syncMs?Math.floor((syncMs/1000)/S16):0;nextT=ac.currentTime+0.1;schLoop();
     }
@@ -398,30 +402,25 @@
 <!-- CONNECT -->
 <section class="section" id="connect" style="padding-top:0">
   <div class="wrap">
-    <div class="tieback reveal">
-      <div class="eyebrow" style="margin-bottom:14px">let's stay in touch</div>
-      <div class="q" style="max-width:780px;margin:0 auto">Right now, I'm building Scentura and running community events. If you're looking for an emcee or facilitator who brings a deeply human touch to the room, I'm currently taking on freelance gigs.</div>
-      <div class="pathways" style="display:grid;gap:12px;max-width:660px;margin:30px auto 0;text-align:left">
-        <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 20px">
-          <span style="font-weight:600;font-size:15.5px">Need an emcee or facilitator?</span>
-          <a class="btn btn-primary" href="mailto:hello@jocelynlim.space?subject=Emcee%20or%20Facilitator%20enquiry">Book a quick chat <span class="arrow">→</span></a>
+    <div class="tieback reveal" style="text-align:left;max-width:780px">
+      <div class="eyebrow" style="text-align:center;margin-bottom:12px">work with me</div>
+      <h2 class="section-h" style="text-align:center"><em>Let's</em> Collaborate</h2>
+      <p class="lead" style="margin:16px auto 0;text-align:center;max-width:620px">My week is divided between building my venture and holding space for others. Here's how we can work together right now:</p>
+      <div style="display:grid;gap:14px;margin:32px 0 0">
+        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 22px">
+          <span style="font-size:15.5px;line-height:1.5;max-width:430px"><b>Hire me to hold the room.</b> I'm currently taking on freelance projects as an Emcee, Moderator, and Facilitator for events that matter.</span>
+          <a class="btn btn-primary" href="mailto:limjy.jocelyn@gmail.com?subject=Your%20event%20%E2%80%94%20emcee%20%2F%20facilitator">Email me about your event <span class="arrow">→</span></a>
         </div>
-        <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 20px">
-          <span style="font-weight:600;font-size:15.5px">Want to bring Scentura to your space?</span>
-          <a class="btn btn-primary" href="mailto:hello@jocelynlim.space?subject=Scentura%20collaboration">Let's build <span class="arrow">→</span></a>
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 20px">
-          <span style="font-weight:600;font-size:15.5px">Want to mingle and build community?</span>
-          <a class="btn btn-ghost" href="https://instagram.com/letsbloom.space" target="_blank" rel="noopener">Join the next letsbloom event</a>
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 20px">
-          <span style="font-weight:600;font-size:15.5px">Just want to say hi or talk startups?</span>
-          <a class="btn btn-ghost" href="mailto:hello@jocelynlim.space?subject=Hi%20Jocelyn">Drop into my inbox</a>
+        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 22px">
+          <span style="font-size:15.5px;line-height:1.5;max-width:430px"><b>Partner with Scentura.</b> Want to bring a multi-sensory floral experience to your space?</span>
+          <a class="btn btn-primary" href="mailto:limjy.jocelyn@gmail.com?subject=Scentura%20%E2%80%94%20multi-sensory%20experience">Email me about Scentura <span class="arrow">→</span></a>
         </div>
       </div>
-      <div class="reveal" style="max-width:660px;margin:30px auto 0;text-align:left;background:var(--card);border:1px dashed var(--line);border-radius:16px;padding:22px 24px">
-        <div style="font-size:15.5px;line-height:1.65;color:#2a2018">🤖 <b>Confession:</b> I can't write a single line of code. I built this entire ecosystem using AI. Why? Because I believe AI should handle the logistics so humans can focus on the room. Want to know how? <a href="mailto:hello@jocelynlim.space?subject=Coffee%20%26%20how%20you%20built%20this" style="color:#b8533a;font-weight:600;text-decoration:underline;text-underline-offset:2px">Let's grab a coffee or jump on a 15-minute call.</a></div>
+      <p style="margin:24px 0 0;text-align:center;font-size:15.5px;line-height:1.6;color:#43392f"><b>Just want to connect?</b> If you're building something cool, want to swap notes on startups, or just want to grab a coffee, skip the email. <a href="https://t.me/jyjocelyn" target="_blank" rel="noopener" style="color:#b8533a;font-weight:600;text-decoration:underline;text-underline-offset:2px">Drop me a text on Telegram (@jyjocelyn)</a></p>
+      <div style="margin:26px auto 0;text-align:left;background:var(--paper-2);border:1px dashed var(--line);border-radius:16px;padding:22px 24px">
+        <div style="font-size:15px;line-height:1.65;color:#2a2018"><b>P.S.</b> If you're wondering how a non-technical founder built this site — I built this entire ecosystem using AI. Why? Because I believe AI should handle the logistics so humans can focus on the room. Want to know how? <a href="mailto:limjy.jocelyn@gmail.com?subject=How%20you%20built%20this" style="color:#b8533a;font-weight:600;text-decoration:underline;text-underline-offset:2px">Let's grab a coffee or jump on a 15-minute call.</a></div>
       </div>
+      <p style="margin:22px 0 0;text-align:center;font-size:14px;color:var(--ink-soft)">Or email me directly at <a href="mailto:limjy.jocelyn@gmail.com" style="color:#b8533a;font-weight:600">limjy.jocelyn@gmail.com</a></p>
     </div>
   </div>
 </section>
@@ -441,7 +440,8 @@
         <a href="https://www.linkedin.com/in/jocelynlimjinyan/" target="_blank" rel="noopener">LinkedIn</a>
         <a href="https://medium.com/@jocelynlimjy" target="_blank" rel="noopener">Medium</a>
         <a href="https://instagram.com/letsbloom.space" target="_blank" rel="noopener">Instagram</a>
-        <a href="mailto:hello@jocelynlim.space">Email</a>
+        <a href="https://t.me/jyjocelyn" target="_blank" rel="noopener">Telegram</a>
+        <a href="mailto:limjy.jocelyn@gmail.com">Email</a>
       </div>
     </div>
     <div class="fbot"><span>© <span class="year"></span> Jocelyn Lim · jocelynlim.space</span><span>Made with care in Singapore</span></div>
