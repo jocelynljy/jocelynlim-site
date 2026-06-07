@@ -353,7 +353,7 @@
       if(s.pluck&&st%2===0){const a=P.ar,oct=(st>=8&&s.bright)?2:1;pluck(t,a[(st/2)%4]*oct,s.bright?0.16:0.11);}
       if(s.lead&&st===0)lead(t,P.ch[2]*2,barLen*0.5);
     }
-    function schLoop(){if(ac&&ac.state==='running'){while(nextT<ac.currentTime+0.12){const b=Math.floor(step16/16);mschedule(nextT,step16%16,b);nextT+=S16;step16++;if(step16>=16*14)step16=16*8;}}schTimer=setTimeout(schLoop,25);}
+    function schLoop(){if(ac&&ac.state==='running'){if(nextT<ac.currentTime)nextT=ac.currentTime+0.05;let guard=0;while(nextT<ac.currentTime+0.12&&guard<24){const b=Math.floor(step16/16);mschedule(nextT,step16%16,b);nextT+=S16;step16++;if(step16>=16*14)step16=16*8;guard++;}}schTimer=setTimeout(schLoop,25);}
     function startMusic(syncMs){if(musicReady)return;musicReady=true;ac=new (window.AudioContext||window.webkitAudioContext)();try{ac.resume();}catch(_){}
       const comp=ac.createDynamicsCompressor();comp.threshold.value=-16;comp.ratio.value=3;comp.connect(ac.destination);
       master=ac.createGain();master.gain.value=0.0001;master.connect(comp);master.gain.exponentialRampToValueAtTime(MUSVOL,ac.currentTime+1.4);
@@ -366,9 +366,9 @@
       step16=syncMs?Math.floor((syncMs/1000)/S16):0;nextT=ac.currentTime+0.1;schLoop();
     }
     function stopMusic(){if(!musicReady)return;musicReady=false;clearTimeout(schTimer);var a=ac;try{a.resume();master.gain.cancelScheduledValues(a.currentTime);master.gain.setValueAtTime(Math.max(master.gain.value,0.0001),a.currentTime);master.gain.exponentialRampToValueAtTime(0.0001,a.currentTime+0.4);}catch(_){}setTimeout(()=>{try{a.close();}catch(_){}},600);ac=null;}
-    function musicResume(){if(!musicReady||!ac)return;ac.resume().then(()=>{nextT=ac.currentTime+0.06;try{master.gain.cancelScheduledValues(ac.currentTime);master.gain.setValueAtTime(Math.max(master.gain.value,0.0001),ac.currentTime);master.gain.exponentialRampToValueAtTime(MUSVOL,ac.currentTime+0.5);}catch(_){}}).catch(()=>{});}
+    function musicResume(){if(!musicReady||!ac)return;clearTimeout(window._wvF);ac.resume().then(()=>{nextT=ac.currentTime+0.06;try{master.gain.cancelScheduledValues(ac.currentTime);master.gain.setValueAtTime(Math.max(master.gain.value,0.0001),ac.currentTime);master.gain.exponentialRampToValueAtTime(MUSVOL,ac.currentTime+0.5);}catch(_){}}).catch(()=>{});}
     function musicSuspend(){if(!musicReady||!ac)return;try{ac.suspend();}catch(_){}}
-    function musicReplay(){if(!musicReady||!ac)return;step16=0;nextT=ac.currentTime+0.06;}
+    function musicReplay(){if(!musicReady||!ac)return;clearTimeout(window._wvF);step16=0;nextT=ac.currentTime+0.06;}
     function musicFadeOut(){if(!musicReady||!ac)return;try{master.gain.cancelScheduledValues(ac.currentTime);master.gain.setValueAtTime(Math.max(master.gain.value,0.0001),ac.currentTime);master.gain.exponentialRampToValueAtTime(0.0001,ac.currentTime+2.2);}catch(_){}clearTimeout(window._wvF);window._wvF=setTimeout(()=>{musicSuspend();},2300);}
     /* sound = crisp voiceover (master clock) + music bed underneath */
     const snd=document.getElementById('snd');
@@ -452,6 +452,19 @@
         <p>I studied Marketing at NUS Business School, but a lot of the real learning happened between countries — growing up across Singapore, Indonesia and Canada, doing homestays and farm stays through ASEAN youth exchanges, and living far from family (sharing a place with friends in Toronto) for a startup stint through NUS Overseas Colleges.</p>
         <p>I don't travel to collect stamps. I travel because I'm endlessly curious about how people live, connect and make meaning — and that same curiosity is the muscle behind everything on this page.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- KIND WORDS -->
+<section class="section" id="kindwords" style="padding-top:0">
+  <div class="wrap">
+    <div class="eyebrow reveal" style="text-align:center">kind words</div>
+    <h2 class="section-h reveal d1" style="text-align:center">What it feels like in <em>the room</em></h2>
+    <div class="quotes three reveal d2" style="margin-top:34px">
+      <blockquote class="quote"><p>Honestly I was smiling start to finish. She just kept the whole room with her.</p><cite>— A founder in the audience</cite></blockquote>
+      <blockquote class="quote"><p>The room never went flat. She kept us on time without it ever feeling rushed.</p><cite>— Event organiser, corporate townhall</cite></blockquote>
+      <blockquote class="quote"><p>Jocelyn is such a great listener — and asks the one question that makes you think harder about your own answer.</p><cite>— Student, facilitated session</cite></blockquote>
     </div>
   </div>
 </section>

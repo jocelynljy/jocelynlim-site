@@ -367,6 +367,8 @@ body{background:radial-gradient(125% 85% at 50% -12%, #f9f3e7 0%, #f3ecde 55%, #
 /* --- testimonials (sub-page social proof) --- */
 .quotes{display:grid;gap:18px;margin-top:24px}
 .quotes.two{grid-template-columns:1fr 1fr}
+.quotes.three{grid-template-columns:repeat(3,1fr)}
+@media(max-width:860px){.quotes.three{grid-template-columns:1fr}}
 .quote{position:relative;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px 28px 26px;box-shadow:var(--shadow-sm);text-align:left;margin:0}
 .quote::before{content:"\201C";position:absolute;top:6px;left:18px;font-family:var(--disp);font-size:62px;line-height:1;color:var(--accent);opacity:.26}
 .quote p{font-size:16.5px;line-height:1.55;color:var(--ink);font-style:italic;margin:8px 0 16px;position:relative}
