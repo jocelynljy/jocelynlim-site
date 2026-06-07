@@ -220,3 +220,61 @@ body{background:radial-gradient(125% 85% at 50% -12%, #f9f3e7 0%, #f3ecde 55%, #
 #why::before{top:-120px; right:-120px}
 #about::before{bottom:-160px; left:-160px; background:radial-gradient(circle, rgba(74,94,148,.09), transparent 70%)}
 #why .wrap, #about .wrap{position:relative; z-index:1}
+
+/* ============================================================
+   v4 — responsive polish (professional phone + desktop)
+   ============================================================ */
+/* raise the menu breakpoint a touch so the full nav never crowds */
+@media(max-width:920px){
+  .nav-links{position:fixed; inset:70px 0 auto 0; background:var(--paper); flex-direction:column; padding:24px 28px; gap:20px; border-bottom:1px solid var(--line); box-shadow:var(--shadow-lg); transform:translateY(-130%); transition:transform .35s; align-items:flex-start}
+  .nav-links.open{transform:none}
+  .nav-links a{font-size:16px}
+  .nav-cta{margin-top:4px}
+  .burger{display:flex}
+}
+/* tablet / small laptop */
+@media(max-width:880px){
+  .section{padding:60px 0}
+  .hero{padding:40px 0 24px}
+  .hero .cta-row{margin-top:28px}
+  .quests{gap:18px}
+}
+/* phones */
+@media(max-width:600px){
+  .wrap{padding:0 20px}
+  .section{padding:48px 0}
+  .hero{padding:28px 0 20px}
+  .hero h1{font-size:clamp(33px,8.8vw,46px); line-height:1.03}
+  .hero h1 .tail{font-size:.5em; margin-top:.5em}
+  .hero .sub{font-size:16.5px; margin-top:18px}
+  .section-h{font-size:clamp(26px,7.4vw,36px)}
+  .lead{font-size:16px; margin-top:14px}
+  .prose p{font-size:16.5px}
+  /* full-width, stacked CTAs read cleaner on a phone */
+  .hero .cta-row{gap:10px}
+  .hero .cta-row .btn{width:100%; justify-content:center}
+  /* contact pathways: stack label over a full-width button */
+  #connect .pathways > div{flex-direction:column!important; align-items:stretch!important; gap:12px!important; padding:16px 18px!important}
+  #connect .pathways > div .btn{width:100%; justify-content:center}
+  /* cards + galleries */
+  .quest .ph{height:180px}
+  .gallery{grid-template-columns:1fr}
+  /* tie-back band */
+  .tieback{padding:30px 20px; border-radius:18px}
+  /* detail page hero */
+  .dhero{padding:30px 0 6px}
+  .dhero h1{font-size:clamp(30px,8.2vw,40px)}
+  .dhero .sub{font-size:16.5px; margin-top:16px}
+  .dhero-img{margin-top:26px; border-radius:18px}
+  /* footer */
+  footer{padding:52px 0 32px; margin-top:60px}
+  footer h4{font-size:25px}
+  footer .fbot{flex-direction:column; align-items:flex-start; gap:8px}
+}
+/* small phones */
+@media(max-width:380px){
+  .wrap{padding:0 16px}
+  .hero h1{font-size:30px}
+  .brand{font-size:19px}
+  .btn{font-size:14.5px; padding:12px 22px}
+}
