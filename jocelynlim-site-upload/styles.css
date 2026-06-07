@@ -13,8 +13,8 @@
   --maxw:1180px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--paper); color:var(--ink); font-family:var(--body); line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden; position:relative}
+html{scroll-behavior:smooth; overflow-x:hidden; overflow-x:clip}
+body{background:var(--paper); color:var(--ink); font-family:var(--body); line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden; overflow-x:clip; max-width:100%; position:relative}
 body::before{content:""; position:fixed; inset:0; z-index:9999; pointer-events:none; opacity:.035;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px}
@@ -280,3 +280,15 @@ body{background:radial-gradient(125% 85% at 50% -12%, #f9f3e7 0%, #f3ecde 55%, #
   .brand{font-size:19px}
   .btn{font-size:14.5px; padding:12px 22px}
 }
+
+/* ============================================================
+   v5 — kill any horizontal scroll / sideways empty space
+   ============================================================ */
+/* clip the decorative section glows so they can't bleed past the screen edge */
+#why, #about{overflow-x:clip}
+/* on phones & tablets, drop the bleed-glows entirely (belt-and-suspenders for older browsers) */
+@media(max-width:920px){
+  #why::before, #about::before{display:none}
+}
+/* never let any stray element create a sideways scroll */
+.wrap, .section, header, footer, .proof{max-width:100%}
