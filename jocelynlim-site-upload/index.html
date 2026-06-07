@@ -119,6 +119,8 @@
     #whyvid .fall{animation:wvfall 1.1s .3s cubic-bezier(.4,0,1,.6) forwards}
     #whyvid .zoom{animation:wvzoom 1.4s linear infinite}
     #whyvid .grow{transform-box:fill-box;transform-origin:center;animation:wvgrow .7s cubic-bezier(.2,1.3,.3,1) both}
+    #whyvid .laughswell{transform-box:fill-box;transform-origin:center;animation:wvswell 1.3s cubic-bezier(.2,1.3,.3,1) both}
+    #whyvid .laughface{animation:wvgiggle 1.1s ease-in-out infinite}
     #whyvid .flip{animation:wvflip 1s cubic-bezier(.4,0,.2,1) both}
     #whyvid .bar{position:relative;height:8px;background:#e2d8c6;border-radius:6px;margin-top:16px;cursor:pointer;touch-action:none}
     #whyvid .bar>i{position:absolute;left:0;top:0;height:100%;width:0;border-radius:6px;background:linear-gradient(90deg,#ffb24d,#c8553d);pointer-events:none}
@@ -151,6 +153,8 @@
     @keyframes wvflip{from{transform:scaleX(-1) translateX(80px);opacity:.4}to{transform:scaleX(-1) translateX(0);opacity:1}}
     @keyframes wvturn{from{transform:rotate(0)}to{transform:rotate(180deg)}}
     @keyframes wvflip180{0%{transform:rotate(180deg)}60%{transform:rotate(0deg)}72%{transform:rotate(-12deg)}100%{transform:rotate(0deg)}}
+    @keyframes wvswell{0%{opacity:0;transform:scale(.4)}68%{opacity:1;transform:scale(1.1)}100%{opacity:1;transform:scale(1)}}
+    @keyframes wvgiggle{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-7px) scale(1.06)}}
     @media (prefers-reduced-motion: reduce){#whyvid .vis svg{animation:none}}
     </style>
     <div id="whyvid" class="reveal d2">
@@ -192,9 +196,9 @@
        let l='',d='',k=0;for(let i=0;i<6;i++){l+=ln([cx,cy],ring[i],.3+(k++)*.05);}for(let i=0;i<6;i++){l+=ln(ring[i],ring[(i+1)%6],.3+(k++)*.05);}
        d+=`<circle class="a pp" cx="${cx}" cy="${cy}" r="15" fill="${Wm}"/>`;ring.forEach((p,i)=>{d+=`<circle class="a pp" style="animation-delay:${.1+i*.08}s" cx="${p[0]}" cy="${p[1]}" r="12" fill="${Wm}"/>`;});
        return `<svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">${l}${d}</svg>`;},
-     laugh(){let s=smiley(360,250,46,'pp',0)+smiley(520,220,52,'pp',0.15)+smiley(660,260,46,'pp',0.3)+smiley(440,330,40,'pp',0.45)+smiley(600,340,40,'pp',0.6);
-       let r='';for(let i=0;i<3;i++)r+=`<circle class="ring" style="animation-delay:${i*0.6}s" cx="510" cy="280" r="120" fill="none" stroke="${Wm}" stroke-width="3"/>`;
-       return `<svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">${r}${s}</svg>`;},
+     laugh(){let s=smiley(515,222,62,'laughface',0)+smiley(360,255,52,'laughface',0.12)+smiley(665,255,52,'laughface',0.24)+smiley(440,350,48,'laughface',0.36)+smiley(595,352,48,'laughface',0.48);
+       let r='';for(let i=0;i<2;i++)r+=`<circle class="ring" style="animation-delay:${i*0.7}s" cx="515" cy="285" r="170" fill="none" stroke="${Wm}" stroke-width="3"/>`;
+       return `<svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">${r}<g class="laughswell">${s}</g></svg>`;},
      friend(){return `<svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">
        <g class="a sL">${person(380,C,'',0).replace('class="a "','')}</g>
        <g class="a sR">${person(620,Wm,'',0).replace('class="a "','')}</g>
