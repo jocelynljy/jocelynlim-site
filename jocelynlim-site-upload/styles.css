@@ -374,6 +374,11 @@ body{background:radial-gradient(125% 85% at 50% -12%, #f9f3e7 0%, #f3ecde 55%, #
 .quote p{font-size:16.5px;line-height:1.55;color:var(--ink);font-style:italic;margin:8px 0 16px;position:relative}
 .quote cite{font-style:normal;font-size:13px;color:var(--ink-soft);font-weight:600}
 @media(max-width:760px){.quotes.two{grid-template-columns:1fr}}
+/* editorial (borderless) testimonials — used on the homepage to contrast with the bordered trust cards above */
+.quotes.editorial .quote{background:none;border:none;box-shadow:none;padding:6px 4px 0}
+.quotes.editorial .quote::before{font-size:78px;top:-20px;left:-2px;opacity:.20}
+.quotes.editorial .quote p{font-size:18px;line-height:1.5;color:var(--ink)}
+.quotes.editorial .quote cite{color:var(--soft)}
 
 /* --- stat cards (Scentura proof) --- */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:24px}
