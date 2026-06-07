@@ -3,148 +3,139 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Preview — The Why (motion graphics)</title>
+<title>Preview — The Why (cinematic motion)</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#2a2018;--soft:#6f6253;--terra:#c8553d;--disp:'Fraunces',serif;--body:'DM Sans',sans-serif}
+:root{--terra:#e6794f;--amber:#f0b357;--cream:#f6ecda;--soft:#c9b9a3}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#f3ecde;color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased}
+body{background:#f3ecde;font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased;color:#2a2018}
 .ribbon{background:linear-gradient(135deg,#c8674f,#a8462f);color:#fff;text-align:center;font-size:12px;padding:7px 16px}
 .frame{max-width:1180px;margin:0 auto;padding:0 28px}
-.kicktop{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--soft);font-weight:600;padding:30px 0 12px}
-.stage{position:relative;height:74vh;min-height:470px;overflow:hidden;border-radius:22px;border:1px solid #e2d8c6;
-  background:radial-gradient(65% 65% at 82% 12%,rgba(200,85,61,.10),transparent 70%),radial-gradient(60% 60% at 8% 92%,rgba(74,94,148,.08),transparent 70%),#f6efe1}
+.kicktop{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#6f6253;font-weight:600;padding:30px 0 12px}
+.stage{position:relative;height:75vh;min-height:480px;overflow:hidden;border-radius:22px;background:#15100c;box-shadow:0 30px 70px rgba(40,25,15,.25)}
 canvas{position:absolute;inset:0;width:100%;height:100%}
-.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 6%}
-#scene{width:min(880px,94%)}
-.big{font-family:var(--disp);font-weight:340;font-size:clamp(30px,5.2vw,60px);line-height:1.03;letter-spacing:-.02em}
-.med{font-family:var(--disp);font-weight:340;font-size:clamp(24px,3.8vw,44px);line-height:1.12}
-.huge{font-family:var(--disp);font-weight:400;font-style:italic;color:var(--terra);font-size:clamp(42px,8.5vw,100px);letter-spacing:-.025em;line-height:.98;display:inline-block}
+.vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 120% at 50% 50%,transparent 55%,rgba(0,0,0,.45))}
+.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 7%}
+#scene{width:min(900px,94%);color:var(--cream);text-shadow:0 2px 30px rgba(0,0,0,.5)}
+.big{font-family:'Fraunces',serif;font-weight:340;font-size:clamp(30px,5.2vw,60px);line-height:1.05;letter-spacing:-.02em}
+.med{font-family:'Fraunces',serif;font-weight:340;font-size:clamp(23px,3.7vw,42px);line-height:1.15}
+.lead{display:block;font-family:'Fraunces',serif;font-weight:340;font-style:italic;font-size:clamp(19px,2.8vw,32px);color:var(--soft);margin-bottom:.12em;opacity:0;animation:aFade .6s both}
+.huge{display:inline-block;font-family:'Fraunces',serif;font-weight:400;font-style:italic;font-size:clamp(40px,8.4vw,98px);letter-spacing:-.025em;line-height:.98;
+  background:linear-gradient(100deg,#f0b357,#e6794f);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 6px 30px rgba(230,121,79,.45));opacity:0;animation:aScale .9s cubic-bezier(.2,1.25,.3,1) both;animation-delay:.35s}
 em{font-style:italic;color:var(--terra)}
-.stampwrap{font-family:var(--disp);font-size:clamp(28px,5vw,56px);font-style:italic;display:flex;gap:.5em;justify-content:center;flex-wrap:wrap}
+.stampwrap{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(28px,5vw,56px);display:flex;gap:.55em;justify-content:center;flex-wrap:wrap}
 .stamp{display:inline-block;opacity:0}
 .w{display:inline-block;opacity:0}
-/* entrances */
-.fade{animation:aFade .6s both}
-.fromL{animation:aFromL .7s cubic-bezier(.2,.9,.2,1) both}
-.fromR{animation:aFromR .7s cubic-bezier(.2,.9,.2,1) both}
+.fade{animation:aFade .65s both}
+.fromL{animation:aFromL .75s cubic-bezier(.2,.9,.2,1) both}
+.fromR{animation:aFromR .75s cubic-bezier(.2,.9,.2,1) both}
 .pop{animation:aPop .6s cubic-bezier(.2,1.3,.35,1) both}
-.jit{animation:aJit .7s both}
-.scaleup{animation:aScale .8s cubic-bezier(.2,1.2,.3,1) both}
+.jit{animation:aJit .75s both}
 .out{animation:aOut .42s both!important}
-@keyframes aFade{from{opacity:0;transform:translateY(18px) scale(.98);filter:blur(7px)}to{opacity:1;transform:none;filter:none}}
-@keyframes aFromL{from{opacity:0;transform:translateX(-70px)}to{opacity:1;transform:none}}
-@keyframes aFromR{from{opacity:0;transform:translateX(70px)}to{opacity:1;transform:none}}
+@keyframes aFade{from{opacity:0;transform:translateY(20px);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+@keyframes aFromL{from{opacity:0;transform:translateX(-80px)}to{opacity:1;transform:none}}
+@keyframes aFromR{from{opacity:0;transform:translateX(80px)}to{opacity:1;transform:none}}
 @keyframes aPop{0%{opacity:0;transform:scale(.55)}100%{opacity:1;transform:scale(1)}}
-@keyframes aScale{0%{opacity:0;transform:scale(.4);filter:blur(8px)}100%{opacity:1;transform:scale(1);filter:none}}
-@keyframes aJit{0%{opacity:0;transform:translateY(-26px)}55%{opacity:1;transform:none}62%{transform:translateX(-5px)}69%{transform:translateX(5px)}76%{transform:translateX(-3px)}83%{transform:translateX(3px)}100%{transform:none}}
-@keyframes aWord{from{opacity:0;transform:translateY(18px) rotate(-4deg)}to{opacity:1;transform:none}}
-@keyframes aStamp{0%{opacity:0;transform:scale(1.7);letter-spacing:.12em}100%{opacity:1;transform:scale(1)}}
-@keyframes aOut{to{opacity:0;transform:translateY(-16px) scale(.99);filter:blur(4px)}}
+@keyframes aScale{0%{opacity:0;transform:scale(.45);filter:blur(10px) drop-shadow(0 6px 30px rgba(230,121,79,.45))}100%{opacity:1;transform:scale(1)}}
+@keyframes aJit{0%{opacity:0;transform:translateY(-26px)}55%{opacity:1;transform:none}63%{transform:translateX(-6px)}71%{transform:translateX(6px)}79%{transform:translateX(-3px)}87%{transform:translateX(3px)}100%{transform:none}}
+@keyframes aWord{from{opacity:0;transform:translateY(20px) rotate(-5deg)}to{opacity:1;transform:none}}
+@keyframes aStamp{0%{opacity:0;transform:scale(1.8);letter-spacing:.14em}100%{opacity:1;transform:scale(1)}}
+@keyframes aOut{to{opacity:0;transform:translateY(-16px) scale(.99);filter:blur(5px)}}
 .bar{height:3px;background:#e2d8c6;border-radius:3px;margin-top:14px;overflow:hidden}
-.bar>i{display:block;height:100%;width:0;background:var(--terra)}
+.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,#f0b357,#c8553d)}
 .controls{display:flex;gap:12px;align-items:center;margin:16px 0 50px}
-.btn{font-family:var(--body);font-weight:600;font-size:14px;border:none;background:linear-gradient(135deg,#c8674f,#a8462f);color:#fff;border-radius:40px;padding:10px 20px;cursor:pointer}
-.note{font-size:13px;color:var(--soft)}
-@media(prefers-reduced-motion:reduce){.note::after{content:" (reduced-motion on — animation simplified)"}}
+.btn{font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;border:none;background:linear-gradient(135deg,#c8674f,#a8462f);color:#fff;border-radius:40px;padding:10px 20px;cursor:pointer}
+.note{font-size:13px;color:#6f6253}
 </style>
 </head>
 <body>
-<div class="ribbon">Preview · "The why" as motion graphics — scattered noise converges into human connection. Autoplays silently; voiceover added later.</div>
+<div class="ribbon">Preview · cinematic "why" — cool noise → warm human connection, with depth. Autoplays silently; voiceover later.</div>
 <div class="frame">
-  <div class="kicktop">the why · motion concept</div>
+  <div class="kicktop">the why · cinematic motion concept</div>
   <div class="stage" id="stage">
     <canvas id="cv"></canvas>
+    <div class="vig"></div>
     <div class="overlay"><div id="scene"></div></div>
   </div>
   <div class="bar"><i id="prog"></i></div>
-  <div class="controls"><button class="btn" id="replay">▶ Replay</button><span class="note">~26s · the cuts will sync to your voiceover later.</span></div>
+  <div class="controls"><button class="btn" id="replay">▶ Replay</button><span class="note">~27s · cuts will sync to your voiceover later.</span></div>
 </div>
-
 <script>
-const stage=document.getElementById('stage'), cv=document.getElementById('cv'), ctx=cv.getContext('2d');
-const sceneEl=document.getElementById('scene'), prog=document.getElementById('prog');
+const stage=document.getElementById('stage'),cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+const sceneEl=document.getElementById('scene'),prog=document.getElementById('prog');
 let W=0,H=0,DPR=Math.min(devicePixelRatio||1,2);
+const N=56,P=[];
+function mkGlow(c){const s=64,o=document.createElement('canvas');o.width=o.height=s;const g=o.getContext('2d');const rg=g.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);rg.addColorStop(0,c);rg.addColorStop(.25,c);rg.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=rg;g.beginPath();g.arc(s/2,s/2,s/2,0,7);g.fill();return o;}
+const GCOOL=mkGlow('rgba(150,180,210,0.9)'), GWARM=mkGlow('rgba(240,150,80,0.95)');
+function layout(){const cx=W/2,cy=H/2,R=Math.min(W,H)*0.26;
+  for(let i=0;i<N;i++){const a=(i/N)*Math.PI*2;const ring=(i%3===0)?R*0.5:(i%3===1?R*0.85:R*1.12);
+    P[i]=P[i]||{x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.55,vy:(Math.random()-.5)*.55,z:0.25+Math.random()*0.75,seed:Math.random()*99};
+    P[i].ang=a;P[i].rr=ring;P[i].tx=cx+Math.cos(a)*ring;P[i].ty=cy+Math.sin(a)*ring;}}
 function resize(){W=stage.clientWidth;H=stage.clientHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);layout();}
 addEventListener('resize',resize);
-
-const N=46, P=[];
-function layout(){
-  const cx=W/2, cy=H/2, R=Math.min(W,H)*0.30;
-  for(let i=0;i<N;i++){
-    const a=(i/N)*Math.PI*2;
-    const ring = i%3===0 ? R*0.55 : R; // two loose rings -> web look
-    P[i]=P[i]||{x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5};
-    P[i].tx=cx+Math.cos(a)*ring+(Math.random()-.5)*26;
-    P[i].ty=cy+Math.sin(a)*ring+(Math.random()-.5)*26;
-  }
-}
-function lerpC(a,b,t){return a.map((v,i)=>Math.round(v+(b[i]-v)*t));}
-const GREY=[170,160,142], TERRA=[200,85,61];
-let runStart=Infinity, gatherAt=9300, total=26500;
-function frame(now){
-  const el=now-runStart;
-  let g = Math.max(0,Math.min(1,(el-gatherAt)/1700)); g=g*g*(3-2*g); // smoothstep
-  const idle = el<0;
+let runStart=Infinity,gatherAt=4700,total=27800;
+function smooth(t){t=Math.max(0,Math.min(1,t));return t*t*(3-2*t);}
+function aurora(t,warm){const blobs=[
+  {x:0.2+0.06*Math.sin(t*0.00021),y:0.3+0.05*Math.cos(t*0.00017),r:0.7,c1:[90,120,170],c2:[230,150,80]},
+  {x:0.8+0.05*Math.cos(t*0.00019),y:0.25+0.06*Math.sin(t*0.00023),r:0.65,c1:[70,150,150],c2:[240,180,90]},
+  {x:0.5+0.07*Math.sin(t*0.00015),y:0.85+0.05*Math.cos(t*0.00025),r:0.8,c1:[80,100,150],c2:[200,90,70]}];
+  for(const b of blobs){const cx=b.x*W,cy=b.y*H,rad=b.r*Math.max(W,H);
+    const col=b.c1.map((v,i)=>Math.round(v+(b.c2[i]-v)*warm));
+    const g=ctx.createRadialGradient(cx,cy,0,cx,cy,rad);
+    g.addColorStop(0,`rgba(${col[0]},${col[1]},${col[2]},${0.14+0.12*warm})`);g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);}}
+function grid(t,warm){const cx=W/2,cy=H*0.52,vp=H*0.5;ctx.lineWidth=1;
+  const cool=[120,150,190],wc=[230,150,90];const col=cool.map((v,i)=>Math.round(v+(wc[i]-v)*warm));
+  const a=0.05+0.05*warm;ctx.strokeStyle=`rgba(${col[0]},${col[1]},${col[2]},${a})`;
+  const scroll=(t*0.00004)%1;
+  for(let i=0;i<16;i++){const f=((i+scroll)/16);const y=cy+Math.pow(f,2.2)*vp;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
+    const y2=cy-Math.pow(f,2.2)*vp;ctx.beginPath();ctx.moveTo(0,y2);ctx.lineTo(W,y2);ctx.stroke();}
+  for(let i=-9;i<=9;i++){ctx.beginPath();ctx.moveTo(cx+i*22,cy);ctx.lineTo(cx+i*W*0.16,cy+vp);ctx.stroke();ctx.beginPath();ctx.moveTo(cx+i*22,cy);ctx.lineTo(cx+i*W*0.16,cy-vp);ctx.stroke();}}
+function frame(now){const el=now-runStart,idle=el<0;
+  let g=smooth((el-gatherAt)/2000);
   ctx.clearRect(0,0,W,H);
-  const col=lerpC(GREY,TERRA,g);
-  // update + draw nodes
+  const base=ctx.createLinearGradient(0,0,0,H);base.addColorStop(0,'#1a130d');base.addColorStop(1,'#221812');ctx.fillStyle=base;ctx.fillRect(0,0,W,H);
+  aurora(now,g);grid(now,g);
+  const cx=W/2,cy=H/2;
   for(const p of P){
-    if(g<0.04){ p.x+=p.vx; p.y+=p.vy; if(p.x<8||p.x>W-8)p.vx*=-1; if(p.y<8||p.y>H-8)p.vy*=-1; }
-    else { p.x+=(p.tx-p.x)*0.06*g + (Math.random()-.5)*0.3; p.y+=(p.ty-p.y)*0.06*g + (Math.random()-.5)*0.3; }
+    if(g<0.04){p.x+=p.vx*(0.6+p.z);p.y+=p.vy*(0.6+p.z);if(p.x<6||p.x>W-6)p.vx*=-1;if(p.y<6||p.y>H-6)p.vy*=-1;}
+    else{const orb=p.ang+now*0.00012;const tx=cx+Math.cos(orb)*p.rr,ty=cy+Math.sin(orb)*p.rr;p.x+=(tx-p.x)*0.05*g;p.y+=(ty-p.y)*0.05*g;}
+    p.dx=p.x+Math.sin(now*0.0003+p.seed)*6*p.z;p.dy=p.y+Math.cos(now*0.00026+p.seed)*6*p.z;
   }
-  // lines when gathering
-  if(g>0.35){
-    const D=Math.min(W,H)*0.20;
-    for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){
-      const dx=P[i].x-P[j].x, dy=P[i].y-P[j].y, d=Math.hypot(dx,dy);
-      if(d<D){ ctx.strokeStyle=`rgba(${col[0]},${col[1]},${col[2]},${(1-d/D)*0.45*g})`; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(P[i].x,P[i].y); ctx.lineTo(P[j].x,P[j].y); ctx.stroke(); }
-    }
-  }
-  for(const p of P){ ctx.fillStyle=`rgba(${col[0]},${col[1]},${col[2]},${idle?0.5:0.85})`; ctx.beginPath(); ctx.arc(p.x,p.y, g>0.5?3.4:2.6, 0, 7); ctx.fill(); }
-  requestAnimationFrame(frame);
-}
+  if(g>0.3){const D=Math.min(W,H)*0.19;ctx.lineWidth=1;
+    for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){const a=P[i],b=P[j],dx=a.dx-b.dx,dy=a.dy-b.dy,d=Math.hypot(dx,dy);
+      if(d<D){ctx.strokeStyle=`rgba(240,160,90,${(1-d/D)*0.5*g})`;ctx.beginPath();ctx.moveTo(a.dx,a.dy);ctx.lineTo(b.dx,b.dy);ctx.stroke();}}}
+  for(const p of P){const s=(11+p.z*20)*(g>0.5?1.15:1),al=idle?0.5:(0.5+0.5*p.z);
+    if(1-g>0.02){ctx.globalAlpha=(1-g)*al;ctx.drawImage(GCOOL,p.dx-s/2,p.dy-s/2,s,s);}
+    if(g>0.02){ctx.globalAlpha=g*al;ctx.drawImage(GWARM,p.dx-s/2,p.dy-s/2,s,s);}}
+  ctx.globalAlpha=1;requestAnimationFrame(frame);}
 requestAnimationFrame(frame);
-
 const SC=[
- {t:0,    html:"AI is coming for the work.", cls:"big jit"},
- {t:2700, html:"But here's what it <em>can't</em> take.", cls:"big fade"},
- {t:5100, html:"<span class='stampwrap'><span class='stamp'>a mic.</span><span class='stamp'>a workshop.</span><span class='stamp'>a pitch.</span></span>", cls:""},
- {t:7500, html:"“Just pick one thing.”", cls:"med fromL"},
- {t:9600, html:"The energy when strangers <em>actually connect.</em>", cls:"big fromR"},
- {t:12600,html:"A room — <em>laughing together.</em>", cls:"big pop"},
- {t:15000,html:"AI can't build that.", cls:"big fade"},
- {t:17500,html:"So I'm building the opposite —", cls:"med fromL"},
- {t:19800,html:"<span class='huge'>aggressively human.</span>", cls:"scaleup"},
- {t:23000,html:"Meet people. Go deeper. <em>Stay connected.</em>", cls:"big stagger"},
+ {t:0,    html:"They say AI is coming for our jobs.", cls:"big jit"},
+ {t:2800, html:"Maybe. But some things it simply <em>can't</em> replace.", cls:"big fade"},
+ {t:5400, html:"The energy of a room when strangers <em>actually connect.</em>", cls:"big fromR"},
+ {t:8400, html:"The whole room — <em>laughing together.</em>", cls:"big pop"},
+ {t:10900,html:"A stranger who becomes a friend.", cls:"med fromL"},
+ {t:13300,html:"I don't think AI can build those moments at all.", cls:"big fade"},
+ {t:16400,html:"So while the world races to scale the virtual —", cls:"med fromL"},
+ {t:19000,html:"I'm building the opposite:", cls:"med pop"},
+ {t:21000,html:"<span class='lead'>experiences, ventures &amp; spaces that are</span><span class='huge'>aggressively human.</span>", cls:""},
+ {t:24800,html:"Meet people. Go deeper. <em>Stay connected.</em>", cls:"big stagger"},
 ];
 let timers=[];
-function clearTimers(){timers.forEach(clearTimeout);timers=[];}
-function showScene(s){
-  sceneEl.innerHTML=`<div class="${s.cls}">${s.html}</div>`;
-  const stamps=sceneEl.querySelectorAll('.stamp');
-  stamps.forEach((el,i)=>{el.style.animation='aStamp .45s both';el.style.animationDelay=(i*0.22)+'s';});
-  if(s.cls.includes('stagger')){
-    const box=sceneEl.firstElementChild; const txt=box.innerHTML;
-    box.innerHTML=txt.replace(/(<em>.*?<\/em>|[^<\s]+)(\s*)/g,(m,word,sp)=>`<span class="w">${word}</span>${sp}`);
-    box.querySelectorAll('.w').forEach((el,i)=>{el.style.animation='aWord .5s both';el.style.animationDelay=(i*0.09)+'s';});
-  }
-}
-function run(){
-  clearTimers(); runStart=performance.now();
-  prog.style.transition='none'; prog.style.width='0'; void prog.offsetWidth;
-  prog.style.transition='width '+(total/1000)+'s linear'; prog.style.width='100%';
-  SC.forEach((s,idx)=>{
-    timers.push(setTimeout(()=>showScene(s), s.t));
-    const end = (idx+1<SC.length ? SC[idx+1].t : total) - 420;
-    timers.push(setTimeout(()=>{const c=sceneEl.firstElementChild; if(c)c.classList.add('out');}, Math.max(s.t,end)));
-  });
-}
+function showScene(s){sceneEl.innerHTML=`<div class="${s.cls}">${s.html}</div>`;
+  if(s.cls.includes('stagger')){const box=sceneEl.firstElementChild,txt=box.innerHTML;
+    box.innerHTML=txt.replace(/(<em>.*?<\/em>|[^<\s]+)(\s*)/g,(m,w,sp)=>`<span class="w">${w}</span>${sp}`);
+    box.querySelectorAll('.w').forEach((el,i)=>{el.style.animation='aWord .5s both';el.style.animationDelay=(i*0.1)+'s';});}}
+function run(){timers.forEach(clearTimeout);timers=[];runStart=performance.now();
+  prog.style.transition='none';prog.style.width='0';void prog.offsetWidth;prog.style.transition='width '+(total/1000)+'s linear';prog.style.width='100%';
+  SC.forEach((s,i)=>{timers.push(setTimeout(()=>showScene(s),s.t));const end=(i+1<SC.length?SC[i+1].t:total)-420;timers.push(setTimeout(()=>{const c=sceneEl.firstElementChild;if(c)c.classList.add('out');},Math.max(s.t,end)));});}
 document.getElementById('replay').onclick=run;
 resize();
-new IntersectionObserver((e)=>{e.forEach(x=>{if(x.isIntersecting){run();}})},{threshold:.4}).observe(stage);
+new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)run();})},{threshold:.4}).observe(stage);
 </script>
 </body>
 </html>
