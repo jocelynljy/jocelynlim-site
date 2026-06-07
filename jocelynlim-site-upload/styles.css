@@ -290,5 +290,3 @@ body{background:radial-gradient(125% 85% at 50% -12%, #f9f3e7 0%, #f3ecde 55%, #
 @media(max-width:920px){
   #why::before, #about::before{display:none}
 }
-/* never let any stray element create a sideways scroll */
-.wrap, .section, header, footer, .proof{max-width:100%}

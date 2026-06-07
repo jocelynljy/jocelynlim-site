@@ -118,7 +118,7 @@
     #whyvid .scan{animation:wvscan 2.2s ease-in-out infinite}
     #whyvid .fall{animation:wvfall 1.1s .3s cubic-bezier(.4,0,1,.6) forwards}
     #whyvid .zoom{animation:wvzoom 1.4s linear infinite}
-    #whyvid .grow{animation:wvgrow .7s cubic-bezier(.2,1.3,.3,1) both}
+    #whyvid .grow{transform-box:fill-box;transform-origin:center;animation:wvgrow .7s cubic-bezier(.2,1.3,.3,1) both}
     #whyvid .flip{animation:wvflip 1s cubic-bezier(.4,0,.2,1) both}
     #whyvid .bar{position:relative;height:8px;background:#e2d8c6;border-radius:6px;margin-top:16px;cursor:pointer;touch-action:none}
     #whyvid .bar>i{position:absolute;left:0;top:0;height:100%;width:0;border-radius:6px;background:linear-gradient(90deg,#ffb24d,#c8553d);pointer-events:none}
@@ -205,12 +205,13 @@
      race(){let z='';for(let i=0;i<7;i++)z+=`<line class="zoom" style="animation-delay:${i*0.18}s" x1="0" y1="${130+i*45}" x2="220" y2="${130+i*45}" stroke="${C}" stroke-width="3" stroke-linecap="round"/>`;
        let st='';for(let i=0;i<4;i++)st+=`<rect class="a up" style="animation-delay:${i*0.15}s" x="${430+i*40}" y="${330-i*52}" width="120" height="40" rx="8" fill="none" stroke="${C}" stroke-width="4"/>`;
        return `<svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">${z}${st}</svg>`;},
-     opposite(){return `<svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">
-       <g style="animation:wvflip180 1.2s cubic-bezier(.45,0,.2,1) both;transform-origin:500px 250px">
-         <line x1="372" y1="250" x2="628" y2="250" stroke="${Wm}" stroke-width="11" stroke-linecap="round"/>
-         <path d="M372 250 l50 -36 M372 250 l50 36" stroke="${Wm}" stroke-width="11" stroke-linecap="round" fill="none"/>
+     opposite(){let r='';for(let i=0;i<3;i++)r+=`<circle class="ring" style="animation-delay:${i*0.55}s" cx="500" cy="250" r="120" fill="none" stroke="${T}" stroke-width="3"/>`;
+       return `<svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">${r}
+       <g style="animation:wvflip180 1.25s cubic-bezier(.45,0,.2,1) both;transform-origin:500px 250px">
+         <line x1="500" y1="250" x2="336" y2="250" stroke="${Wm}" stroke-width="12" stroke-linecap="round"/>
+         <path d="M336 250 l56 -40 M336 250 l56 40" stroke="${Wm}" stroke-width="12" stroke-linecap="round" fill="none"/>
        </g>
-       <circle class="a grow" style="animation-delay:.2s" cx="500" cy="250" r="10" fill="${T}"/></svg>`;},
+       <circle class="a grow" style="animation-delay:.1s" cx="500" cy="250" r="62" fill="${T}"/></svg>`;},
      human(){let r='';for(let i=0;i<4;i++)r+=`<circle class="ring" style="animation-delay:${i*0.4}s" cx="500" cy="250" r="150" fill="none" stroke="${T}" stroke-width="4"/>`;
        return `<svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">${r}<circle class="a grow" style="animation-delay:.15s" cx="500" cy="250" r="92" fill="none" stroke="${Wm}" stroke-width="3" opacity=".55"/><circle class="a grow" cx="500" cy="250" r="46" fill="${Wm}"/></svg>`;},
      connch(){const pts=[[500,160],[372,255],[628,255],[432,360],[568,360]];const E=[[0,1],[0,2],[1,2],[1,3],[2,4],[3,4],[0,3],[0,4]];
@@ -265,24 +266,24 @@
       if(soundOn&&vo){vo.currentTime=(from||0)/1000;vo.play().catch(()=>{});}
       playing=true;setPP();}
     function toggle(){
-      if(soundOn&&vo){if(vo.ended||elapsed>=total-30){vo.currentTime=0;vo.play().catch(()=>{});musicReplay();musicResume();}else if(vo.paused){vo.play().catch(()=>{});musicResume();}else{vo.pause();musicSuspend();}return;}
+      if(soundOn&&vo){if(vo.ended||elapsed>=total-30){vo.currentTime=0;vo.play().catch(()=>{});}else if(vo.paused){vo.play().catch(()=>{});}else{vo.pause();}return;}
       if(elapsed>=total){start(0);return;}
       playing=!playing;lastTs=0;setPP();}
     pp.onclick=toggle;
-    rp.onclick=()=>{cur=-1;if(soundOn&&vo){vo.currentTime=0;vo.play().catch(()=>{});musicReplay();musicResume();}else{start(0);}};
+    rp.onclick=()=>{cur=-1;if(soundOn&&vo){vo.currentTime=0;vo.play().catch(()=>{});}else{start(0);}};
     function seekR(r){r=Math.max(0,Math.min(1,r));elapsed=r*total;lastTs=0;if(soundOn&&vo)vo.currentTime=elapsed/1000;const i=sceneAt(elapsed);if(i!==cur)renderScene(i);paint();}
     let dragging=false,wasPlay=false;
     function rEv(e){const b=bar.getBoundingClientRect();return (e.clientX-b.left)/b.width;}
-    bar.addEventListener('pointerdown',e=>{dragging=true;wasPlay=(soundOn&&vo)?!vo.paused:playing;if(soundOn&&vo){vo.pause();musicSuspend();}else playing=false;setPP();try{bar.setPointerCapture(e.pointerId);}catch(_){}seekR(rEv(e));});
+    bar.addEventListener('pointerdown',e=>{dragging=true;wasPlay=(soundOn&&vo)?!vo.paused:playing;if(soundOn&&vo){vo.pause();}else playing=false;setPP();try{bar.setPointerCapture(e.pointerId);}catch(_){}seekR(rEv(e));});
     bar.addEventListener('pointermove',e=>{if(dragging)seekR(rEv(e));});
-    bar.addEventListener('pointerup',e=>{if(!dragging)return;dragging=false;lastTs=0;if(soundOn&&vo){if(wasPlay){vo.play().catch(()=>{});musicResume();}}else playing=wasPlay;setPP();});
+    bar.addEventListener('pointerup',e=>{if(!dragging)return;dragging=false;lastTs=0;if(soundOn&&vo){if(wasPlay)vo.play().catch(()=>{});}else playing=wasPlay;setPP();});
     requestAnimationFrame(frame);
     let started=false;
     new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting&&!started){started=true;start(0);}})},{threshold:.4}).observe(document.getElementById('stage'));
 
     /* ===== music bed — generated, ducked under the voiceover, builds with the timeline ===== */
     let ac,musicReady=false,schTimer=null,nextT=0,step16=0,master,drum,bassBus,melBus,padBus,noise;
-    const BPM=112,SPB=60/BPM,S16=SPB/4,barLen=SPB*4,MUSVOL=0.42;
+    const BPM=112,SPB=60/BPM,S16=SPB/4,barLen=SPB*4,MUSVOL=0.66;
     const NT={C2:65.41,F2:87.31,G2:98.0,A2:110.0,F3:174.61,G3:196.0,A3:220.0,B3:246.94,C4:261.63,D4:293.66,E4:329.63,F4:349.23,G4:392.0,A4:440.0,C5:523.25};
     const PROG=[{r:NT.C2,ch:[NT.C4,NT.E4,NT.G4],ar:[NT.C4,NT.E4,NT.G4,NT.C5]},{r:NT.G2,ch:[NT.G3,NT.B3,NT.D4],ar:[NT.G3,NT.B3,NT.D4,NT.G4]},{r:NT.A2,ch:[NT.A3,NT.C4,NT.E4],ar:[NT.A3,NT.C4,NT.E4,NT.A4]},{r:NT.F2,ch:[NT.F3,NT.A3,NT.C4],ar:[NT.F3,NT.A3,NT.C4,NT.F4]}];
     function sect(b){return{pluck:true,bass:b>=1,kick:b>=1,clap:b>=2,hat:b>=2,hat16:b>=4,lead:b>=6,bright:b>=8};}
@@ -324,13 +325,20 @@
     function musicFadeOut(){if(!musicReady||!ac)return;try{master.gain.cancelScheduledValues(ac.currentTime);master.gain.setValueAtTime(Math.max(master.gain.value,0.0001),ac.currentTime);master.gain.exponentialRampToValueAtTime(0.0001,ac.currentTime+2.2);}catch(_){}clearTimeout(window._wvF);window._wvF=setTimeout(()=>{musicSuspend();},2300);}
     /* sound = crisp voiceover (master clock) + music bed underneath */
     const snd=document.getElementById('snd');
-    if(vo){vo.addEventListener('ended',()=>{playing=false;setPP();musicFadeOut();});}
+    /* music is tied entirely to the voiceover element: it resumes on every play,
+       pauses with it, and fades when the clip ends — so it never drifts or dies on replay */
+    if(vo){
+      vo.volume=0.82;                       /* leave headroom so the bed sits close to the voice */
+      vo.addEventListener('play', function(){ if(soundOn){ if(vo.currentTime<0.35) musicReplay(); musicResume(); } });
+      vo.addEventListener('pause',function(){ if(soundOn && !vo.ended) musicSuspend(); });
+      vo.addEventListener('ended',function(){ playing=false; setPP(); musicFadeOut(); });
+    }
     snd.onclick=function(){
       if(soundOn){soundOn=false;if(vo)vo.pause();stopMusic();playing=true;lastTs=0;
         this.textContent='🔇 Sound off';this.style.background='#e3d8c4';this.style.color='#5c5142';}
       else{soundOn=true;
-        if(vo){vo.currentTime=Math.min(Math.max(elapsed,0)/1000,total/1000-0.05);vo.play().catch(()=>{});}
         startMusic(elapsed);
+        if(vo){vo.volume=0.82;vo.currentTime=Math.min(Math.max(elapsed,0)/1000,total/1000-0.05);vo.play().catch(()=>{});}
         this.textContent='🔊 Sound on';this.style.background='linear-gradient(135deg,#3fae74,#2f9460)';this.style.color='#fff';}
     };
     })();
@@ -404,25 +412,42 @@
 <!-- CONNECT -->
 <section class="section" id="connect" style="padding-top:0">
   <div class="wrap">
-    <div class="tieback reveal" style="text-align:left;max-width:780px">
-      <div class="eyebrow" style="text-align:center;margin-bottom:12px">work with me</div>
-      <h2 class="section-h" style="text-align:center"><em>Let's</em> Collaborate</h2>
-      <p class="lead" style="margin:16px auto 0;text-align:center;max-width:620px">My week is divided between building my venture and holding space for others. Here's how we can work together right now:</p>
-      <div style="display:grid;gap:14px;margin:32px 0 0">
-        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 22px">
-          <span style="font-size:15.5px;line-height:1.5;max-width:430px"><b>Hire me to hold the room.</b> I'm currently taking on freelance projects as an Emcee, Moderator, and Facilitator for events that matter.</span>
+    <style>
+    .collab{max-width:860px;margin:0 auto;text-align:center}
+    .collab-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:36px 0 0;text-align:left}
+    .collab-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px 26px;display:flex;flex-direction:column;box-shadow:var(--shadow-sm);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
+    .collab-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+    .collab-ic{width:50px;height:50px;border-radius:15px;background:var(--paper-2);display:grid;place-items:center;font-size:24px;margin-bottom:18px}
+    .collab-card h3{font-family:var(--disp);font-weight:600;font-size:22px;line-height:1.15;margin-bottom:9px}
+    .collab-card p{font-size:14.5px;color:var(--ink-soft);line-height:1.55;margin-bottom:22px;flex:1}
+    .collab-card .btn{align-self:flex-start}
+    .collab-aside{max-width:600px;margin:30px auto 0;font-size:15px;line-height:1.6;color:var(--ink-soft)}
+    .collab-aside a{color:#b8533a;font-weight:600;text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+    .collab-ps{margin-top:18px;font-size:14px;font-style:italic}
+    .collab-email{margin-top:22px;font-size:13.5px;color:var(--faint)}
+    @media(max-width:680px){.collab-grid{grid-template-columns:1fr;gap:14px}.collab-card{padding:24px 22px}}
+    </style>
+    <div class="tieback reveal collab">
+      <div class="eyebrow">work with me</div>
+      <h2 class="section-h" style="margin-top:8px"><em>Let's</em> collaborate</h2>
+      <p class="lead" style="margin:16px auto 0;max-width:600px">My week is split between building my venture and holding space for others. Here's how we can work together right now.</p>
+      <div class="collab-grid">
+        <div class="collab-card">
+          <div class="collab-ic">🎤</div>
+          <h3>Hire me to hold the room</h3>
+          <p>Freelance Emcee, Moderator &amp; Facilitator — for events that actually matter.</p>
           <a class="btn btn-primary" href="mailto:limjy.jocelyn@gmail.com?subject=Your%20event%20%E2%80%94%20emcee%20%2F%20facilitator">Email me about your event <span class="arrow">→</span></a>
         </div>
-        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 22px">
-          <span style="font-size:15.5px;line-height:1.5;max-width:430px"><b>Partner with Scentura.</b> Want to bring a multi-sensory floral experience to your space?</span>
+        <div class="collab-card">
+          <div class="collab-ic">🌸</div>
+          <h3>Partner with Scentura</h3>
+          <p>Bring a multi-sensory floral experience — scent, craft &amp; connection — to your space.</p>
           <a class="btn btn-primary" href="mailto:limjy.jocelyn@gmail.com?subject=Scentura%20%E2%80%94%20multi-sensory%20experience">Email me about Scentura <span class="arrow">→</span></a>
         </div>
       </div>
-      <p style="margin:24px 0 0;text-align:center;font-size:15.5px;line-height:1.6;color:#43392f"><b>Just want to connect?</b> If you're building something cool, want to swap notes on startups, or just want to grab a coffee, skip the email. <a href="https://t.me/jyjocelyn" target="_blank" rel="noopener" style="color:#b8533a;font-weight:600;text-decoration:underline;text-underline-offset:2px">Drop me a text on Telegram (@jyjocelyn)</a></p>
-      <div style="margin:26px auto 0;text-align:left;background:var(--paper-2);border:1px dashed var(--line);border-radius:16px;padding:22px 24px">
-        <div style="font-size:15px;line-height:1.65;color:#2a2018"><b>P.S.</b> If you're wondering how a non-technical founder built this site — I built this entire ecosystem using AI. Why? Because I believe AI should handle the logistics so humans can focus on the room. Want to know how? <a href="#" onclick="if(window.Calendly){Calendly.initPopupWidget({url:'https://calendly.com/jocelyn-limjy/15-minute-meeting'});}if(window.gtag){gtag('event','contact_click',{method:'calendly'});}return false;" style="color:#b8533a;font-weight:600;text-decoration:underline;text-underline-offset:2px;cursor:pointer">Let's grab a coffee or jump on a 15-minute call.</a></div>
-      </div>
-      <p style="margin:22px 0 0;text-align:center;font-size:14px;color:var(--ink-soft)">Or email me directly at <a href="mailto:limjy.jocelyn@gmail.com" style="color:#b8533a;font-weight:600">limjy.jocelyn@gmail.com</a></p>
+      <p class="collab-aside"><b style="color:var(--ink)">Just want to connect?</b> Building something cool, want to swap startup notes, or grab a coffee? Skip the inbox — <a href="https://t.me/jyjocelyn" target="_blank" rel="noopener">text me on Telegram (@jyjocelyn)</a>.</p>
+      <p class="collab-aside collab-ps"><b style="font-style:normal;color:var(--ink)">P.S.</b> Curious how a non-technical founder built this whole ecosystem with AI? <a href="#" onclick="if(window.Calendly){Calendly.initPopupWidget({url:'https://calendly.com/jocelyn-limjy/15-minute-meeting'});}if(window.gtag){gtag('event','contact_click',{method:'calendly'});}return false;" style="font-style:normal">Grab a coffee or a 15-min call.</a></p>
+      <p class="collab-aside collab-email">Or email me directly at <a href="mailto:limjy.jocelyn@gmail.com" style="text-decoration:none">limjy.jocelyn@gmail.com</a></p>
     </div>
   </div>
 </section>
