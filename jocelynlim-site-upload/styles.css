@@ -50,6 +50,11 @@ img{display:block; max-width:100%}
 .ev-chip{font-family:inherit; font-size:13.5px; color:var(--ink-soft); background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:8px 13px; cursor:pointer; transition:all .15s}
 .ev-chip:hover{border-color:var(--bloom)}
 .ev-chip.on{background:var(--bloom); color:#fff; border-color:var(--bloom)}
+.wm-row{display:flex; gap:12px}
+.wm-row .wm-field{flex:1; min-width:0}
+.wm-opt{color:var(--faint); font-weight:400; font-size:.9em}
+#wmEvents .wm-modal{max-height:92vh; overflow:auto}
+@media(max-width:480px){.wm-row{flex-direction:column; gap:0}}
 .btn .arrow{transition:transform .25s}
 .btn:hover .arrow{transform:translateX(4px)}
 

@@ -37,7 +37,25 @@
 .mc-ncard .ic{font-size:26px;margin-bottom:10px}
 .mc-ncard h4{font-family:var(--disp);font-weight:600;font-size:17px;margin-bottom:6px}
 .mc-ncard p{font-size:14px;color:var(--ink-soft);line-height:1.5}
-@media(max-width:760px){.mc-intro{grid-template-columns:1fr;gap:22px}.mc-notice{grid-template-columns:1fr}}
+.mc-art-cap{grid-column:1/-1;text-align:right;font-size:12.5px;color:var(--faint);font-style:italic;margin:6px 2px 0}
+/* bold dark band for the "noticing" section */
+.mc-band{background:var(--ink);color:#f3ead9;border-radius:24px;padding:36px 32px;box-shadow:0 22px 50px rgba(44,36,32,.28)}
+.mc-band-head{max-width:640px;margin-bottom:26px}
+.mc-band-eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:#e8a06a}
+.mc-band-head h2{font-family:var(--disp);font-weight:600;font-size:clamp(25px,3.8vw,34px);margin:9px 0 9px;color:#fff;line-height:1.12}
+.mc-band-head h2 em{font-style:italic;color:#e8a06a}
+.mc-band-head p{font-size:16px;color:#d9ccb8;line-height:1.5;margin:0}
+.mc-band-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.mc-bcard .bn{font-size:30px;display:block;margin-bottom:9px}
+.mc-bcard h4{font-family:var(--disp);font-weight:600;font-size:18px;color:#fff;margin-bottom:5px}
+.mc-bcard p{font-size:14px;color:#cdbfa8;line-height:1.5}
+/* playful colored use-case tiles */
+.mc-use{transition:transform .2s,box-shadow .2s}
+.mc-use .ic{font-size:30px}
+.mc-use:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(60,45,30,.12)}
+.mc-use.u1{background:#fbe9e4}.mc-use.u2{background:#f4ead6}.mc-use.u3{background:#e7ecf6}
+.mc-use.u4{background:#f1e4ee}.mc-use.u5{background:#e4f0ea}.mc-use.u6{background:#f9e8d8}
+@media(max-width:760px){.mc-intro{grid-template-columns:1fr;gap:22px}.mc-notice{grid-template-columns:1fr}.mc-band-grid{grid-template-columns:1fr;gap:16px}.mc-band{padding:26px 22px}}
 .mc-eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--accent);margin-bottom:14px}
 /* gallery */
 .mc-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px}
@@ -142,9 +160,9 @@
         <img src="/assets/character-4.jpg" alt="Chibi character mid-dance with a 'HA!' speech bubble" loading="lazy">
         <img src="/assets/character-5.jpg" alt="Chibi character with a DJ console and a cheeky grin" loading="lazy">
         <img src="/assets/character-6.jpg" alt="Chibi character in a tutu holding a giant hammer" loading="lazy">
+        <p class="mc-art-cap">(Drawn from their personalities, not their names. ;)</p>
       </div>
     </div>
-    <p class="mc-cap" style="text-align:left;margin-top:14px">A few of my people. (Drawn from their personalities, not their names. ;)</p>
   </div>
 </section>
 
@@ -189,9 +207,21 @@ Outfit: [clothing, e.g. baggy oversized tee and shorts, a classical dance outfit
 
 Props &amp; Vibe: Surround the character with [3 to 4 objects, e.g. a DJ console, a giant hammer, musical notes, a floating bottle, hearts, sparkles].
 
-Text Elements: Include a small handwritten name label '[name]' and [number] speech bubbles with their catchphrases: "[phrase 1]" and "[phrase 2]".</div>
+Text Elements: Include a small handwritten name label '[name]' and [number] speech bubbles with their catchphrases: "[phrase 1]" and "[phrase 2]".
+
+<b>// How to turn a real person into a drawing (read them, then exaggerate)</b>
+- A bit of a menace? Give them a giant weapon, or a split "angel and devil" face.
+- Always dancing? A big dynamic pose: a twerk, a spin, a bounce.
+- Always laughing? Eye-smiles (^^) and hands squishing their cheeks.
+- Obsessed with someone or something? Heart-eyes, maybe a tiny bit of drool.
+- Effortlessly chill? Half-lidded eyes and a "heh" smirk.
+- One signature habit? Float 1 or 2 little "totem" objects around them.
+
+<b>// Pro tips</b>
+- Only colour the hair and 1 or 2 key props. Leave the clothes white so the character pops.
+- Long catchphrase? Split it across two speech bubbles to keep it clean.
+- Always say "cream paper background" so it doesn't come out clinical white.</div>
     </div>
-    <a class="mc-grab" href="/assets/make-them-a-character-prompt-guide.md" target="_blank" rel="noopener" data-track="character:download-guide">Grab the full guide (with all my tips) →</a>
 
     <div class="mc-callout reveal">
       <div class="e">🎨</div>
@@ -203,14 +233,19 @@ Text Elements: Include a small handwritten name label '[name]' and [number] spee
   </div>
 </section>
 
-<section class="section" style="padding-top:18px">
+<section class="section" style="padding-top:22px">
   <div class="wrap">
-    <h2 style="font-family:var(--disp);font-weight:600;font-size:clamp(22px,3.2vw,28px);margin:0 0 6px">The fun part? Noticing.</h2>
-    <p class="mc-cap" style="text-align:left;margin:0;font-size:15px">Read someone's personality, then turn it all the way up. That's the whole game.</p>
-    <div class="mc-notice reveal">
-      <div class="mc-ncard"><div class="ic">👀</div><h4>Look closely</h4><p>The catchphrase they always say. The way they move. The thing they'd never admit they love.</p></div>
-      <div class="mc-ncard"><div class="ic">🪞</div><h4>It's a mirror</h4><p>Everyone draws everyone differently. Your version of a friend says as much about you as it does them.</p></div>
-      <div class="mc-ncard"><div class="ic">✨</div><h4>No art skills</h4><p>The prompt does the heavy lifting. Just tell it their vibe, then exaggerate.</p></div>
+    <div class="mc-band reveal">
+      <div class="mc-band-head">
+        <span class="mc-band-eyebrow">the actual magic</span>
+        <h2>The fun part? <em>Noticing.</em></h2>
+        <p>Read someone's personality, then turn it all the way up. That's the whole game.</p>
+      </div>
+      <div class="mc-band-grid">
+        <div class="mc-bcard"><span class="bn">👀</span><h4>Look closely</h4><p>The catchphrase they always say. The way they move. The thing they'd never admit they love.</p></div>
+        <div class="mc-bcard"><span class="bn">🪞</span><h4>It's a mirror</h4><p>Everyone draws everyone differently. Your version of a friend says as much about you as it does them.</p></div>
+        <div class="mc-bcard"><span class="bn">✨</span><h4>No art skills</h4><p>The prompt does the heavy lifting. Tell it their vibe, then exaggerate.</p></div>
+      </div>
     </div>
   </div>
 </section>
@@ -220,12 +255,12 @@ Text Elements: Include a small handwritten name label '[name]' and [number] spee
     <h2 style="font-family:var(--disp);font-weight:600;font-size:clamp(22px,3.2vw,28px);margin:0 0 4px">Once you have the characters&hellip;</h2>
     <p class="mc-cap" style="text-align:left;margin:0">This is where it gets really fun. A few things I've done (and you can too):</p>
     <div class="mc-uses reveal">
-      <div class="mc-use"><div class="ic">💌</div><h4>Postcards &amp; letters</h4><p>Print the character, write a handwritten note on the back. Instant heirloom.</p></div>
-      <div class="mc-use"><div class="ic">🎂</div><h4>Birthday cards &amp; cake toppers</h4><p>Yes, we actually printed characters onto cakes. The reaction is unreal.</p></div>
-      <div class="mc-use"><div class="ic">🌐</div><h4>A tiny website for someone</h4><p>Build a little one-page site for a friend, with their character as the star.</p></div>
-      <div class="mc-use"><div class="ic">✨</div><h4>Stickers &amp; wallpapers</h4><p>Phone wallpapers, laptop stickers, group-chat reaction packs.</p></div>
-      <div class="mc-use"><div class="ic">👯</div><h4>The whole friend group</h4><p>Make everyone, line them up together. A little illustrated family portrait.</p></div>
-      <div class="mc-use"><div class="ic">🎁</div><h4>The impossible-to-buy-for person</h4><p>When they have everything, give them something only you could make.</p></div>
+      <div class="mc-use u1"><div class="ic">💌</div><h4>Postcards &amp; letters</h4><p>Print the character, write a handwritten note on the back. Instant heirloom.</p></div>
+      <div class="mc-use u2"><div class="ic">🎂</div><h4>Birthday cards &amp; cake toppers</h4><p>Yes, we actually printed characters onto cakes. The reaction is unreal.</p></div>
+      <div class="mc-use u3"><div class="ic">🌐</div><h4>A tiny website for someone</h4><p>Build a little one-page site for a friend, with their character as the star.</p></div>
+      <div class="mc-use u4"><div class="ic">✨</div><h4>Stickers &amp; wallpapers</h4><p>Phone wallpapers, laptop stickers, group-chat reaction packs.</p></div>
+      <div class="mc-use u5"><div class="ic">👯</div><h4>The whole friend group</h4><p>Make everyone, line them up together. A little illustrated family portrait.</p></div>
+      <div class="mc-use u6"><div class="ic">🎁</div><h4>The impossible-to-buy-for person</h4><p>When they have everything, give them something only you could make.</p></div>
     </div>
     <figure class="mc-cake reveal">
       <img src="/assets/cake-character.jpg" alt="A chocolate birthday cake with a printed cut-out of a hand-drawn character standing on top among the candles" loading="lazy">
