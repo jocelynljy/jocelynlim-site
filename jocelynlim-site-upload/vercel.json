@@ -1,6 +1,12 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "rewrites": [
+    { "source": "/stories/:slug", "destination": "/:slug" }
+  ],
+  "redirects": [
+    { "source": "/what-a-newsroom-taught-me-about-hosting", "destination": "/stories/what-a-newsroom-taught-me-about-hosting", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",

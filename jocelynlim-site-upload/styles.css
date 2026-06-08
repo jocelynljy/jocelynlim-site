@@ -93,6 +93,11 @@ img{display:block; max-width:100%}
 .post-body p{font-size:18px;line-height:1.7;color:#43392f;margin-bottom:22px}
 .post-body h2{font-family:var(--disp);font-weight:600;font-size:25px;margin:34px 0 10px;color:var(--ink)}
 .post-cta{margin-top:42px;padding-top:26px;border-top:1px solid var(--line)}
+.post-deck{font-family:var(--disp);font-style:italic;font-weight:400;font-size:clamp(18px,2.4vw,22px);color:var(--ink-soft);line-height:1.4;margin:0 0 18px}
+.post-body>img{width:100%;border-radius:16px;margin:6px 0 30px}
+.post-scene{color:var(--ink-soft)}
+.post-scene em{font-style:italic}
+.post-more{margin-top:46px;padding-top:30px;border-top:1px solid var(--line)}
 
 /* hero */
 .hero{position:relative; padding:64px 0 40px; overflow:hidden}
