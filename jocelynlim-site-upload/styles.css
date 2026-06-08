@@ -519,4 +519,9 @@ body{background:radial-gradient(125% 85% at 50% -12%, #f9f3e7 0%, #f3ecde 55%, #
     margin:0;
   }
   .router-grid > .rcard:hover{transform:none}
+
+  /* "what I'm building" ventures grid also swipes */
+  .quests{display:flex !important;grid-template-columns:none !important;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding:4px 20px 16px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .quests::-webkit-scrollbar{display:none}
+  .quests > .quest{flex:0 0 86%;scroll-snap-align:center;margin:0}
 }
