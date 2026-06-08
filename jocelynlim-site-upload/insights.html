@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insights · private</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js"></script>
+<style>
+:root{--paper:#f6f0e6;--paper2:#efe7d8;--ink:#2c2420;--soft:#6f655c;--faint:#9a9085;--line:#e2d8c6;--card:#fffdf8;--acc:#b8533a;--blue:#4a5e94;--gold:#b07d3a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.5;padding:24px;max-width:1100px;margin:0 auto}
+h1{font-size:25px;font-weight:700;letter-spacing:-.01em}
+.sub{color:var(--soft);font-size:13px;margin-top:3px}
+.lock{float:right;font-size:12.5px;color:var(--soft);background:none;border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer}
+/* gate */
+.gate{max-width:380px;margin:14vh auto;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:34px 28px;box-shadow:0 24px 60px rgba(60,45,30,.12)}
+.gate h2{font-size:20px;font-weight:700;margin-bottom:6px}
+.gate p{color:var(--soft);font-size:13.5px;margin-bottom:20px}
+.gate input{width:100%;font-size:15px;padding:13px 15px;border:1px solid var(--line);border-radius:12px;margin-bottom:12px;font-family:inherit}
+.gate input:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px rgba(196,100,79,.14)}
+.gate button{width:100%;background:var(--acc);color:#fff;border:none;border-radius:12px;padding:13px;font-size:15px;font-weight:600;cursor:pointer}
+.gate .err{color:var(--acc);font-size:13px;margin-top:10px;min-height:18px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:12px;margin:22px 0}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px 16px}
+.kpi .n{font-size:27px;font-weight:700;letter-spacing:-.02em;line-height:1;color:var(--acc)}
+.kpi .l{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--faint);font-weight:700;margin-top:7px}
+.grid2{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.card h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--soft);font-weight:700;margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;color:var(--faint);font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;padding:5px 8px;border-bottom:1px solid var(--line)}
+td{padding:7px 8px;border-bottom:1px solid #f0e9da;vertical-align:top}
+td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.path{word-break:break-word;color:var(--ink)}.muted{color:var(--faint)}.mono{font-family:ui-monospace,Menlo,monospace;font-size:12px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:20px;padding:2px 7px;margin-left:6px}
+.tag.post{color:var(--acc);background:#f6efe3}.tag.cta{color:var(--blue);background:#e7ecf6}
+.scroll{max-height:330px;overflow:auto}
+canvas{max-height:230px}
+.state{padding:30px;text-align:center;color:var(--soft)}
+@media(max-width:760px){.grid2{grid-template-columns:1fr}body{padding:14px}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+var SB='https://axttzedzhtvlblalrryc.supabase.co';
+var KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4dHR6ZWR6aHR2bGJsYWxycnljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5MjI4MTEsImV4cCI6MjA5NjQ5ODgxMX0.cZMZeeST8ik4Es3UaVtcAZvgrmdLrcBpcWKQ8GOUVAQ';
+var app=document.getElementById('app');
+function E(s){var d=document.createElement('div');d.textContent=(s==null?'':String(s));return d.innerHTML;}
+function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v);}catch(e){return null;}}
+
+function gate(msg){
+  app.innerHTML='<div class="gate"><h2>🔒 Private insights</h2><p>Enter your passphrase to view your site\'s numbers.</p>'+
+    '<input id="pw" type="password" placeholder="passphrase" autocomplete="off"><button id="go">Unlock</button><div class="err">'+E(msg||'')+'</div></div>';
+  var pw=document.getElementById('pw');pw.focus();
+  function submit(){load(pw.value.trim());}
+  document.getElementById('go').onclick=submit;
+  pw.addEventListener('keydown',function(e){if(e.key==='Enter')submit();});
+}
+
+function load(pass){
+  if(!pass){gate('Type your passphrase.');return;}
+  app.innerHTML='<div class="state">Loading your numbers…</div>';
+  fetch(SB+'/rest/v1/rpc/get_insights',{method:'POST',headers:{'apikey':KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json'},body:JSON.stringify({p:pass})})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(!d||d.ok!==true){ls('jl_ins',null);gate('Hmm, that passphrase didn\'t work. Try again.');return;}
+      ls('jl_ins',pass);
+      try{render(d);}catch(e){app.innerHTML='<div class="state">Rendering issue: '+E(e.message)+' <button class="lock" onclick="location.reload()">reload</button></div>';}
+    })
+    .catch(function(e){gate('Couldn\'t reach the server ('+E(e.message)+'). Try again.');});
+}
+
+function isPost(p){return String(p).indexOf('/stories/')===0;}
+function isCta(l){return String(l).indexOf('open:')===0;}
+function shortRef(u){try{if(String(u).indexOf('(')===0)return u;return new URL(u).hostname.replace('www.','');}catch(e){return u;}}
+
+function render(d){
+  var dev=d.device||[],pages=d.pages||[],refs=d.refs||[],clicks=d.clicks||[],daily=d.daily||[],rv=d.recent_views||[],rl=d.recent_leads||[],rc=d.recent_comments||[];
+  var k=[['Page views',d.total_views||0],['Visitors',d.visitors||0],['Bounce',d.bounce==null?'—':d.bounce+'%'],['Pages / visit',d.ppv==null?'—':d.ppv],['CTA clicks',d.cta_clicks||0],['Likes',d.likes||0],['Comments',d.comments||0],['Email leads',d.leads||0]];
+  var h='<div><button class="lock" onclick="ls(\'jl_ins\',null);location.reload()">🔒 lock</button><h1>Site Insights</h1><div class="sub">Private · jocelynlim.space · updated '+E(d.generated_at||'')+' (SGT)</div></div>';
+  h+='<div class="kpis">'+k.map(function(x){return '<div class="kpi"><div class="n">'+E(x[1])+'</div><div class="l">'+x[0]+'</div></div>';}).join('')+'</div>';
+  h+='<div class="grid2"><div class="card"><h2>Views over time</h2><canvas id="cD"></canvas></div><div class="card"><h2>Laptop vs mobile</h2><canvas id="cV"></canvas></div></div>';
+  // pages
+  h+='<div class="card" style="margin-bottom:16px"><h2>Top pages &amp; posts</h2><div class="scroll"><table><thead><tr><th>Page</th><th style="text-align:right">Views</th><th style="text-align:right">Visitors</th></tr></thead><tbody>'+
+     (pages.length?pages.map(function(p){return '<tr><td class="path">'+E(p.path)+(isPost(p.path)?'<span class="tag post">post</span>':'')+'</td><td class="num">'+p.n+'</td><td class="num muted">'+p.v+'</td></tr>';}).join(''):'<tr><td colspan="3" class="muted">No views yet.</td></tr>')+'</tbody></table></div></div>';
+  // refs + clicks
+  h+='<div class="grid2"><div class="card"><h2>Where visitors came from</h2><div class="scroll"><table><tbody>'+
+     (refs.length?refs.map(function(r){return '<tr><td class="path">'+E(shortRef(r.ref))+'</td><td class="num">'+r.n+'</td></tr>';}).join(''):'<tr><td class="muted">Nothing yet.</td></tr>')+'</tbody></table></div></div>'+
+     '<div class="card"><h2>What people click</h2><div class="scroll"><table><tbody>'+
+     (clicks.length?clicks.map(function(c){return '<tr><td class="path">'+E(c.label)+(isCta(c.label)?'<span class="tag cta">cta</span>':'')+'</td><td class="num">'+c.n+'</td></tr>';}).join(''):'<tr><td class="muted">No clicks yet.</td></tr>')+'</tbody></table></div></div></div>';
+  // email leads
+  h+='<div class="card" style="margin-bottom:16px"><h2>📧 Email leads ('+(rl.length)+')</h2><div class="scroll"><table><thead><tr><th>Email</th><th>From</th><th>Result</th><th>When</th></tr></thead><tbody>'+
+     (rl.length?rl.map(function(l){return '<tr><td class="mono">'+E(l.email)+'</td><td class="muted">'+E(l.source)+'</td><td>'+E(l.result||'')+'</td><td class="muted">'+E(l.ts)+'</td></tr>';}).join(''):'<tr><td colspan="4" class="muted">No leads yet — they appear when someone enters their email in the quiz.</td></tr>')+'</tbody></table></div></div>';
+  // comments
+  h+='<div class="card" style="margin-bottom:16px"><h2>💬 Comments ('+(rc.length)+')</h2><div class="scroll"><table><thead><tr><th>Name</th><th>Message</th><th>Email</th><th>Post</th><th>When</th></tr></thead><tbody>'+
+     (rc.length?rc.map(function(c){return '<tr><td><b>'+E(c.name)+'</b></td><td class="path">'+E(c.message)+'</td><td class="mono muted">'+E(c.email||'—')+'</td><td class="muted">'+E(c.post)+'</td><td class="muted">'+E(c.ts)+'</td></tr>';}).join(''):'<tr><td colspan="5" class="muted">No comments yet.</td></tr>')+'</tbody></table></div></div>';
+  // recent activity
+  h+='<div class="card"><h2>Recent activity (last 50 views)</h2><div class="scroll"><table><thead><tr><th>Page</th><th>Device</th><th>From</th><th>When</th></tr></thead><tbody>'+
+     (rv.length?rv.map(function(v){return '<tr><td class="path">'+E(v.path)+'</td><td class="muted">'+E(v.device)+'</td><td class="muted">'+E(shortRef(v.ref))+'</td><td class="muted">'+E(v.ts)+'</td></tr>';}).join(''):'<tr><td colspan="4" class="muted">Nothing yet.</td></tr>')+'</tbody></table></div></div>';
+  app.innerHTML=h;
+  if(daily.length&&window.Chart)new Chart(document.getElementById('cD'),{type:'bar',data:{labels:daily.map(function(x){return x.label;}),datasets:[{data:daily.map(function(x){return x.n;}),backgroundColor:'#c4644f',borderRadius:6}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{precision:0}},x:{grid:{display:false}}}}});
+  if(dev.length&&window.Chart)new Chart(document.getElementById('cV'),{type:'doughnut',data:{labels:dev.map(function(x){return x.device;}),datasets:[{data:dev.map(function(x){return x.n;}),backgroundColor:['#b8533a','#4a5e94','#b07d3a','#93577f','#7d8a4f']}]},options:{plugins:{legend:{position:'bottom'}}}});
+}
+
+var saved=ls('jl_ins');
+if(saved)load(saved);else gate('');
+</script>
+</body>
+</html>
