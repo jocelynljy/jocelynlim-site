@@ -8,13 +8,13 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js"></script>
 <style>
-:root{--paper:#f6f0e6;--paper2:#efe7d8;--ink:#2c2420;--soft:#6f655c;--faint:#9a9085;--line:#e2d8c6;--card:#fffdf8;--acc:#b8533a;--blue:#4a5e94;--gold:#b07d3a}
+:root{--paper:#f6f0e6;--paper2:#efe7d8;--ink:#2c2420;--soft:#6f655c;--faint:#9a9085;--line:#e2d8c6;--card:#fffdf8;--acc:#b8533a;--blue:#4a5e94;--gold:#b07d3a;--green:#3f8a6a}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--paper);color:var(--ink);font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.5;padding:24px;max-width:1100px;margin:0 auto}
+body{background:var(--paper);color:var(--ink);font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.5;padding:24px;max-width:1160px;margin:0 auto}
 h1{font-size:25px;font-weight:700;letter-spacing:-.01em}
 .sub{color:var(--soft);font-size:13px;margin-top:3px}
-.lock{float:right;font-size:12.5px;color:var(--soft);background:none;border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer}
-/* gate */
+.lock{font-size:12.5px;color:var(--soft);background:none;border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
 .gate{max-width:380px;margin:14vh auto;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:34px 28px;box-shadow:0 24px 60px rgba(60,45,30,.12)}
 .gate h2{font-size:20px;font-weight:700;margin-bottom:6px}
 .gate p{color:var(--soft);font-size:13.5px;margin-bottom:20px}
@@ -22,13 +22,21 @@ h1{font-size:25px;font-weight:700;letter-spacing:-.01em}
 .gate input:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px rgba(196,100,79,.14)}
 .gate button{width:100%;background:var(--acc);color:#fff;border:none;border-radius:12px;padding:13px;font-size:15px;font-weight:600;cursor:pointer}
 .gate .err{color:var(--acc);font-size:13px;margin-top:10px;min-height:18px}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:12px;margin:22px 0}
-.kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px 16px}
-.kpi .n{font-size:27px;font-weight:700;letter-spacing:-.02em;line-height:1;color:var(--acc)}
-.kpi .l{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--faint);font-weight:700;margin-top:7px}
+.ranges{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin:16px 0 4px}
+.rg{font-size:12.5px;font-weight:600;color:var(--soft);background:var(--card);border:1px solid var(--line);border-radius:20px;padding:6px 13px;cursor:pointer}
+.rg.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.ranges .sep{width:1px;height:20px;background:var(--line);margin:0 3px}
+.ranges input[type=date]{font-family:inherit;font-size:12.5px;border:1px solid var(--line);border-radius:9px;padding:5px 9px;color:var(--ink);background:var(--card)}
+.ranges .go{font-size:12.5px;font-weight:600;color:#fff;background:var(--blue);border:none;border-radius:9px;padding:6px 13px;cursor:pointer}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:11px;margin:18px 0}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 15px}
+.kpi .n{font-size:25px;font-weight:700;letter-spacing:-.02em;line-height:1;color:var(--acc)}
+.kpi .l{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700;margin-top:7px}
 .grid2{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-bottom:16px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
-.card h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--soft);font-weight:700;margin-bottom:14px}
+.grid2b{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px}
+.card h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--soft);font-weight:700;margin-bottom:4px}
+.card .hint{font-size:11.5px;color:var(--faint);margin-bottom:13px}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th{text-align:left;color:var(--faint);font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;padding:5px 8px;border-bottom:1px solid var(--line)}
 td{padding:7px 8px;border-bottom:1px solid #f0e9da;vertical-align:top}
@@ -36,10 +44,14 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-
 .path{word-break:break-word;color:var(--ink)}.muted{color:var(--faint)}.mono{font-family:ui-monospace,Menlo,monospace;font-size:12px}
 .tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:20px;padding:2px 7px;margin-left:6px}
 .tag.post{color:var(--acc);background:#f6efe3}.tag.cta{color:var(--blue);background:#e7ecf6}
-.scroll{max-height:330px;overflow:auto}
+.badge{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:20px;padding:2px 8px}
+.badge.win{color:#2f7d5b;background:#e2f1e9}.badge.new{color:var(--gold);background:#f4ead6}.badge.ret{color:var(--blue);background:#e7ecf6}
+.chip{display:inline-block;font-size:11px;color:var(--soft);background:var(--paper2);border-radius:6px;padding:2px 7px;margin:1px 3px 1px 0}
+.chip.arrow:after{content:"\203A";color:var(--faint);margin-left:6px}
+.scroll{max-height:360px;overflow:auto}
 canvas{max-height:230px}
 .state{padding:30px;text-align:center;color:var(--soft)}
-@media(max-width:760px){.grid2{grid-template-columns:1fr}body{padding:14px}}
+@media(max-width:760px){.grid2,.grid2b{grid-template-columns:1fr}body{padding:14px}}
 </style>
 </head>
 <body>
@@ -48,11 +60,21 @@ canvas{max-height:230px}
 var SB='https://axttzedzhtvlblalrryc.supabase.co';
 var KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4dHR6ZWR6aHR2bGJsYWxycnljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5MjI4MTEsImV4cCI6MjA5NjQ5ODgxMX0.cZMZeeST8ik4Es3UaVtcAZvgrmdLrcBpcWKQ8GOUVAQ';
 var app=document.getElementById('app');
+var charts=[];
+var RANGE={key:'all',from:null,to:null};
+
 function E(s){var d=document.createElement('div');d.textContent=(s==null?'':String(s));return d.innerHTML;}
 function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v);}catch(e){return null;}}
+function fmtSecs(s){s=Math.round(s||0);if(!s)return '0s';if(s<60)return s+'s';var m=Math.floor(s/60),r=s%60;return m+'m'+(r?' '+r+'s':'');}
+function prettyPath(p){if(p==='/'||p==='')return 'Home';return String(p);}
+function isPost(p){return String(p).indexOf('/stories/')===0;}
+function isCta(l){return String(l).indexOf('open:')===0;}
+function shortRef(u){try{if(String(u).indexOf('(')===0)return u;return new URL(u).hostname.replace('www.','');}catch(e){return u;}}
+function destroyCharts(){charts.forEach(function(c){try{c.destroy();}catch(e){}});charts=[];}
 
 function gate(msg){
-  app.innerHTML='<div class="gate"><h2>🔒 Private insights</h2><p>Enter your passphrase to view your site\'s numbers.</p>'+
+  destroyCharts();
+  app.innerHTML='<div class="gate"><h2>&#128274; Private insights</h2><p>Enter your passphrase to view your numbers.</p>'+
     '<input id="pw" type="password" placeholder="passphrase" autocomplete="off"><button id="go">Unlock</button><div class="err">'+E(msg||'')+'</div></div>';
   var pw=document.getElementById('pw');pw.focus();
   function submit(){load(pw.value.trim());}
@@ -62,51 +84,137 @@ function gate(msg){
 
 function load(pass){
   if(!pass){gate('Type your passphrase.');return;}
-  app.innerHTML='<div class="state">Loading your numbers…</div>';
-  fetch(SB+'/rest/v1/rpc/get_insights',{method:'POST',headers:{'apikey':KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json'},body:JSON.stringify({p:pass})})
+  ls('jl_ins',pass);
+  app.innerHTML='<div class="state">Loading your numbers&hellip;</div>';
+  fetch(SB+'/rest/v1/rpc/get_insights',{method:'POST',headers:{'apikey':KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json'},body:JSON.stringify({p:pass,from_ts:RANGE.from,to_ts:RANGE.to})})
     .then(function(r){return r.json();})
     .then(function(d){
-      if(!d||d.ok!==true){ls('jl_ins',null);gate('Hmm, that passphrase didn\'t work. Try again.');return;}
-      ls('jl_ins',pass);
+      if(!d||d.ok!==true){ls('jl_ins',null);gate('Hmm, that passphrase did not work. Try again.');return;}
       try{render(d);}catch(e){app.innerHTML='<div class="state">Rendering issue: '+E(e.message)+' <button class="lock" onclick="location.reload()">reload</button></div>';}
     })
-    .catch(function(e){gate('Couldn\'t reach the server ('+E(e.message)+'). Try again.');});
+    .catch(function(e){gate('Could not reach the server ('+E(e.message)+'). Try again.');});
 }
 
-function isPost(p){return String(p).indexOf('/stories/')===0;}
-function isCta(l){return String(l).indexOf('open:')===0;}
-function shortRef(u){try{if(String(u).indexOf('(')===0)return u;return new URL(u).hostname.replace('www.','');}catch(e){return u;}}
+function setRange(key){
+  var now=new Date(),f=null;
+  if(key==='today'){var d=new Date();d.setHours(0,0,0,0);f=d.toISOString();}
+  else if(key==='7'){f=new Date(now.getTime()-7*864e5).toISOString();}
+  else if(key==='30'){f=new Date(now.getTime()-30*864e5).toISOString();}
+  else if(key==='90'){f=new Date(now.getTime()-90*864e5).toISOString();}
+  RANGE={key:key,from:f,to:null};
+  load(ls('jl_ins'));
+}
+function setCustom(){
+  var a=document.getElementById('df'),b=document.getElementById('dt');
+  if(!a||!a.value){return;}
+  var from=new Date(a.value+'T00:00:00').toISOString();
+  var to=b&&b.value?new Date(new Date(b.value+'T00:00:00').getTime()+864e5).toISOString():null;
+  RANGE={key:'custom',from:from,to:to};
+  load(ls('jl_ins'));
+}
+
+function rangeBar(){
+  var keys=[['today','Today'],['7','7 days'],['30','30 days'],['90','90 days'],['all','All time']];
+  var h='<div class="ranges">';
+  h+=keys.map(function(k){return '<button class="rg'+(RANGE.key===k[0]?' on':'')+'" onclick="setRange(\''+k[0]+'\')">'+k[1]+'</button>';}).join('');
+  h+='<span class="sep"></span><input type="date" id="df"><span class="muted" style="font-size:12px">to</span><input type="date" id="dt"><button class="go" onclick="setCustom()">Apply</button>';
+  h+='</div>';
+  return h;
+}
+
+function tbl(rows,head,fn,empty){
+  if(!rows||!rows.length)return '<table><tbody><tr><td class="muted">'+(empty||'Nothing yet.')+'</td></tr></tbody></table>';
+  return '<table>'+(head||'')+'<tbody>'+rows.map(fn).join('')+'</tbody></table>';
+}
 
 function render(d){
-  var dev=d.device||[],pages=d.pages||[],refs=d.refs||[],clicks=d.clicks||[],daily=d.daily||[],rv=d.recent_views||[],rl=d.recent_leads||[],rc=d.recent_comments||[];
-  var k=[['Page views',d.total_views||0],['Visitors',d.visitors||0],['Bounce',d.bounce==null?'—':d.bounce+'%'],['Pages / visit',d.ppv==null?'—':d.ppv],['CTA clicks',d.cta_clicks||0],['Likes',d.likes||0],['Comments',d.comments||0],['Email leads',d.leads||0]];
-  var h='<div><button class="lock" onclick="ls(\'jl_ins\',null);location.reload()">🔒 lock</button><h1>Site Insights</h1><div class="sub">Private · jocelynlim.space · updated '+E(d.generated_at||'')+' (SGT)</div></div>';
+  destroyCharts();
+  var k=[
+    ['Page views',d.total_views||0],
+    ['Visitors',d.visitors||0],
+    ['Returning',d.returning||0],
+    ['Avg time',fmtSecs(d.avg_secs)],
+    ['Bounce',d.bounce==null?'—':d.bounce+'%'],
+    ['Pages / visit',d.ppv==null?'—':d.ppv],
+    ['CTA clicks',d.cta_clicks||0],
+    ['Lead actions',d.converting_sessions||0],
+    ['Email leads',d.leads||0],
+    ['Likes',d.likes||0],
+    ['Comments',d.comments||0]
+  ];
+  var h='<div class="top"><div><h1>Site Insights</h1><div class="sub">Private &middot; jocelynlim.space &middot; updated '+E(d.generated_at||'')+' (SGT) &middot; '+E(d.range_from)+' &rarr; '+E(d.range_to)+'</div></div>'+
+    '<button class="lock" onclick="ls(\'jl_ins\',null);location.reload()">&#128274; lock</button></div>';
+  h+=rangeBar();
   h+='<div class="kpis">'+k.map(function(x){return '<div class="kpi"><div class="n">'+E(x[1])+'</div><div class="l">'+x[0]+'</div></div>';}).join('')+'</div>';
+
   h+='<div class="grid2"><div class="card"><h2>Views over time</h2><canvas id="cD"></canvas></div><div class="card"><h2>Laptop vs mobile</h2><canvas id="cV"></canvas></div></div>';
-  // pages
-  h+='<div class="card" style="margin-bottom:16px"><h2>Top pages &amp; posts</h2><div class="scroll"><table><thead><tr><th>Page</th><th style="text-align:right">Views</th><th style="text-align:right">Visitors</th></tr></thead><tbody>'+
-     (pages.length?pages.map(function(p){return '<tr><td class="path">'+E(p.path)+(isPost(p.path)?'<span class="tag post">post</span>':'')+'</td><td class="num">'+p.n+'</td><td class="num muted">'+p.v+'</td></tr>';}).join(''):'<tr><td colspan="3" class="muted">No views yet.</td></tr>')+'</tbody></table></div></div>';
-  // refs + clicks
-  h+='<div class="grid2"><div class="card"><h2>Where visitors came from</h2><div class="scroll"><table><tbody>'+
-     (refs.length?refs.map(function(r){return '<tr><td class="path">'+E(shortRef(r.ref))+'</td><td class="num">'+r.n+'</td></tr>';}).join(''):'<tr><td class="muted">Nothing yet.</td></tr>')+'</tbody></table></div></div>'+
-     '<div class="card"><h2>What people click</h2><div class="scroll"><table><tbody>'+
-     (clicks.length?clicks.map(function(c){return '<tr><td class="path">'+E(c.label)+(isCta(c.label)?'<span class="tag cta">cta</span>':'')+'</td><td class="num">'+c.n+'</td></tr>';}).join(''):'<tr><td class="muted">No clicks yet.</td></tr>')+'</tbody></table></div></div></div>';
-  // email leads
-  h+='<div class="card" style="margin-bottom:16px"><h2>📧 Email leads ('+(rl.length)+')</h2><div class="scroll"><table><thead><tr><th>Email</th><th>From</th><th>Result</th><th>When</th></tr></thead><tbody>'+
-     (rl.length?rl.map(function(l){return '<tr><td class="mono">'+E(l.email)+'</td><td class="muted">'+E(l.source)+'</td><td>'+E(l.result||'')+'</td><td class="muted">'+E(l.ts)+'</td></tr>';}).join(''):'<tr><td colspan="4" class="muted">No leads yet — they appear when someone enters their email in the quiz.</td></tr>')+'</tbody></table></div></div>';
-  // comments
-  h+='<div class="card" style="margin-bottom:16px"><h2>💬 Comments ('+(rc.length)+')</h2><div class="scroll"><table><thead><tr><th>Name</th><th>Message</th><th>Email</th><th>Post</th><th>When</th></tr></thead><tbody>'+
-     (rc.length?rc.map(function(c){return '<tr><td><b>'+E(c.name)+'</b></td><td class="path">'+E(c.message)+'</td><td class="mono muted">'+E(c.email||'—')+'</td><td class="muted">'+E(c.post)+'</td><td class="muted">'+E(c.ts)+'</td></tr>';}).join(''):'<tr><td colspan="5" class="muted">No comments yet.</td></tr>')+'</tbody></table></div></div>';
-  // recent activity
-  h+='<div class="card"><h2>Recent activity (last 50 views)</h2><div class="scroll"><table><thead><tr><th>Page</th><th>Device</th><th>From</th><th>When</th></tr></thead><tbody>'+
-     (rv.length?rv.map(function(v){return '<tr><td class="path">'+E(v.path)+'</td><td class="muted">'+E(v.device)+'</td><td class="muted">'+E(shortRef(v.ref))+'</td><td class="muted">'+E(v.ts)+'</td></tr>';}).join(''):'<tr><td colspan="4" class="muted">Nothing yet.</td></tr>')+'</tbody></table></div></div>';
+  h+='<div class="card"><h2>When people visit</h2><div class="hint">By hour of day, Singapore time &mdash; your best window to post or share.</div><canvas id="cH"></canvas></div>';
+
+  var sources=d.sources||[],pages=d.pages||[];
+  h+='<div class="grid2b">';
+  h+='<div class="card"><h2>How they found you</h2><div class="hint">Entry channel per visit (Google, AI, social, direct&hellip;).</div>'+
+     tbl(sources,'',function(s){return '<tr><td class="path">'+E(s.source)+'</td><td class="num">'+s.n+'</td></tr>';},'No visits yet.')+'</div>';
+  h+='<div class="card"><h2>Top pages &amp; posts</h2><div class="hint">Views, people, average time on page, scroll depth.</div><div class="scroll">'+
+     tbl(pages,'<thead><tr><th>Page</th><th style="text-align:right">Views</th><th style="text-align:right">Ppl</th><th style="text-align:right">Avg time</th><th style="text-align:right">Read</th></tr></thead>',
+       function(p){return '<tr><td class="path">'+E(prettyPath(p.path))+(isPost(p.path)?'<span class="tag post">post</span>':'')+'</td><td class="num">'+p.n+'</td><td class="num muted">'+p.v+'</td><td class="num">'+(p.avg_time?fmtSecs(p.avg_time):'—')+'</td><td class="num muted">'+(p.avg_scroll!=null?p.avg_scroll+'%':'—')+'</td></tr>';},'No views yet.')+'</div></div>';
+  h+='</div>';
+
+  var countries=d.countries||[],cities=d.cities||[];
+  h+='<div class="grid2b">';
+  h+='<div class="card"><h2>Countries</h2><div class="scroll">'+
+     tbl(countries,'<thead><tr><th>Country</th><th style="text-align:right">Views</th><th style="text-align:right">Ppl</th></tr></thead>',
+       function(c){return '<tr><td class="path">'+E(c.country)+'</td><td class="num">'+c.n+'</td><td class="num muted">'+c.v+'</td></tr>';},'No geo yet.')+'</div></div>';
+  h+='<div class="card"><h2>Cities</h2><div class="scroll">'+
+     tbl(cities,'<thead><tr><th>City</th><th>Country</th><th style="text-align:right">Views</th></tr></thead>',
+       function(c){return '<tr><td class="path">'+E(c.city)+'</td><td class="muted">'+E(c.country)+'</td><td class="num">'+c.n+'</td></tr>';},'No geo yet.')+'</div></div>';
+  h+='</div>';
+
+  var sessions=d.sessions||[];
+  h+='<div class="card"><h2>Visitor journeys</h2><div class="hint">Each row is one visit &mdash; the pages viewed in order, where from, device, time spent, and whether they took a lead action.</div><div class="scroll">'+
+     tbl(sessions,'<thead><tr><th>When</th><th>From</th><th>Where</th><th>Journey</th><th style="text-align:right">Time</th><th></th></tr></thead>',
+       function(s){
+         var journey=(s.journey||[]).map(function(p,i,arr){return '<span class="chip'+(i<arr.length-1?' arrow':'')+'">'+E(prettyPath(p))+'</span>';}).join('');
+         var loc=[s.city,s.country].filter(Boolean).join(', ')||(s.country||'—');
+         var who=s.ret?'<span class="badge ret">returning</span>':'<span class="badge new">new</span>';
+         var conv=s.converted?'<span class="badge win">lead</span>':'';
+         return '<tr><td class="muted" style="white-space:nowrap">'+E(s.started)+'<br>'+who+'</td><td class="path">'+E(s.source)+'</td><td class="path muted">'+E(loc)+'<br><span style="font-size:11px">'+E(s.device)+'</span></td><td>'+journey+'</td><td class="num">'+fmtSecs(s.secs)+'</td><td>'+conv+'</td></tr>';
+       },'No visits yet.')+'</div></div>';
+
+  var bounced=d.bounced||[],clicks=d.clicks||[];
+  h+='<div class="grid2b">';
+  h+='<div class="card"><h2>Bounced visits</h2><div class="hint">Came, saw one page, left. Landing page, time before leaving, whether they clicked.</div><div class="scroll">'+
+     tbl(bounced,'<thead><tr><th>When</th><th>Landed on</th><th>From</th><th style="text-align:right">Stayed</th><th style="text-align:right">Clicks</th></tr></thead>',
+       function(b){return '<tr><td class="muted" style="white-space:nowrap">'+E(b.started)+'</td><td class="path">'+E(prettyPath(b.entry))+'</td><td class="path muted">'+E(b.source)+'</td><td class="num">'+fmtSecs(b.secs)+'</td><td class="num '+(b.clicks?'':'muted')+'">'+b.clicks+'</td></tr>';},'No bounces yet.')+'</div></div>';
+  h+='<div class="card"><h2>What people click</h2><div class="hint">CTAs, links, and any resource/download you add later (auto-tracked).</div><div class="scroll">'+
+     tbl(clicks,'',function(c){return '<tr><td class="path">'+E(c.label)+(isCta(c.label)?'<span class="tag cta">cta</span>':'')+'</td><td class="num">'+c.n+'</td></tr>';},'No clicks yet.')+'</div></div>';
+  h+='</div>';
+
+  var refs=d.refs||[],leads=d.recent_leads||[];
+  h+='<div class="grid2b">';
+  h+='<div class="card"><h2>Referrer URLs</h2><div class="scroll">'+
+     tbl(refs,'',function(r){return '<tr><td class="path">'+E(shortRef(r.ref))+'</td><td class="num">'+r.n+'</td></tr>';},'Nothing yet.')+'</div></div>';
+  h+='<div class="card"><h2>Email leads</h2><div class="hint">From the quiz and forms.</div><div class="scroll">'+
+     tbl(leads,'<thead><tr><th>Email</th><th>From</th><th>When</th></tr></thead>',
+       function(l){return '<tr><td class="path mono">'+E(l.email)+'</td><td class="muted">'+E(l.source||l.result||'')+'</td><td class="muted" style="white-space:nowrap">'+E(l.ts)+'</td></tr>';},'No leads yet.')+'</div></div>';
+  h+='</div>';
+
+  var comments=d.recent_comments||[];
+  h+='<div class="card"><h2>Comments</h2><div class="hint">Email shown to you only (hidden on the public site).</div><div class="scroll">'+
+     tbl(comments,'<thead><tr><th>Name</th><th>Email</th><th>Post</th><th>Message</th><th>When</th></tr></thead>',
+       function(c){return '<tr><td class="path">'+E(c.name)+'</td><td class="mono muted">'+E(c.email||'—')+'</td><td class="path muted">'+E(prettyPath(c.post))+'</td><td class="path">'+E(c.message)+'</td><td class="muted" style="white-space:nowrap">'+E(c.ts)+'</td></tr>';},'No comments yet.')+'</div></div>';
+
   app.innerHTML=h;
-  if(daily.length&&window.Chart)new Chart(document.getElementById('cD'),{type:'bar',data:{labels:daily.map(function(x){return x.label;}),datasets:[{data:daily.map(function(x){return x.n;}),backgroundColor:'#c4644f',borderRadius:6}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{precision:0}},x:{grid:{display:false}}}}});
-  if(dev.length&&window.Chart)new Chart(document.getElementById('cV'),{type:'doughnut',data:{labels:dev.map(function(x){return x.device;}),datasets:[{data:dev.map(function(x){return x.n;}),backgroundColor:['#b8533a','#4a5e94','#b07d3a','#93577f','#7d8a4f']}]},options:{plugins:{legend:{position:'bottom'}}}});
+
+  var daily=(d.daily||[]).slice().reverse();
+  if(daily.length){charts.push(new Chart(document.getElementById('cD'),{type:'bar',data:{labels:daily.map(function(x){return x.label;}),datasets:[{label:'Views',data:daily.map(function(x){return x.n;}),backgroundColor:'#c4644f',borderRadius:6},{label:'Visitors',data:daily.map(function(x){return x.v;}),backgroundColor:'#d8b48f',borderRadius:6}]},options:{plugins:{legend:{display:true,position:'bottom',labels:{boxWidth:12,font:{size:11}}}},scales:{y:{beginAtZero:true,ticks:{precision:0}},x:{grid:{display:false}}}}}));}
+  var dev=d.device||[];
+  if(dev.length){charts.push(new Chart(document.getElementById('cV'),{type:'doughnut',data:{labels:dev.map(function(x){return x.device;}),datasets:[{data:dev.map(function(x){return x.n;}),backgroundColor:['#b8533a','#4a5e94','#b07d3a','#93577f','#7d8a4f']}]},options:{plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}}}}}));}
+  var hourly=d.hourly||[];
+  if(hourly.length){var hmap={};hourly.forEach(function(x){hmap[x.h]=x.n;});var hl=[],hd=[];for(var i=0;i<24;i++){hl.push((i<10?'0':'')+i);hd.push(hmap[i]||0);}charts.push(new Chart(document.getElementById('cH'),{type:'bar',data:{labels:hl,datasets:[{data:hd,backgroundColor:'#4a5e94',borderRadius:4}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{precision:0}},x:{grid:{display:false}}}}}));}
 }
 
 var saved=ls('jl_ins');
-if(saved)load(saved);else gate('');
+if(saved){load(saved);}else{gate('');}
 </script>
 </body>
 </html>

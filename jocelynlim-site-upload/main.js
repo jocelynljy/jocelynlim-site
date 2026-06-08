@@ -267,16 +267,100 @@ if (portrait && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) 
 
   function device() { var w = window.innerWidth || screen.width || 0; if (w <= 600) return 'mobile'; if (w <= 1024) return 'tablet'; return 'desktop'; }
   function sid() { try { var s = sessionStorage.getItem('jl_sid'); if (!s) { s = Date.now().toString(36) + Math.random().toString(36).slice(2, 8); sessionStorage.setItem('jl_sid', s); } return s; } catch (e) { return 'na'; } }
+  function rnd() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 10); }
 
-  // page view, once per load
-  sbInsert('page_views', { path: location.pathname || '/', referrer: document.referrer ? document.referrer.slice(0, 300) : null, device: device(), session_id: sid() });
+  // persistent visitor id -> distinguishes new vs returning people (anonymous, not PII)
+  var RETURNING = false, VID = 'na';
+  try { VID = localStorage.getItem('jl_vid'); if (VID) { RETURNING = true; } else { VID = rnd(); localStorage.setItem('jl_vid', VID); } } catch (e) { VID = 'na'; }
+  window.sbVid = VID;
 
-  // click tracking on links + CTAs
+  // capture UTM tags (so shared links / campaigns are measurable)
+  var qs; try { qs = new URLSearchParams(location.search); } catch (e) { qs = { get: function () { return null; } }; }
+  var UTM = { source: qs.get('utm_source'), medium: qs.get('utm_medium'), campaign: qs.get('utm_campaign') };
+
+  // classify how a visitor arrived, from referrer + utm
+  function classifySource(ref, utm) {
+    if (utm && utm.source) return 'utm:' + String(utm.source).slice(0, 40);
+    if (!ref) return 'direct';
+    var h; try { h = new URL(ref).hostname.replace('www.', ''); } catch (e) { return 'direct'; }
+    if (location.hostname.indexOf(h) > -1 || h.indexOf('jocelynlim') > -1) return 'internal';
+    if (/google\./.test(h)) return 'Google';
+    if (/bing\./.test(h)) return 'Bing';
+    if (/duckduckgo/.test(h)) return 'DuckDuckGo';
+    if (/yahoo\./.test(h)) return 'Yahoo';
+    if (/(chatgpt|openai)\.com/.test(h)) return 'ChatGPT';
+    if (/perplexity/.test(h)) return 'Perplexity';
+    if (/gemini\.google|bard\.google/.test(h)) return 'Gemini';
+    if (/claude\.ai/.test(h)) return 'Claude';
+    if (/copilot\.microsoft/.test(h)) return 'Copilot';
+    if (/linkedin\./.test(h) || /lnkd\.in/.test(h)) return 'LinkedIn';
+    if (/instagram\./.test(h)) return 'Instagram';
+    if (/(facebook|fb\.com|fb\.me)/.test(h)) return 'Facebook';
+    if (/(t\.co|twitter\.|x\.com)/.test(h)) return 'Twitter/X';
+    if (/(t\.me|telegram)/.test(h)) return 'Telegram';
+    if (/(wa\.me|whatsapp)/.test(h)) return 'WhatsApp';
+    if (/medium\.com/.test(h)) return 'Medium';
+    if (/youtube\.|youtu\.be/.test(h)) return 'YouTube';
+    if (/reddit\./.test(h)) return 'Reddit';
+    return 'ref:' + h.slice(0, 40);
+  }
+  var SOURCE = classifySource(document.referrer, UTM);
+
+  // look up coarse geo (country/city) via a free, keyless service; cached per session; no IP stored
+  function withGeo(cb) {
+    var cached; try { cached = sessionStorage.getItem('jl_geo'); } catch (e) {}
+    if (cached) { try { return cb(JSON.parse(cached)); } catch (e) { return cb({}); } }
+    var done = false, t = setTimeout(function () { if (!done) { done = true; cb({}); } }, 1500);
+    try {
+      fetch('https://get.geojs.io/v1/ip/geo.json').then(function (r) { return r.json(); }).then(function (j) {
+        if (done) return; done = true; clearTimeout(t);
+        var g = { country: j && j.country ? j.country : null, city: j && j.city ? j.city : null, region: j && j.region ? j.region : null };
+        try { sessionStorage.setItem('jl_geo', JSON.stringify(g)); } catch (e) {}
+        cb(g);
+      }).catch(function () { if (!done) { done = true; clearTimeout(t); cb({}); } });
+    } catch (e) { if (!done) { done = true; clearTimeout(t); cb({}); } }
+  }
+
+  // page view, once per load (enriched with source, geo, visitor)
+  withGeo(function (g) {
+    sbInsert('page_views', {
+      path: location.pathname || '/',
+      referrer: document.referrer ? document.referrer.slice(0, 300) : null,
+      device: device(), session_id: sid(), visitor_id: VID, is_returning: RETURNING,
+      source: SOURCE, country: g.country || null, city: g.city || null, region: g.region || null,
+      utm_source: UTM.source || null, utm_medium: UTM.medium || null, utm_campaign: UTM.campaign || null
+    });
+  });
+
+  // click tracking: CTAs (data-open), anything with data-track (future resources/downloads/shares), and links
   document.addEventListener('click', function (e) {
-    var a = e.target.closest ? e.target.closest('a,[data-open]') : null; if (!a) return;
-    var label = a.getAttribute('data-open') ? 'open:' + a.getAttribute('data-open') : (a.getAttribute('href') || (a.textContent || '').trim()).slice(0, 120);
-    sbInsert('events', { path: location.pathname, label: label, session_id: sid() });
+    var a = e.target.closest ? e.target.closest('a,[data-open],[data-track],button') : null; if (!a) return;
+    var label;
+    if (a.getAttribute('data-track')) label = String(a.getAttribute('data-track')).slice(0, 120);
+    else if (a.getAttribute('data-open')) label = 'open:' + a.getAttribute('data-open');
+    else if (a.tagName === 'A' && a.getAttribute('href')) label = a.getAttribute('href').slice(0, 120);
+    else return;
+    sbInsert('events', { path: location.pathname, label: label, session_id: sid(), visitor_id: VID });
   }, true);
+
+  // time-on-page (dwell) + scroll depth -> sent once when the page is hidden/closed
+  var _start = Date.now(), _maxScroll = 0, _sentExit = false;
+  function scrollPct() {
+    var de = document.documentElement, b = document.body;
+    var h = (de.scrollHeight || b.scrollHeight || 0) - window.innerHeight;
+    if (h <= 0) return 100;
+    return Math.min(100, Math.round((window.scrollY || window.pageYOffset || 0) / h * 100));
+  }
+  window.addEventListener('scroll', function () { var p = scrollPct(); if (p > _maxScroll) _maxScroll = p; }, { passive: true });
+  function sendExit() {
+    if (_sentExit) return; _sentExit = true;
+    var secs = Math.round((Date.now() - _start) / 1000);
+    if (secs < 0 || secs > 7200) secs = 0;
+    sbInsert('events', { path: location.pathname, label: 'exit', value: secs, session_id: sid(), visitor_id: VID });
+    sbInsert('events', { path: location.pathname, label: 'scroll', value: _maxScroll, session_id: sid(), visitor_id: VID });
+  }
+  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') sendExit(); });
+  window.addEventListener('pagehide', sendExit);
 
   // ----- comments + likes (only where #comments exists) -----
   var box = document.getElementById('comments');
