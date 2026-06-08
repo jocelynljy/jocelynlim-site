@@ -290,37 +290,56 @@ if (portrait && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) 
     '<button class="btn btn-primary cm-submit" type="submit">Post note <span class="arrow">→</span></button><div class="cm-msg" hidden></div></form>' +
     '<div class="cm-list"></div>';
   var likeBtn = box.querySelector('.cm-like'), likeN = box.querySelector('.cm-like-n'), list = box.querySelector('.cm-list'), form = box.querySelector('.cm-form'), count = box.querySelector('.cm-count');
-  function esc(s) { var d = document.createElement('div'); d.textContent = (s == null ? '' : s); return d.innerHTML; }
-  function loadLikes() { sbSelect('reactions?post=eq.' + encodeURIComponent(post) + '&select=id').then(function (r) { likeN.textContent = Array.isArray(r) ? r.length : 0; }); }
-  try { if (localStorage.getItem('jl_like_' + post) === '1') likeBtn.classList.add('liked'); } catch (e) {}
-  likeBtn.addEventListener('click', function () {
-    if (likeBtn.classList.contains('liked')) return;
-    likeBtn.classList.add('liked'); try { localStorage.setItem('jl_like_' + post, '1'); } catch (e) {}
-    likeN.textContent = (parseInt(likeN.textContent, 10) || 0) + 1;
-    sbInsert('reactions', { post: post, kind: 'like' });
+  function esc(s){var d=document.createElement('div');d.textContent=(s==null?'':s);return d.innerHTML;}
+  function tok(){return Math.random().toString(36).slice(2)+Date.now().toString(36);}
+  function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+  function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+  function lsDel(k){try{localStorage.removeItem(k);}catch(e){}}
+  function sbInsertRep(table,row){return fetch(SB_URL+'/rest/v1/'+table,{method:'POST',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify(row)}).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;});}
+  function sbRpc(fn,args){return fetch(SB_URL+'/rest/v1/rpc/'+fn,{method:'POST',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'},body:JSON.stringify(args)}).then(function(r){return r.ok;}).catch(function(){return false;});}
+
+  function loadLikes(){sbSelect('reactions?post=eq.'+encodeURIComponent(post)+'&select=id').then(function(r){likeN.textContent=Array.isArray(r)?r.length:0;});}
+  function myLike(){var v=lsGet('jl_like_'+post);if(!v)return null;if(v==='1')return{legacy:true};try{return JSON.parse(v);}catch(e){return{legacy:true};}}
+  function paintLike(){var m=myLike();likeBtn.classList.toggle('liked',!!m);var t=likeBtn.querySelector('.cm-like-t');if(t)t.textContent=m?'Liked':'Like';}
+  paintLike();
+  likeBtn.addEventListener('click',function(){
+    var m=myLike();
+    if(m&&m.id){lsDel('jl_like_'+post);paintLike();likeN.textContent=Math.max(0,(parseInt(likeN.textContent,10)||1)-1);sbRpc('delete_reaction',{r_id:m.id,r_token:m.token}).then(loadLikes);return;}
+    if(m&&m.legacy){lsDel('jl_like_'+post);paintLike();return;}
+    var t=tok();likeBtn.classList.add('liked');var lab=likeBtn.querySelector('.cm-like-t');if(lab)lab.textContent='Liked';
+    likeN.textContent=(parseInt(likeN.textContent,10)||0)+1;
+    sbInsertRep('reactions',{post:post,kind:'like',delete_token:t}).then(function(rows){if(rows&&rows[0]&&rows[0].id)lsSet('jl_like_'+post,JSON.stringify({id:rows[0].id,token:t}));loadLikes();});
   });
-  function loadComments() {
-    sbSelect('comments?post=eq.' + encodeURIComponent(post) + '&approved=eq.true&select=name,message,created_at&order=created_at.desc').then(function (rows) {
-      if (!Array.isArray(rows)) rows = [];
-      count.textContent = rows.length ? '(' + rows.length + ')' : '';
-      list.innerHTML = rows.length ? rows.map(function (c) {
-        var w = ''; try { w = new Date(c.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }); } catch (e) {}
-        return '<div class="cm-item"><div class="cm-head"><b>' + esc(c.name) + '</b><span>' + w + '</span></div><p>' + esc(c.message) + '</p></div>';
-      }).join('') : '<p class="cm-empty">Be the first to leave a note. 🤍</p>';
+
+  function loadComments(){
+    sbSelect('comments?post=eq.'+encodeURIComponent(post)+'&approved=eq.true&select=id,name,message,created_at&order=created_at.desc').then(function(rows){
+      if(!Array.isArray(rows))rows=[];
+      count.textContent=rows.length?'('+rows.length+')':'';
+      list.innerHTML=rows.length?rows.map(function(c){
+        var w='';try{w=new Date(c.created_at).toLocaleDateString(undefined,{month:'short',day:'numeric'});}catch(e){}
+        var del=lsGet('jl_cmt_'+c.id)?' <button class="cm-del" data-id="'+c.id+'">delete</button>':'';
+        return '<div class="cm-item"><div class="cm-head"><b>'+esc(c.name)+'</b><span>'+w+del+'</span></div><p>'+esc(c.message)+'</p></div>';
+      }).join(''):'<p class="cm-empty">Be the first to leave a note. 🤍</p>';
     });
   }
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var btn = form.querySelector('.cm-submit'), out = form.querySelector('.cm-msg');
-    var name = form.name.value.trim(), message = form.message.value.trim(), email = form.email.value.trim();
-    if (!name || !message) { out.hidden = false; out.textContent = 'Pop in your name and a note 🙂'; return; }
-    btn.disabled = true; btn.innerHTML = 'Posting…';
-    sbInsert('comments', { post: post, name: name, email: email || null, message: message }).then(function (r) { return r && r.ok; }).then(function (ok) {
-      btn.disabled = false; btn.innerHTML = 'Post note <span class="arrow">→</span>';
-      out.hidden = false;
-      if (ok) { form.reset(); out.textContent = 'Thank you 🤍 your note is up.'; loadComments(); }
-      else { out.textContent = 'Hmm, that didn’t post. Mind trying again?'; }
-    }).catch(function () { btn.disabled = false; btn.innerHTML = 'Post note <span class="arrow">→</span>'; out.hidden = false; out.textContent = 'Something went wrong. Try again?'; });
+  list.addEventListener('click',function(e){
+    var b=e.target.closest?e.target.closest('.cm-del'):null;if(!b)return;
+    var id=b.getAttribute('data-id'),token=lsGet('jl_cmt_'+id);if(!token)return;
+    b.textContent='…';
+    sbRpc('delete_comment',{c_id:parseInt(id,10),c_token:token}).then(function(ok){if(ok){lsDel('jl_cmt_'+id);loadComments();}else{b.textContent='delete';}});
   });
-  loadLikes(); loadComments();
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var btn=form.querySelector('.cm-submit'),out=form.querySelector('.cm-msg');
+    var name=form.name.value.trim(),message=form.message.value.trim(),email=form.email.value.trim();
+    if(!name||!message){out.hidden=false;out.textContent='Pop in your name and a note 🙂';return;}
+    btn.disabled=true;btn.innerHTML='Posting…';var t=tok();
+    sbInsertRep('comments',{post:post,name:name,email:email||null,message:message,delete_token:t}).then(function(rows){
+      btn.disabled=false;btn.innerHTML='Post note <span class="arrow">→</span>';out.hidden=false;
+      if(rows&&rows[0]&&rows[0].id){lsSet('jl_cmt_'+rows[0].id,t);form.reset();out.textContent='Thank you 🤍 your note is up — you can delete it anytime.';loadComments();}
+      else{out.textContent='Hmm, that didn’t post. Mind trying again?';}
+    }).catch(function(){btn.disabled=false;btn.innerHTML='Post note <span class="arrow">→</span>';out.hidden=false;out.textContent='Something went wrong. Try again?';});
+  });
+  loadLikes();loadComments();
 })();

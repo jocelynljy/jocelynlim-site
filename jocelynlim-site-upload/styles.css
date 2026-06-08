@@ -120,6 +120,8 @@ img{display:block; max-width:100%}
 .cm-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;gap:12px}
 .cm-head b{font-weight:600;color:var(--ink)}
 .cm-head span{font-size:12.5px;color:var(--faint);flex:none}
+.cm-del{background:none;border:none;color:var(--accent);font-size:12px;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px;padding:0 0 0 8px}
+.cm-del:hover{opacity:.7}
 .cm-item p{font-size:15px;line-height:1.55;color:var(--ink-soft)}
 .cm-empty{color:var(--ink-soft);font-style:italic}
 @media(max-width:600px){.cm-row{grid-template-columns:1fr}}
