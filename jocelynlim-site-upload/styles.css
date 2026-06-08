@@ -62,6 +62,7 @@ img{display:block; max-width:100%}
 .lead{font-size:18px; color:var(--ink-soft); max-width:620px; margin-top:18px}
 .prose p{font-size:17.5px; color:#43392f; margin-bottom:18px; max-width:660px}
 .prose p .hl{background:linear-gradient(transparent 62%, rgba(196,100,79,.28) 62%); padding:0 1px}
+.prose .pullquote{font-family:var(--disp); font-weight:500; font-style:italic; font-size:clamp(20px,2.6vw,27px); line-height:1.32; color:var(--accent); border-left:3px solid var(--accent); padding-left:20px; margin:26px 0; max-width:660px}
 
 /* hero */
 .hero{position:relative; padding:64px 0 40px; overflow:hidden}
