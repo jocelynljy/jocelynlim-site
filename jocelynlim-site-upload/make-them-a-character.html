@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Make Them a Character · A free little recipe · Jocelyn Lim</title>
+<meta name="description" content="Turn your friends into cute hand-drawn chibi characters based on their personality, then put them on postcards, birthday cards, even cakes. Here's the exact free prompt I used, plus how to make your own.">
+<link rel="canonical" href="https://jocelynlim.space/make-them-a-character">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Make Them a Character · A free little recipe">
+<meta property="og:description" content="Turn your friends into cute little characters based on their personality. Postcards, birthday cards, even cake toppers. Here's the exact prompt, free.">
+<meta property="og:image" content="https://jocelynlim.space/assets/character-2.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<style>
+.mc-lead{max-width:640px;font-size:17px;line-height:1.6;color:var(--ink-soft)}
+.mc-lead p{margin:0 0 14px}
+.mc-lead .big{font-family:var(--disp);font-weight:500;font-size:21px;color:var(--ink);line-height:1.4;margin-bottom:14px}
+.mc-eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--accent);margin-bottom:14px}
+/* gallery */
+.mc-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px}
+.mc-card{background:#fbf4e7;border:1px solid var(--line);border-radius:16px;padding:10px;box-shadow:0 10px 26px rgba(60,45,30,.10);overflow:hidden}
+.mc-card img{display:block;width:100%;height:auto;border-radius:9px}
+.mc-card:nth-child(1){transform:rotate(-2.2deg)}
+.mc-card:nth-child(2){transform:rotate(1.6deg);margin-top:18px}
+.mc-card:nth-child(3){transform:rotate(-1.2deg)}
+.mc-card:nth-child(4){transform:rotate(1.8deg)}
+.mc-card:nth-child(5){transform:rotate(-1.8deg);margin-top:14px}
+.mc-card:nth-child(6){transform:rotate(1.3deg)}
+.mc-card{transition:transform .25s ease, box-shadow .25s ease}
+.mc-card:hover{transform:rotate(0) scale(1.03);box-shadow:0 18px 40px rgba(60,45,30,.16);z-index:2}
+.mc-cap{text-align:center;color:var(--faint);font-size:13.5px;margin-top:16px;font-style:italic}
+/* steps */
+.mc-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.mc-step{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 22px 24px;box-shadow:var(--shadow-sm)}
+.mc-step .num{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:15px;margin-bottom:14px}
+.mc-step h3{font-family:var(--disp);font-weight:600;font-size:19px;margin-bottom:7px}
+.mc-step p{font-size:14.5px;color:var(--ink-soft);line-height:1.55}
+.mc-step a{color:var(--accent);font-weight:600}
+/* prompt block */
+.mc-prompt-wrap{position:relative;margin-top:20px}
+.mc-prompt{background:#2c2622;color:#f3ead9;border-radius:16px;padding:22px 22px 22px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;line-height:1.62;white-space:pre-wrap;word-break:break-word;max-height:420px;overflow:auto;border:1px solid #3a332c}
+.mc-prompt b{color:#f0c98a;font-weight:600}
+.mc-copy{position:absolute;top:14px;right:14px;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:9px 15px;font-family:var(--body);font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(60,45,30,.2)}
+.mc-copy.done{background:#3f8a6a}
+.mc-grab{display:inline-block;margin-top:14px;font-size:14px;color:var(--accent);font-weight:600}
+/* callout */
+.mc-callout{display:flex;gap:16px;align-items:flex-start;background:#efe7d8;border:1px solid var(--line);border-radius:18px;padding:20px 22px;margin-top:22px}
+.mc-callout .e{font-size:30px;line-height:1}
+.mc-callout h3{font-family:var(--disp);font-weight:600;font-size:18px;margin-bottom:5px}
+.mc-callout p{font-size:14.5px;color:var(--ink-soft);line-height:1.55;margin:0}
+.mc-callout a{color:var(--accent);font-weight:600}
+/* tips */
+.mc-tips{display:grid;grid-template-columns:1fr 1fr;gap:12px 28px;margin-top:20px}
+.mc-tip{display:flex;gap:11px;align-items:flex-start;font-size:14.5px;color:var(--ink-soft);line-height:1.5}
+.mc-tip b{color:var(--ink);font-weight:600}
+.mc-tip .d{color:var(--accent);font-weight:700;flex:none}
+/* uses */
+.mc-uses{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.mc-use{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 18px 20px}
+.mc-use .ic{font-size:24px;margin-bottom:9px}
+.mc-use h4{font-family:var(--disp);font-weight:600;font-size:16.5px;margin-bottom:5px}
+.mc-use p{font-size:13.5px;color:var(--ink-soft);line-height:1.5}
+/* cake placeholder */
+.mc-soon{margin-top:18px;border:1.5px dashed var(--line);border-radius:16px;padding:26px;text-align:center;color:var(--faint);font-size:14.5px}
+/* big cta */
+.mc-bigcta{margin-top:30px;text-align:center;background:linear-gradient(180deg,#fbf4e7,#f3ead9);border:1px solid var(--line);border-radius:22px;padding:38px 26px}
+.mc-bigcta h2{font-family:var(--disp);font-weight:600;font-size:clamp(24px,3.4vw,32px);margin-bottom:8px}
+.mc-bigcta p{color:var(--ink-soft);font-size:16px;max-width:480px;margin:0 auto 20px}
+.mc-btn{display:inline-block;background:var(--accent);color:#fff;font-weight:600;font-size:16px;padding:15px 28px;border-radius:14px;text-decoration:none;box-shadow:0 10px 24px rgba(60,45,30,.18)}
+.mc-fineprint{margin-top:12px;font-size:12.5px;color:var(--faint)}
+@media(max-width:820px){.mc-gallery{grid-template-columns:repeat(3,1fr);gap:10px}.mc-steps{grid-template-columns:1fr}.mc-uses{grid-template-columns:1fr}.mc-tips{grid-template-columns:1fr}.mc-card{margin-top:0!important}}
+@media(max-width:560px){.mc-gallery{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body style="--accent:var(--hub)">
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="/">Jocelyn Lim<span class="d">.</span></a>
+    <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-links">
+      <a href="/#about">About</a>
+      <a href="/hosting">Hosting</a>
+      <a href="/facilitation">Facilitation</a>
+      <a href="/scentura">Scentura</a>
+      <a href="/letsbloom">letsbloom</a>
+      <a href="/stories">Stories</a>
+      <a href="/for-you" class="active">For you</a>
+      <a class="nav-cta" href="/#connect">Let's connect</a>
+    </div>
+  </div>
+</nav>
+
+<header class="dhero">
+  <span class="hero-bg" aria-hidden="true"></span>
+  <div class="wrap">
+    <a class="back" href="/for-you">← back to For you</a>
+    <div class="verb reveal">a little recipe 🎨</div>
+    <h1 class="reveal d1">Make Them<br>a Character</h1>
+    <p class="sub reveal d2">I turned my friends into tiny hand-drawn characters, based on their personalities. Then I put them on postcards, birthday cards, even cakes. Here's the exact recipe, free. :)</p>
+  </div>
+</header>
+
+<section class="section" style="padding-top:48px">
+  <div class="wrap">
+    <div class="mc-lead reveal">
+      <p class="big">Okay, this is one of my favourite things I've ever made. 🤍</p>
+      <p>One day I turned each of my friends into a little character, drawn entirely from their personality. The dancer got a twerk. The chaos gremlin got a giant hammer. The hopeless romantic got heart-eyes and a "muah muah muah."</p>
+      <p>Then I went a bit overboard (as one does). I printed them as postcards and wrote everyone a handwritten letter. Turned them into birthday cards. We even printed them onto cakes. Watching someone realise the tiny character is <em>them</em>? Best reaction ever.</p>
+      <p>So here's the whole recipe. It's free. Steal it, make your people, and go a little overboard too.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:8px">
+  <div class="wrap">
+    <div class="mc-gallery reveal">
+      <div class="mc-card"><img src="/assets/character-1.jpg" alt="Hand-drawn chibi character dancing in a party hat and sunglasses" loading="lazy"></div>
+      <div class="mc-card"><img src="/assets/character-2.jpg" alt="Hand-drawn chibi character with heart-eyes and a 'love is love' rainbow" loading="lazy"></div>
+      <div class="mc-card"><img src="/assets/character-3.jpg" alt="Hand-drawn chibi character in a cap and glasses, looking cool" loading="lazy"></div>
+      <div class="mc-card"><img src="/assets/character-4.jpg" alt="Hand-drawn chibi character mid-dance with a 'HA!' speech bubble" loading="lazy"></div>
+      <div class="mc-card"><img src="/assets/character-5.jpg" alt="Hand-drawn chibi character with a DJ console and a cheeky grin" loading="lazy"></div>
+      <div class="mc-card"><img src="/assets/character-6.jpg" alt="Hand-drawn chibi character in a tutu holding a giant hammer" loading="lazy"></div>
+    </div>
+    <p class="mc-cap">A few of my people. (Drawn from their personalities, not their names. ;)</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:14px">
+  <div class="wrap">
+    <div class="fy-eyebrow" style="color:var(--accent);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin-bottom:4px">the whole recipe</div>
+    <h2 style="font-family:var(--disp);font-weight:600;font-size:clamp(24px,3.4vw,30px);margin:0 0 4px">Three steps. Ten minutes. Free.</h2>
+
+    <div class="mc-steps reveal">
+      <div class="mc-step">
+        <span class="num">1</span>
+        <h3>Copy the prompt</h3>
+        <p>It's right below. One tap and it's on your clipboard, ready to go.</p>
+      </div>
+      <div class="mc-step">
+        <span class="num">2</span>
+        <h3>Paste it into Manus</h3>
+        <p>The AI tool I used to draw all of these. <a href="https://www.manus.im/invitation/TGFN4WBUK1EA8F?utm_source=invitation&amp;utm_medium=social&amp;utm_campaign=copy_link" target="_blank" rel="noopener" data-track="character:manus-step">Sign up with my link</a> and you get 500 bonus credits to play with.</p>
+      </div>
+      <div class="mc-step">
+        <span class="num">3</span>
+        <h3>Make it them</h3>
+        <p>Swap the [brackets] for your friend's vibe: their hair, their energy, their catchphrase. Hit go, then tweak till it feels like them.</p>
+      </div>
+    </div>
+
+    <div class="mc-prompt-wrap reveal">
+      <button class="mc-copy" id="mcCopy" data-track="character:copy-prompt">Copy prompt</button>
+      <div class="mc-prompt" id="mcPrompt"><b>// The style base (paste this first, it's the secret sauce)</b>
+A cute hand-drawn cartoon chibi character illustration. Use clean, confident black marker linework on an off-white cream paper background with a subtle paper texture. Use simple flat colour fills (no gradients) for hair and specific props only. Add a soft light-pink blush on the cheeks. The drawing should feel like a professional artist's quick marker doodle: charming, slightly messy but intentional, and full of personality.
+
+<b>// Then the character</b>
+Character Name: [name]
+
+Anatomy &amp; Pose: A solo full-body chibi character with a large round head (about half the total height) and a small expressive body. Standing in a [pose, e.g. twerking, mid-spin, shielding their head, bouncing] pose that captures their energy.
+
+Face &amp; Expression: [expression, e.g. cheeky wink with tongue out, nonchalant 'heh' smirk, heart-eyes with a little drool]. Include details like [glasses, big teeth, dimples].
+
+Hair: [colour] hair in a [style, e.g. voluminous butterfly cut, low ponytail, half-up bun]. [detail, e.g. dark roots with lighter tips, side parting].
+
+Outfit: [clothing, e.g. baggy oversized tee and shorts, a classical dance outfit, a ballet tutu]. [accessories, e.g. a party hat, shutter shades, a hair clip].
+
+Props &amp; Vibe: Surround the character with [3 to 4 objects, e.g. a DJ console, a giant hammer, musical notes, a floating bottle, hearts, sparkles].
+
+Text Elements: Include a small handwritten name label '[name]' and [number] speech bubbles with their catchphrases: "[phrase 1]" and "[phrase 2]".</div>
+    </div>
+    <a class="mc-grab" href="/assets/make-them-a-character-prompt-guide.md" target="_blank" rel="noopener" data-track="character:download-guide">Grab the full guide (with all my tips) →</a>
+
+    <div class="mc-callout reveal">
+      <div class="e">🎨</div>
+      <div>
+        <h3>The tool: Manus</h3>
+        <p>I pasted this prompt straight into <a href="https://www.manus.im/invitation/TGFN4WBUK1EA8F?utm_source=invitation&amp;utm_medium=social&amp;utm_campaign=copy_link" target="_blank" rel="noopener" data-track="character:manus-callout">Manus</a> and it drew these for me. If you sign up through my link you'll get <b>500 bonus credits</b>, which is plenty to make a whole friend group.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:18px">
+  <div class="wrap">
+    <h2 style="font-family:var(--disp);font-weight:600;font-size:clamp(22px,3.2vw,28px);margin:0 0 4px">Turning a real person into a drawing</h2>
+    <p class="mc-cap" style="text-align:left;margin:0 0 4px">The fun part is reading their personality, then exaggerating it.</p>
+    <div class="mc-tips reveal">
+      <div class="mc-tip"><span class="d">◆</span><div><b>A bit of a menace?</b> Give them a giant weapon, or a split "angel and devil" face.</div></div>
+      <div class="mc-tip"><span class="d">◆</span><div><b>Always dancing?</b> Use a big dynamic pose: a twerk, a spin, a bounce.</div></div>
+      <div class="mc-tip"><span class="d">◆</span><div><b>Always laughing?</b> Eye-smiles (^^) and hands squishing their cheeks.</div></div>
+      <div class="mc-tip"><span class="d">◆</span><div><b>Obsessed with someone or something?</b> Heart-eyes, maybe a tiny bit of drool.</div></div>
+      <div class="mc-tip"><span class="d">◆</span><div><b>Effortlessly chill?</b> Half-lidded eyes and a "heh" smirk.</div></div>
+      <div class="mc-tip"><span class="d">◆</span><div><b>One signature habit?</b> Float 1 or 2 little "totem" objects around them.</div></div>
+    </div>
+    <p class="mc-cap" style="text-align:left;margin-top:16px">Two more tips: only colour the hair and a prop or two (leave the clothes white so they pop), and always say "cream paper background" so it doesn't come out clinical white.</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:18px">
+  <div class="wrap">
+    <h2 style="font-family:var(--disp);font-weight:600;font-size:clamp(22px,3.2vw,28px);margin:0 0 4px">Once you have the characters&hellip;</h2>
+    <p class="mc-cap" style="text-align:left;margin:0">This is where it gets really fun. A few things I've done (and you can too):</p>
+    <div class="mc-uses reveal">
+      <div class="mc-use"><div class="ic">💌</div><h4>Postcards &amp; letters</h4><p>Print the character, write a handwritten note on the back. Instant heirloom.</p></div>
+      <div class="mc-use"><div class="ic">🎂</div><h4>Birthday cards &amp; cake toppers</h4><p>Yes, we actually printed characters onto cakes. The reaction is unreal.</p></div>
+      <div class="mc-use"><div class="ic">🌐</div><h4>A tiny website for someone</h4><p>Build a little one-page site for a friend, with their character as the star.</p></div>
+      <div class="mc-use"><div class="ic">✨</div><h4>Stickers &amp; wallpapers</h4><p>Phone wallpapers, laptop stickers, group-chat reaction packs.</p></div>
+      <div class="mc-use"><div class="ic">👯</div><h4>The whole friend group</h4><p>Make everyone, line them up together. A little illustrated family portrait.</p></div>
+      <div class="mc-use"><div class="ic">🎁</div><h4>The impossible-to-buy-for person</h4><p>When they have everything, give them something only you could make.</p></div>
+    </div>
+    <div class="mc-soon">📸 Photos of the postcards and the cake are coming soon. (They're too cute not to share.)</div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:14px;padding-bottom:30px">
+  <div class="wrap">
+    <div class="mc-bigcta reveal">
+      <h2>Go make someone's day. 🤍</h2>
+      <p>This is what I mean by using AI to make real life a little warmer. A drawing that quietly says: I see you, I get you, here's proof.</p>
+      <a class="mc-btn" href="https://www.manus.im/invitation/TGFN4WBUK1EA8F?utm_source=invitation&amp;utm_medium=social&amp;utm_campaign=copy_link" target="_blank" rel="noopener" data-track="character:manus-cta">Make your first character →</a>
+      <div class="mc-fineprint">Opens Manus. My referral link gives you 500 bonus credits to start.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="ftop">
+      <div><h4>Meet people.<br><em>Go deeper.</em><br>Stay connected.</h4></div>
+      <div class="col"><h5>Explore</h5>
+        <a href="/hosting">Hosting &amp; Emceeing</a><a href="/facilitation">Facilitation</a><a href="/scentura">Scentura</a><a href="/letsbloom">letsbloom</a><a href="/stories">Stories</a><a href="/for-you">For you</a>
+      </div>
+      <div class="col"><h5>Elsewhere</h5>
+        <a href="https://www.linkedin.com/in/jocelynlimjinyan/" target="_blank" rel="noopener">LinkedIn</a><a href="https://medium.com/@jocelynlimjy" target="_blank" rel="noopener">Medium</a><a href="https://instagram.com/letsbloom.space" target="_blank" rel="noopener">Instagram</a><a href="https://t.me/jyjocelyn" target="_blank" rel="noopener">Telegram</a><a href="#" data-open="contact">Email</a>
+      </div>
+    </div>
+    <div class="fbot"><span>© <span class="year"></span> Jocelyn Lim Jin Yan · jocelynlim.space</span><span><a href="/privacy">Privacy</a> · Made with care in Singapore</span></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var btn=document.getElementById('mcCopy'), box=document.getElementById('mcPrompt');
+  if(!btn||!box)return;
+  btn.addEventListener('click',function(){
+    var text=box.innerText||box.textContent||'';
+    function ok(){btn.textContent='Copied! ✓';btn.classList.add('done');setTimeout(function(){btn.textContent='Copy prompt';btn.classList.remove('done');},2200);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(ok).catch(fallback);}else{fallback();}
+    function fallback(){try{var r=document.createRange();r.selectNodeContents(box);var s=window.getSelection();s.removeAllRanges();s.addRange(r);document.execCommand('copy');s.removeAllRanges();ok();}catch(e){btn.textContent='Select & copy';}}
+  });
+})();
+</script>
+<script src="/main.js"></script>
+</body>
+</html>
