@@ -233,3 +233,22 @@ if (portrait && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) 
     portrait.style.transform = `translateY(${y * 0.04}px)`;
   });
 }
+
+// ---- mobile engagement layer: desktop note + sticky CTA (shown only on phones via CSS) ----
+(function () {
+  // tiny "best on desktop" note at the very top
+  var note = document.createElement('div');
+  note.className = 'm-note';
+  note.innerHTML = '<span>🖥️ This site is optimised for desktop view</span><button class="m-note-x" aria-label="Dismiss">✕</button>';
+  document.body.insertBefore(note, document.body.firstChild);
+  note.querySelector('.m-note-x').addEventListener('click', function () { note.remove(); });
+
+  // sticky bottom "Work with me" bar — reuses the existing modal via data-open
+  var bar = document.createElement('div');
+  bar.className = 'm-cta';
+  bar.innerHTML = '<a class="m-cta-btn" data-open="work" href="#">Work with me <span>→</span></a>';
+  document.body.appendChild(bar);
+  function onScroll() { bar.classList.toggle('show', window.scrollY > 300); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();

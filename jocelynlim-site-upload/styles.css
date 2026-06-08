@@ -423,3 +423,57 @@ body{background:radial-gradient(125% 85% at 50% -12%, #f9f3e7 0%, #f3ecde 55%, #
 .stat .desc{font-size:14px;color:var(--ink);line-height:1.5;margin-top:14px}
 .stat .src{font-size:11px;color:var(--faint);margin-top:12px;line-height:1.4}
 @media(max-width:760px){.stats{grid-template-columns:1fr}}
+
+/* ============================================================
+   v7 — mobile engagement layer (desktop is NOT affected; all
+   rules live inside max-width media queries or are hidden by default)
+   ============================================================ */
+.m-note{display:none}
+.m-cta{display:none}
+
+@media(max-width:600px){
+  /* tiny "best on desktop" note at the very top */
+  .m-note{display:flex;align-items:center;justify-content:center;gap:10px;text-align:center;font-size:12.5px;font-weight:500;color:var(--ink-soft);background:var(--paper-2);border-bottom:1px solid var(--line);padding:8px 14px;line-height:1.3}
+  .m-note .m-note-x{flex:none;background:none;border:none;color:var(--faint);font-size:12px;cursor:pointer;padding:2px 4px;line-height:1}
+
+  /* sticky bottom "Work with me" bar */
+  .m-cta{display:block;position:fixed;left:0;right:0;bottom:0;z-index:70;padding:10px 16px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(to top,var(--paper) 62%,rgba(246,240,230,0));transform:translateY(135%);transition:transform .32s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+  .m-cta.show{transform:none}
+  .m-cta-btn{pointer-events:auto;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--accent);color:#fff;font-weight:600;font-size:16px;padding:15px;border-radius:14px;box-shadow:0 8px 26px rgba(60,45,30,.20)}
+  body{padding-bottom:64px}
+
+  /* pacing — cut dead space so every scroll reveals something */
+  .section{padding:40px 0}
+  .hero{padding:18px 0 6px}
+  .hero .wrap{gap:22px}
+  .hero .cta-row{margin-top:22px}
+  .split{gap:20px}
+  .dhero{padding:20px 0 2px}
+
+  /* punchier headlines (editorial energy on a phone) */
+  .hero h1{font-size:clamp(35px,9.6vw,48px);line-height:1.0;letter-spacing:-.012em}
+  .section-h{font-size:clamp(28px,8vw,38px);line-height:1.06}
+  .dhero h1{font-size:clamp(32px,8.8vw,42px);line-height:1.02}
+
+  /* immersive, edge-to-edge images (safe full-bleed via symmetric breakout) */
+  .portrait,.dhero-img,.split-media,.post-body img{
+    margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
+    max-width:100vw;width:auto;border-radius:0}
+  .portrait img,.dhero-img img,.split-media img{border-radius:0;width:100%}
+
+  /* photo galleries become a swipeable snap-carousel */
+  .gallery{display:flex;grid-template-columns:none;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
+    margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding:2px 20px 10px;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .gallery::-webkit-scrollbar{display:none}
+  .gallery figure{flex:0 0 80%;scroll-snap-align:center;margin:0}
+  .gallery figure img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px}
+
+  /* writing cards a touch tighter */
+  .writing-grid{grid-template-columns:1fr;gap:14px}
+}
+
+@media(max-width:380px){
+  .m-cta-btn{font-size:15px;padding:14px}
+  .gallery figure{flex:0 0 84%}
+}
