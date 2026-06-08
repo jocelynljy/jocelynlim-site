@@ -243,3 +243,84 @@ if (portrait && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) 
   document.body.insertBefore(note, document.body.firstChild);
   note.querySelector('.m-note-x').addEventListener('click', function () { note.remove(); });
 })();
+
+// ============================================================
+//  Supabase: first-party analytics + comments/likes (all free tier)
+// ============================================================
+(function () {
+  var SB_URL = 'https://axttzedzhtvlblalrryc.supabase.co';
+  var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4dHR6ZWR6aHR2bGJsYWxycnljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5MjI4MTEsImV4cCI6MjA5NjQ5ODgxMX0.cZMZeeST8ik4Es3UaVtcAZvgrmdLrcBpcWKQ8GOUVAQ';
+  function sbInsert(table, row) {
+    try {
+      return fetch(SB_URL + '/rest/v1/' + table, {
+        method: 'POST',
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+        body: JSON.stringify(row), keepalive: true
+      });
+    } catch (e) { return Promise.resolve({ ok: false }); }
+  }
+  function sbSelect(path) {
+    return fetch(SB_URL + '/rest/v1/' + path, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY } })
+      .then(function (r) { return r.json(); }).catch(function () { return []; });
+  }
+  window.sbInsert = sbInsert; window.sbSelect = sbSelect;
+
+  function device() { var w = window.innerWidth || screen.width || 0; if (w <= 600) return 'mobile'; if (w <= 1024) return 'tablet'; return 'desktop'; }
+  function sid() { try { var s = sessionStorage.getItem('jl_sid'); if (!s) { s = Date.now().toString(36) + Math.random().toString(36).slice(2, 8); sessionStorage.setItem('jl_sid', s); } return s; } catch (e) { return 'na'; } }
+
+  // page view, once per load
+  sbInsert('page_views', { path: location.pathname || '/', referrer: document.referrer ? document.referrer.slice(0, 300) : null, device: device(), session_id: sid() });
+
+  // click tracking on links + CTAs
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a,[data-open]') : null; if (!a) return;
+    var label = a.getAttribute('data-open') ? 'open:' + a.getAttribute('data-open') : (a.getAttribute('href') || (a.textContent || '').trim()).slice(0, 120);
+    sbInsert('events', { path: location.pathname, label: label, session_id: sid() });
+  }, true);
+
+  // ----- comments + likes (only where #comments exists) -----
+  var box = document.getElementById('comments');
+  if (!box) return;
+  var post = box.getAttribute('data-post') || location.pathname;
+  box.innerHTML =
+    '<div class="cm-likebar"><button class="cm-like" type="button" aria-label="Like this post">🤍 <span class="cm-like-t">Like</span> <b class="cm-like-n">·</b></button></div>' +
+    '<h3 class="cm-title">Leave a note <span class="cm-count"></span></h3>' +
+    '<form class="cm-form" novalidate><div class="cm-row"><input name="name" placeholder="Your name" maxlength="80" required><input name="email" type="email" placeholder="Email (optional, never shown)" maxlength="180"></div>' +
+    '<textarea name="message" placeholder="Say hi, or share a thought…" maxlength="2000" required></textarea>' +
+    '<button class="btn btn-primary cm-submit" type="submit">Post note <span class="arrow">→</span></button><div class="cm-msg" hidden></div></form>' +
+    '<div class="cm-list"></div>';
+  var likeBtn = box.querySelector('.cm-like'), likeN = box.querySelector('.cm-like-n'), list = box.querySelector('.cm-list'), form = box.querySelector('.cm-form'), count = box.querySelector('.cm-count');
+  function esc(s) { var d = document.createElement('div'); d.textContent = (s == null ? '' : s); return d.innerHTML; }
+  function loadLikes() { sbSelect('reactions?post=eq.' + encodeURIComponent(post) + '&select=id').then(function (r) { likeN.textContent = Array.isArray(r) ? r.length : 0; }); }
+  try { if (localStorage.getItem('jl_like_' + post) === '1') likeBtn.classList.add('liked'); } catch (e) {}
+  likeBtn.addEventListener('click', function () {
+    if (likeBtn.classList.contains('liked')) return;
+    likeBtn.classList.add('liked'); try { localStorage.setItem('jl_like_' + post, '1'); } catch (e) {}
+    likeN.textContent = (parseInt(likeN.textContent, 10) || 0) + 1;
+    sbInsert('reactions', { post: post, kind: 'like' });
+  });
+  function loadComments() {
+    sbSelect('comments?post=eq.' + encodeURIComponent(post) + '&approved=eq.true&select=name,message,created_at&order=created_at.desc').then(function (rows) {
+      if (!Array.isArray(rows)) rows = [];
+      count.textContent = rows.length ? '(' + rows.length + ')' : '';
+      list.innerHTML = rows.length ? rows.map(function (c) {
+        var w = ''; try { w = new Date(c.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }); } catch (e) {}
+        return '<div class="cm-item"><div class="cm-head"><b>' + esc(c.name) + '</b><span>' + w + '</span></div><p>' + esc(c.message) + '</p></div>';
+      }).join('') : '<p class="cm-empty">Be the first to leave a note. 🤍</p>';
+    });
+  }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = form.querySelector('.cm-submit'), out = form.querySelector('.cm-msg');
+    var name = form.name.value.trim(), message = form.message.value.trim(), email = form.email.value.trim();
+    if (!name || !message) { out.hidden = false; out.textContent = 'Pop in your name and a note 🙂'; return; }
+    btn.disabled = true; btn.innerHTML = 'Posting…';
+    sbInsert('comments', { post: post, name: name, email: email || null, message: message }).then(function (r) { return r && r.ok; }).then(function (ok) {
+      btn.disabled = false; btn.innerHTML = 'Post note <span class="arrow">→</span>';
+      out.hidden = false;
+      if (ok) { form.reset(); out.textContent = 'Thank you 🤍 your note is up.'; loadComments(); }
+      else { out.textContent = 'Hmm, that didn’t post. Mind trying again?'; }
+    }).catch(function () { btn.disabled = false; btn.innerHTML = 'Post note <span class="arrow">→</span>'; out.hidden = false; out.textContent = 'Something went wrong. Try again?'; });
+  });
+  loadLikes(); loadComments();
+})();

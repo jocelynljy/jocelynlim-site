@@ -99,6 +99,31 @@ img{display:block; max-width:100%}
 .post-scene em{font-style:italic}
 .post-more{margin-top:46px;padding-top:30px;border-top:1px solid var(--line)}
 
+/* comments + likes */
+.comments{max-width:720px;margin:46px auto 0;padding-top:30px;border-top:1px solid var(--line)}
+.cm-likebar{margin-bottom:26px}
+.cm-like{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:11px 20px;font-family:var(--body);font-size:15px;font-weight:600;color:var(--ink);cursor:pointer;transition:border-color .2s,transform .12s,background .2s}
+.cm-like:hover{border-color:var(--accent)}
+.cm-like:active{transform:scale(.95)}
+.cm-like.liked{background:var(--accent);color:#fff;border-color:var(--accent)}
+.cm-like-n{font-weight:700}
+.cm-title{font-family:var(--disp);font-weight:600;font-size:23px;margin-bottom:16px}
+.cm-count{color:var(--faint);font-weight:400;font-size:18px}
+.cm-form{margin-bottom:32px}
+.cm-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.cm-form input,.cm-form textarea{width:100%;font-family:var(--body);font-size:15px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink)}
+.cm-form textarea{min-height:96px;resize:vertical;margin-bottom:14px}
+.cm-form input:focus,.cm-form textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(196,100,79,.14)}
+.cm-msg{margin-top:12px;font-size:14px;color:var(--ink-soft)}
+.cm-list{display:flex;flex-direction:column;gap:14px}
+.cm-item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.cm-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;gap:12px}
+.cm-head b{font-weight:600;color:var(--ink)}
+.cm-head span{font-size:12.5px;color:var(--faint);flex:none}
+.cm-item p{font-size:15px;line-height:1.55;color:var(--ink-soft)}
+.cm-empty{color:var(--ink-soft);font-style:italic}
+@media(max-width:600px){.cm-row{grid-template-columns:1fr}}
+
 /* hero */
 .hero{position:relative; padding:64px 0 40px; overflow:hidden}
 .hero .wrap{display:grid; grid-template-columns:1.15fr .85fr; gap:54px; align-items:center}
