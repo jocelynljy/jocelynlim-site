@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You — Free Tools &amp; Resources · Jocelyn Lim</title>
+<meta name="description" content="Free things Jocelyn Lim made for you — a Connection Style quiz, an AI icebreaker generator, and resources for hosting, facilitating and bringing people together.">
+<link rel="canonical" href="https://jocelynlim.space/for-you">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="For You — Free Tools &amp; Resources · Jocelyn Lim">
+<meta property="og:description" content="Play with them, take what's useful. A Connection Style quiz and more, free.">
+<meta property="og:image" content="https://jocelynlim.space/assets/jocelyn-portrait.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<style>
+.fy-sec{margin-top:18px}
+.fy-eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--accent);margin-bottom:6px}
+.fy-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+.fy-card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:var(--shadow-sm)}
+.fy-card .ic{font-size:26px;margin-bottom:10px}
+.fy-tag{align-self:flex-start;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;border-radius:20px;padding:3px 10px;margin-bottom:12px}
+.fy-tag.try{color:#3f8a82;background:#e4f0ee}
+.fy-tag.soon{color:var(--ink-soft);background:var(--paper-2)}
+.fy-card h3{font-family:var(--disp);font-weight:600;font-size:21px;line-height:1.18;margin-bottom:8px}
+.fy-card p{font-size:14.5px;color:var(--ink-soft);line-height:1.55;flex:1}
+.fy-card .fy-go{margin-top:16px;align-self:flex-start;font-weight:600;color:var(--accent);cursor:pointer;border:none;background:none;font-family:var(--body);font-size:15px;padding:0}
+.fy-soon{opacity:.72}
+/* quiz */
+.quiz{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px;box-shadow:var(--shadow-sm);max-width:620px;margin:0 auto}
+.quiz-bar{height:5px;background:var(--paper-2);border-radius:6px;overflow:hidden;margin-bottom:22px}
+.quiz-bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .35s}
+.quiz-q{font-family:var(--disp);font-weight:600;font-size:22px;line-height:1.25;margin-bottom:18px}
+.quiz-opts{display:flex;flex-direction:column;gap:10px}
+.quiz-opt{text-align:left;font-family:var(--body);font-size:15.5px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px;cursor:pointer;transition:border-color .15s,transform .1s,background .15s}
+.quiz-opt:hover{border-color:var(--accent);background:#fff}
+.quiz-opt:active{transform:scale(.99)}
+.quiz-step{font-size:12.5px;color:var(--faint);font-weight:600;margin-top:16px;letter-spacing:.04em}
+.res-emoji{font-size:54px;line-height:1}
+.res-name{font-family:var(--disp);font-weight:600;font-size:30px;margin:8px 0 4px}
+.res-name b{color:var(--accent)}
+.res-tagline{color:var(--ink-soft);font-size:16px;margin-bottom:18px}
+.res-block{text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:12px}
+.res-block h4{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:700;margin-bottom:5px}
+.res-block p{font-size:15px;color:var(--ink);line-height:1.55}
+.res-cap{margin-top:18px;text-align:left;background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:18px}
+.res-cap label{font-size:14.5px;color:var(--ink);font-weight:600;display:block;margin-bottom:10px}
+.res-cap .row{display:flex;gap:10px}
+.res-cap input{flex:1;font-family:var(--body);font-size:15px;padding:12px 14px;border:1px solid var(--line);border-radius:12px}
+.res-cap input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(196,100,79,.14)}
+.quiz-again{margin-top:16px;background:none;border:none;color:var(--ink-soft);font-weight:600;cursor:pointer;font-family:var(--body);font-size:14px;text-decoration:underline}
+@media(max-width:600px){.fy-grid{grid-template-columns:1fr}.quiz{padding:22px}.res-cap .row{flex-direction:column}}
+</style>
+</head>
+<body style="--accent:var(--hub)">
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="/">Jocelyn Lim<span class="d">.</span></a>
+    <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-links">
+      <a href="/#about">About</a>
+      <a href="/hosting">Hosting</a>
+      <a href="/facilitation">Facilitation</a>
+      <a href="/scentura">Scentura</a>
+      <a href="/letsbloom">letsbloom</a>
+      <a href="/stories">Stories</a>
+      <a href="/for-you" class="active">For you</a>
+      <a class="nav-cta" href="/#connect">Let's connect</a>
+    </div>
+  </div>
+</nav>
+
+<header class="dhero">
+  <span class="hero-bg" aria-hidden="true"></span>
+  <div class="wrap">
+    <a class="back" href="/">← back to everything</a>
+    <div class="verb reveal">a little gift</div>
+    <h1 class="reveal d1">For you</h1>
+    <p class="sub reveal d2">Free things I've made. Play with them, take what's useful — no strings.</p>
+  </div>
+</header>
+
+<section class="section" style="padding-top:50px">
+  <div class="wrap">
+
+    <div class="fy-sec reveal">
+      <div class="fy-eyebrow">try it now</div>
+      <p class="lead" style="margin:0 0 6px;max-width:620px">Quick, playful, and a little bit about you.</p>
+    </div>
+
+    <div class="quiz reveal d1" id="quiz" style="margin-top:22px"></div>
+
+    <div class="fy-sec reveal" style="margin-top:54px">
+      <div class="fy-eyebrow">also here</div>
+      <div class="fy-grid">
+        <div class="fy-card fy-soon">
+          <div class="ic">🎤</div>
+          <span class="fy-tag soon">interactive · soon</span>
+          <h3>AI Icebreaker Generator</h3>
+          <p>Tell it your group, the occasion and the vibe — get custom icebreakers and a deeper question you can use that night. Landing here very soon.</p>
+        </div>
+        <div class="fy-card fy-soon">
+          <div class="ic">🃏</div>
+          <span class="fy-tag soon">download · soon</span>
+          <h3>The Connection Card Deck</h3>
+          <p>My deck of deep questions, icebreakers and little challenges, sorted by occasion. For dinners, teams, road trips, first dates.</p>
+        </div>
+        <div class="fy-card fy-soon">
+          <div class="ic">🤖</div>
+          <span class="fy-tag soon">guide · soon</span>
+          <h3>How I Built This With AI</h3>
+          <p>A non-techie's guide (plus the actual prompts) to building a whole site, blog, tools and analytics with AI. Coming soon.</p>
+        </div>
+        <div class="fy-card fy-soon">
+          <div class="ic">🗂️</div>
+          <span class="fy-tag soon">template · soon</span>
+          <h3>My Personal CRM</h3>
+          <p>The simple system I use to actually stay close to people. Coming later.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="ftop">
+      <div><h4>Meet people.<br><em>Go deeper.</em><br>Stay connected.</h4></div>
+      <div class="col"><h5>Explore</h5>
+        <a href="/hosting">Hosting &amp; Emceeing</a><a href="/facilitation">Facilitation</a><a href="/scentura">Scentura</a><a href="/letsbloom">letsbloom</a><a href="/stories">Stories</a><a href="/for-you">For you</a>
+      </div>
+      <div class="col"><h5>Elsewhere</h5>
+        <a href="https://www.linkedin.com/in/jocelynlimjinyan/" target="_blank" rel="noopener">LinkedIn</a><a href="https://medium.com/@jocelynlimjy" target="_blank" rel="noopener">Medium</a><a href="https://instagram.com/letsbloom.space" target="_blank" rel="noopener">Instagram</a><a href="https://t.me/jyjocelyn" target="_blank" rel="noopener">Telegram</a><a href="#" data-open="contact">Email</a>
+      </div>
+    </div>
+    <div class="fbot"><span>© <span class="year"></span> Jocelyn Lim Jin Yan · jocelynlim.space</span><span><a href="/privacy">Privacy</a> · Made with care in Singapore</span></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var A={
+    host:{e:'🎤',n:'The Host',t:'You make a room feel like home.',d:'You notice the person standing alone, you pull people in, and somehow everyone leaves feeling like they belonged. Gatherings are better because you were there.',s:'Making people feel welcome and included, instantly.',g:'Remember to let someone host you sometimes. You\'re allowed to be looked after too.',tip:'Before your next gathering, pick one quiet person and make it your mission to help them feel seen.'},
+    listener:{e:'👂',n:'The Listener',t:'You\'re the one people open up to.',d:'You ask the question that actually matters, then you really listen. People tell you things they didn\'t plan to. Being around you feels like exhaling.',s:'Making people feel deeply heard and understood.',g:'Share more of your own story — being known goes both ways.',tip:'Next conversation, try one honest "me too" before your next question. Watch it deepen.'},
+    spark:{e:'✨',n:'The Spark',t:'You bring the room to life.',d:'You break the ice before anyone realises it was frozen. You get people laughing, loosen the mood, and turn a stiff group into a fun one. Energy follows you.',s:'Lifting the mood and making connection feel easy and light.',g:'It\'s okay to be the quiet one sometimes. Your calm is welcome too.',tip:'Try opening your next group with a silly, low-stakes question. Fun is a doorway to depth.'},
+    anchor:{e:'⚓',n:'The Anchor',t:'You\'re the calm people gravitate to.',d:'When things get tense or loud, you\'re the steady one. People feel safe around you. You don\'t need to fill silence — your presence does the work.',s:'Being a grounding, steady, safe presence for others.',g:'Let people in on what you\'re feeling — steady doesn\'t have to mean silent.',tip:'This week, name one feeling out loud to someone you trust. Steadiness plus honesty is magnetic.'},
+    bridge:{e:'🌉',n:'The Bridge',t:'You connect people to each other.',d:'You\'re the natural introducer — "oh, you two have to meet." You weave separate people into one conversation and somehow always know someone who can help.',s:'Weaving people together and building community around you.',g:'Make space for your own one-on-ones, not just the group. You deserve depth too.',tip:'Introduce two people this week with one specific reason they\'d click. Connection is your art.'}
+  };
+  var Q=[
+    {q:'At a party where you only know the host, you usually…',o:[['Find one person and have a real conversation','listener'],['Get a little group laughing within ten minutes','spark'],['Introduce people who should know each other','bridge'],['Help the host make sure everyone\'s okay','host'],['Find a calm spot and let people come to you','anchor']]},
+    {q:'Friends would say you\'re the one who…',o:[['Remembers the little details of their life','listener'],['Lifts the mood when things get heavy','spark'],['Always knows someone who can help','bridge'],['Plans the thing and makes it happen','host'],['They call when they need to feel steady','anchor']]},
+    {q:'In a brand-new group, your superpower is…',o:[['Asking the question that makes someone open up','listener'],['Breaking the ice so no one feels awkward','spark'],['Weaving separate people into one chat','bridge'],['Making sure no one\'s left standing alone','host'],['Being the calm everyone drifts toward','anchor']]},
+    {q:'Your idea of a perfect catch-up is…',o:[['A long, deep one-on-one','listener'],['A spontaneous, laughter-filled hang','spark'],['Your friends from different worlds finally meeting','bridge'],['A little gathering you host','host'],['A quiet, unhurried evening','anchor']]},
+    {q:'When someone\'s upset, you…',o:[['Sit with them and really listen','listener'],['Gently get them to smile again','spark'],['Connect them with someone who\'s been there','bridge'],['Take charge of what they need','host'],['Stay steady and remind them it\'ll be okay','anchor']]},
+    {q:'At work, people rely on you to…',o:[['Notice how everyone\'s actually feeling','listener'],['Keep the energy up','spark'],['Get the right people in the room','bridge'],['Organise and lead','host'],['Be the level head when it\'s tense','anchor']]}
+  ];
+  var el=document.getElementById('quiz'), i=0, score={host:0,listener:0,spark:0,anchor:0,bridge:0};
+  function intro(){
+    el.innerHTML='<div style="text-align:center"><div class="res-emoji">🌷</div><h2 class="res-name">What\'s your <b>connection style</b>?</h2><p class="res-tagline">Six quick questions. A little mirror for how you show up with people.</p><button class="btn btn-primary" id="qstart">Start the quiz <span class="arrow">→</span></button></div>';
+    document.getElementById('qstart').onclick=function(){i=0;score={host:0,listener:0,spark:0,anchor:0,bridge:0};render();};
+  }
+  function render(){
+    var q=Q[i];
+    el.innerHTML='<div class="quiz-bar"><i style="width:'+Math.round(i/Q.length*100)+'%"></i></div>'+
+      '<div class="quiz-q">'+q.q+'</div><div class="quiz-opts">'+
+      q.o.map(function(o,idx){return '<button class="quiz-opt" data-k="'+o[1]+'">'+o[0]+'</button>';}).join('')+
+      '</div><div class="quiz-step">Question '+(i+1)+' of '+Q.length+'</div>';
+    Array.prototype.forEach.call(el.querySelectorAll('.quiz-opt'),function(b){
+      b.onclick=function(){score[b.getAttribute('data-k')]++;i++;if(i<Q.length)render();else result();};
+    });
+  }
+  function result(){
+    var best='host',max=-1;for(var k in score){if(score[k]>max){max=score[k];best=k;}}
+    var a=A[best];
+    el.innerHTML='<div style="text-align:center"><div class="res-emoji">'+a.e+'</div>'+
+      '<h2 class="res-name">You\'re <b>'+a.n+'</b></h2><p class="res-tagline">'+a.t+'</p>'+
+      '<div class="res-block"><h4>What this looks like</h4><p>'+a.d+'</p></div>'+
+      '<div class="res-block"><h4>Your strength</h4><p>'+a.s+'</p></div>'+
+      '<div class="res-cap" id="cap"><label>Want your full profile — your growth edge + a tip made for you? I\'ll send it over. 🤍</label>'+
+      '<div class="row"><input id="capemail" type="email" placeholder="your@email.com"><button class="btn btn-primary" id="capbtn">Send it to me</button></div><div id="capmsg" style="font-size:13.5px;color:var(--ink-soft);margin-top:10px"></div></div>'+
+      '<button class="quiz-again" id="qagain">↺ take it again</button></div>';
+    document.getElementById('qagain').onclick=intro;
+    var btn=document.getElementById('capbtn');
+    btn.onclick=function(){
+      var email=(document.getElementById('capemail').value||'').trim(), msg=document.getElementById('capmsg');
+      if(email.indexOf('@')<1){msg.textContent='Pop in a valid email 🙂';return;}
+      btn.disabled=true;btn.textContent='Sending…';
+      if(window.sbInsert){window.sbInsert('leads',{email:email,source:'connection-quiz',result:a.n});}
+      setTimeout(function(){
+        document.getElementById('cap').innerHTML='<div style="text-align:left"><h4 style="font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:700;margin-bottom:6px">Your growth edge</h4><p style="font-size:15px;color:var(--ink);line-height:1.55;margin-bottom:14px">'+a.g+'</p><h4 style="font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:700;margin-bottom:6px">A tip, just for you</h4><p style="font-size:15px;color:var(--ink);line-height:1.55">'+a.tip+'</p><p style="font-size:13.5px;color:var(--ink-soft);margin-top:14px">Saved 🤍 I\'ll be in touch. Thanks for trusting me with your email — it\'s never shared.</p></div>';
+      },500);
+    };
+  }
+  intro();
+})();
+</script>
+<script src="/main.js"></script>
+</body>
+</html>
