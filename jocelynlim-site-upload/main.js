@@ -242,13 +242,4 @@ if (portrait && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) 
   note.innerHTML = '<span>🖥️ This site is optimised for desktop view</span><button class="m-note-x" aria-label="Dismiss">✕</button>';
   document.body.insertBefore(note, document.body.firstChild);
   note.querySelector('.m-note-x').addEventListener('click', function () { note.remove(); });
-
-  // sticky bottom "Work with me" bar — reuses the existing modal via data-open
-  var bar = document.createElement('div');
-  bar.className = 'm-cta';
-  bar.innerHTML = '<a class="m-cta-btn" data-open="work" href="#">Work with me <span>→</span></a>';
-  document.body.appendChild(bar);
-  function onScroll() { bar.classList.toggle('show', window.scrollY > 300); }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
 })();

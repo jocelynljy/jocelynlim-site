@@ -94,7 +94,7 @@ img{display:block; max-width:100%}
 .post-body h2{font-family:var(--disp);font-weight:600;font-size:25px;margin:34px 0 10px;color:var(--ink)}
 .post-cta{margin-top:42px;padding-top:26px;border-top:1px solid var(--line)}
 .post-deck{font-family:var(--disp);font-style:italic;font-weight:400;font-size:clamp(18px,2.4vw,22px);color:var(--ink-soft);line-height:1.4;margin:0 0 18px}
-.post-body>img{width:100%;border-radius:16px;margin:6px 0 30px}
+.post-body>img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:16px;margin:6px 0 30px}
 .post-scene{color:var(--ink-soft)}
 .post-scene em{font-style:italic}
 .post-more{margin-top:46px;padding-top:30px;border-top:1px solid var(--line)}
@@ -481,4 +481,42 @@ body{background:radial-gradient(125% 85% at 50% -12%, #f9f3e7 0%, #f3ecde 55%, #
 @media(max-width:380px){
   .m-cta-btn{font-size:15px;padding:14px}
   .gallery figure{flex:0 0 84%}
+}
+
+/* ============================================================
+   v8 — mobile refinements (desktop NOT affected; all in ≤600)
+   ============================================================ */
+@media(max-width:600px){
+  /* hero headline dominates the first screen */
+  .hero h1{font-size:clamp(41px,11.4vw,58px);line-height:.98;letter-spacing:-.016em}
+  .hero h1 .tail{font-size:.5em;margin-top:.42em}
+  .hero .sub{font-size:16px}
+
+  /* clean, borderless hero photo — kill the arch ring + shadow line */
+  .portrait .ring{display:none}
+  .portrait img{box-shadow:none}
+
+  /* sets of cards become swipeable carousels (glance + swipe, next peeks in) */
+  .router-grid,
+  .quotes.three{
+    display:flex !important;
+    grid-template-columns:none !important;
+    gap:14px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    margin-left:calc(50% - 50vw);
+    margin-right:calc(50% - 50vw);
+    padding:4px 20px 14px;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .router-grid::-webkit-scrollbar,
+  .quotes.three::-webkit-scrollbar{display:none}
+  .router-grid > .rcard,
+  .quotes.three > .quote{
+    flex:0 0 82%;
+    scroll-snap-align:center;
+    margin:0;
+  }
+  .router-grid > .rcard:hover{transform:none}
 }
