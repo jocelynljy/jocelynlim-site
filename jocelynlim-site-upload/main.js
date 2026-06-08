@@ -107,6 +107,12 @@ document.addEventListener('click', function (e) {
     '    <button class="wm-close" data-close aria-label="Close">✕</button>' +
     '    <div id="wmContactBody"></div>' +
     '  </div>' +
+    '</div>' +
+    '<div class="wm-overlay" id="wmEvents" role="dialog" aria-modal="true" aria-label="Join the letsbloom events list">' +
+    '  <div class="wm-modal">' +
+    '    <button class="wm-close" data-close aria-label="Close">✕</button>' +
+    '    <div id="wmEventsBody"></div>' +
+    '  </div>' +
     '</div>';
   document.body.appendChild(wrap);
 
@@ -149,6 +155,68 @@ document.addEventListener('click', function (e) {
     if (window.gtag) gtag('event', 'open_contact', { topic: t || 'general' });
   }
 
+  // ----- letsbloom events list (email capture + reason) -----
+  function eventsHTML() {
+    var reasons = [['craft', '🎨', 'I love crafts'], ['network', '🤝', 'To network'], ['curious', '👀', 'Just curious'], ['friends', '🫶', 'To make friends']];
+    return '' +
+      '<div class="wm-eyebrow">letsbloom events</div>' +
+      '<h3>Come mingle with us 🌷</h3>' +
+      '<p class="wm-sub">Drop your email and I’ll let you know whenever there’s an event coming up. No pressure, just join if you’re free. And honestly? The craft is just an excuse for people to meet and talk. You don’t need to be crafty at all.</p>' +
+      '<form id="evForm" novalidate>' +
+      '  <input type="text" name="_honey" class="wm-hp" tabindex="-1" autocomplete="off" aria-hidden="true">' +
+      '  <div class="wm-field"><label for="evEmail">Your email</label><input id="evEmail" type="email" name="email" required placeholder="you@email.com"></div>' +
+      '  <div class="wm-field"><label>What’s pulling you in? <span style="color:var(--faint,#9a9085);font-weight:400">(pick any)</span></label>' +
+      '    <div class="ev-chips">' + reasons.map(function (r) { return '<button type="button" class="ev-chip" data-reason="' + r[0] + '">' + r[1] + ' ' + r[2] + '</button>'; }).join('') +
+      '      <button type="button" class="ev-chip" id="evOtherBtn" data-reason="other">✨ Something else</button>' +
+      '    </div>' +
+      '    <input type="text" id="evOther" name="other" placeholder="Tell me…" style="display:none;margin-top:10px">' +
+      '  </div>' +
+      '  <button type="submit" class="btn btn-primary wm-submit">Keep me posted <span class="arrow">→</span></button>' +
+      '  <div class="wm-msg" id="evMsgOut" hidden></div>' +
+      '</form>';
+  }
+  function bindEvents() {
+    var form = document.getElementById('evForm'); if (!form) return;
+    form.querySelectorAll('.ev-chip').forEach(function (c) {
+      c.addEventListener('click', function () {
+        c.classList.toggle('on');
+        if (c.id === 'evOtherBtn') { var o = document.getElementById('evOther'); var on = c.classList.contains('on'); o.style.display = on ? 'block' : 'none'; if (on) o.focus(); }
+      });
+    });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (form._honey && form._honey.value) return;
+      var out = document.getElementById('evMsgOut');
+      var email = (form.email.value || '').trim();
+      if (!email || email.indexOf('@') < 1) { out.hidden = false; out.classList.add('err'); out.textContent = 'Please pop in a valid email.'; return; }
+      var reasons = [];
+      form.querySelectorAll('.ev-chip.on').forEach(function (c) {
+        var r = c.getAttribute('data-reason');
+        if (r === 'other') { var ov = (document.getElementById('evOther').value || '').trim(); reasons.push(ov ? 'other: ' + ov : 'other'); }
+        else reasons.push(r);
+      });
+      var resultStr = reasons.join(', ');
+      var btn = form.querySelector('button[type=submit]');
+      btn.disabled = true; btn.innerHTML = '<span class="wm-spin" aria-hidden="true"></span> Saving…';
+      if (window.sbInsert) window.sbInsert('leads', { email: email, source: 'letsbloom-events', result: resultStr });
+      try {
+        fetch(FORM_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, keepalive: true,
+          body: JSON.stringify({ email: email, message: 'New letsbloom events signup. Reasons: ' + (resultStr || '(not specified)'), _subject: 'New letsbloom events signup 🌷', _template: 'table', _captcha: 'false' }) }).catch(function () {});
+      } catch (e2) {}
+      setTimeout(function () {
+        document.getElementById('wmEventsBody').innerHTML =
+          '<div class="wm-success"><div class="ws-ic">✓</div><h3>You’re on the list 🌷</h3>' +
+          '<p>I’ll email you whenever something’s coming up. Come as you are, bring a friend if you like.</p></div>';
+        if (window.gtag) gtag('event', 'generate_lead', { method: 'letsbloom_events' });
+      }, 450);
+    });
+  }
+  function openEvents() {
+    document.getElementById('wmEventsBody').innerHTML = eventsHTML();
+    bindEvents();
+    closeAll(); open('wmEvents');
+  }
+
   // backdrop + close-button + esc
   document.querySelectorAll('.wm-overlay').forEach(function (o) {
     o.addEventListener('click', function (e) { if (e.target === o || (e.target.closest && e.target.closest('[data-close]'))) closeAll(); });
@@ -168,6 +236,7 @@ document.addEventListener('click', function (e) {
     var what = t.getAttribute('data-open');
     if (what === 'work') { open('wmWork'); if (window.gtag) gtag('event', 'cta_click', { cta: 'work_with_me' }); }
     else if (what === 'contact') { openContact(t.getAttribute('data-topic') || 'general'); }
+    else if (what === 'events') { openEvents(); }
     else if (what === 'calendly') { openCal(); }
   });
 

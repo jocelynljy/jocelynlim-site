@@ -20,6 +20,24 @@
 .mc-lead{max-width:640px;font-size:17px;line-height:1.6;color:var(--ink-soft)}
 .mc-lead p{margin:0 0 14px}
 .mc-lead .big{font-family:var(--disp);font-weight:500;font-size:21px;color:var(--ink);line-height:1.4;margin-bottom:14px}
+/* two-column intro: text left, small art right */
+.mc-intro{display:grid;grid-template-columns:1fr 0.92fr;gap:40px;align-items:center}
+.mc-intro-text p{font-size:16px;line-height:1.62;color:var(--ink-soft);margin:0 0 13px}
+.mc-intro-text .big{font-family:var(--disp);font-weight:500;font-size:22px;color:var(--ink);line-height:1.38}
+.mc-intro-text em{font-style:italic}
+.mc-intro-free{font-weight:600;color:var(--ink)!important;margin-bottom:0!important}
+.mc-intro-art{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.mc-intro-art img{width:100%;aspect-ratio:1/1.28;object-fit:cover;object-position:top center;border-radius:13px;background:#fbf4e7;border:1px solid var(--line);box-shadow:0 8px 18px rgba(60,45,30,.10);transition:transform .25s}
+.mc-intro-art img:nth-child(odd){transform:rotate(-1.6deg)}
+.mc-intro-art img:nth-child(even){transform:rotate(1.6deg)}
+.mc-intro-art img:hover{transform:rotate(0) scale(1.05);z-index:2;position:relative}
+/* noticing cards */
+.mc-notice{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+.mc-ncard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 20px 22px;box-shadow:var(--shadow-sm)}
+.mc-ncard .ic{font-size:26px;margin-bottom:10px}
+.mc-ncard h4{font-family:var(--disp);font-weight:600;font-size:17px;margin-bottom:6px}
+.mc-ncard p{font-size:14px;color:var(--ink-soft);line-height:1.5}
+@media(max-width:760px){.mc-intro{grid-template-columns:1fr;gap:22px}.mc-notice{grid-template-columns:1fr}}
 .mc-eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--accent);margin-bottom:14px}
 /* gallery */
 .mc-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px}
@@ -108,28 +126,25 @@
   </div>
 </header>
 
-<section class="section" style="padding-top:48px">
+<section class="section" style="padding-top:44px">
   <div class="wrap">
-    <div class="mc-lead reveal">
-      <p class="big">Okay, this is one of my favourite things I've ever made. 🤍</p>
-      <p>One day I turned each of my friends into a little character, drawn entirely from their personality. The dancer got a twerk. The hopeless romantic got heart-eyes and a "muah muah muah."</p>
-      <p>Then I put each character on top of a little digital note I wrote for them. We even printed one out and popped it on a cake. So personal. Watching someone realise the tiny character is <em>them</em>? Best reaction ever.</p>
-      <p>So here's the whole recipe. It's free. Steal it, make your people, and go a little overboard too.</p>
+    <div class="mc-intro reveal">
+      <div class="mc-intro-text">
+        <p class="big">Okay, this is one of my favourite things I've ever made. 🤍</p>
+        <p>I turn each friend into a little character, drawn entirely from their personality. The dancer got a twerk. The hopeless romantic, heart-eyes and a "muah muah muah."</p>
+        <p>Then I pop them on a note, a card, even a cake. Watching someone realise the tiny character is <em>them</em>? Best reaction ever.</p>
+        <p class="mc-intro-free">It's free. Steal it, make your people. 👇</p>
+      </div>
+      <div class="mc-intro-art">
+        <img src="/assets/character-1.jpg" alt="Chibi character dancing in a party hat and sunglasses" loading="lazy">
+        <img src="/assets/character-2.jpg" alt="Chibi character with heart-eyes blowing kisses" loading="lazy">
+        <img src="/assets/character-3.jpg" alt="Chibi character in a cap and glasses looking cool" loading="lazy">
+        <img src="/assets/character-4.jpg" alt="Chibi character mid-dance with a 'HA!' speech bubble" loading="lazy">
+        <img src="/assets/character-5.jpg" alt="Chibi character with a DJ console and a cheeky grin" loading="lazy">
+        <img src="/assets/character-6.jpg" alt="Chibi character in a tutu holding a giant hammer" loading="lazy">
+      </div>
     </div>
-  </div>
-</section>
-
-<section class="section" style="padding-top:8px">
-  <div class="wrap">
-    <div class="mc-gallery reveal">
-      <div class="mc-card"><img src="/assets/character-1.jpg" alt="Hand-drawn chibi character dancing in a party hat and sunglasses" loading="lazy"></div>
-      <div class="mc-card"><img src="/assets/character-2.jpg" alt="Hand-drawn chibi character with heart-eyes and a 'love is love' rainbow" loading="lazy"></div>
-      <div class="mc-card"><img src="/assets/character-3.jpg" alt="Hand-drawn chibi character in a cap and glasses, looking cool" loading="lazy"></div>
-      <div class="mc-card"><img src="/assets/character-4.jpg" alt="Hand-drawn chibi character mid-dance with a 'HA!' speech bubble" loading="lazy"></div>
-      <div class="mc-card"><img src="/assets/character-5.jpg" alt="Hand-drawn chibi character with a DJ console and a cheeky grin" loading="lazy"></div>
-      <div class="mc-card"><img src="/assets/character-6.jpg" alt="Hand-drawn chibi character in a tutu holding a giant hammer" loading="lazy"></div>
-    </div>
-    <p class="mc-cap">A few of my people. (Drawn from their personalities, not their names. ;)</p>
+    <p class="mc-cap" style="text-align:left;margin-top:14px">A few of my people. (Drawn from their personalities, not their names. ;)</p>
   </div>
 </section>
 
@@ -190,11 +205,12 @@ Text Elements: Include a small handwritten name label '[name]' and [number] spee
 
 <section class="section" style="padding-top:18px">
   <div class="wrap">
-    <h2 style="font-family:var(--disp);font-weight:600;font-size:clamp(22px,3.2vw,28px);margin:0 0 10px">The fun part is noticing</h2>
-    <div class="mc-lead">
-      <p>The whole game is reading someone's personality, then turning it all the way up. What are they like around you? The catchphrase they always say, the way they move, the thing they'd never admit they love.</p>
-      <p>It quietly tests how well you actually notice the people in your life. And the best bit: everyone draws everyone a little differently. Your version of a friend says as much about you as it does about them.</p>
-      <p style="margin:0">You don't need to be artistic. The prompt does the heavy lifting. Just tell it their personality, then exaggerate.</p>
+    <h2 style="font-family:var(--disp);font-weight:600;font-size:clamp(22px,3.2vw,28px);margin:0 0 6px">The fun part? Noticing.</h2>
+    <p class="mc-cap" style="text-align:left;margin:0;font-size:15px">Read someone's personality, then turn it all the way up. That's the whole game.</p>
+    <div class="mc-notice reveal">
+      <div class="mc-ncard"><div class="ic">👀</div><h4>Look closely</h4><p>The catchphrase they always say. The way they move. The thing they'd never admit they love.</p></div>
+      <div class="mc-ncard"><div class="ic">🪞</div><h4>It's a mirror</h4><p>Everyone draws everyone differently. Your version of a friend says as much about you as it does them.</p></div>
+      <div class="mc-ncard"><div class="ic">✨</div><h4>No art skills</h4><p>The prompt does the heavy lifting. Just tell it their vibe, then exaggerate.</p></div>
     </div>
   </div>
 </section>

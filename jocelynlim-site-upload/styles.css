@@ -44,6 +44,12 @@ img{display:block; max-width:100%}
 .btn-primary:hover{background:var(--bloom); transform:translateY(-2px); box-shadow:var(--shadow-sm)}
 .btn-ghost{background:transparent; color:var(--ink); border:1.5px solid var(--line)}
 .btn-ghost:hover{border-color:var(--ink); transform:translateY(-2px)}
+.btn-bloom{background:var(--bloom); color:#fff; border:none}
+.btn-bloom:hover{filter:brightness(1.06); transform:translateY(-2px); box-shadow:var(--shadow-sm)}
+.ev-chips{display:flex; flex-wrap:wrap; gap:8px}
+.ev-chip{font-family:inherit; font-size:13.5px; color:var(--ink-soft); background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:8px 13px; cursor:pointer; transition:all .15s}
+.ev-chip:hover{border-color:var(--bloom)}
+.ev-chip.on{background:var(--bloom); color:#fff; border-color:var(--bloom)}
 .btn .arrow{transition:transform .25s}
 .btn:hover .arrow{transform:translateX(4px)}
 
