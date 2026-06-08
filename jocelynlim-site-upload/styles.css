@@ -152,6 +152,7 @@ img{display:block; max-width:100%}
 
 /* side-quest cards */
 .quests{display:grid; grid-template-columns:repeat(2,1fr); gap:22px; margin-top:46px}
+.trio{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:40px}
 .quest{position:relative; display:block; background:var(--card); border:1px solid var(--line); border-radius:20px; overflow:hidden; box-shadow:var(--shadow-sm); transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s; border-top:4px solid var(--qc,var(--bloom))}
 .quest:hover{transform:translateY(-6px); box-shadow:var(--shadow-lg)}
 .quest .ph{height:200px; overflow:hidden}
@@ -216,6 +217,7 @@ footer .fbot{display:flex; justify-content:space-between; align-items:center; ma
   .hero .wrap{grid-template-columns:1fr; gap:36px}
   .portrait{max-width:380px; margin:0 auto}
   .quests{grid-template-columns:1fr}
+  .trio{grid-template-columns:1fr; gap:18px}
   .split{grid-template-columns:1fr; gap:30px}
   .split.flip .split-media{order:0}
   footer .ftop{grid-template-columns:1fr 1fr}
