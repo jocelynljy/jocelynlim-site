@@ -24,6 +24,12 @@
 .fy-tag{align-self:flex-start;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;border-radius:20px;padding:3px 10px;margin-bottom:12px}
 .fy-tag.try{color:#3f8a82;background:#e4f0ee}
 .fy-tag.soon{color:var(--ink-soft);background:var(--paper-2)}
+.fy-tag.cat-fr{color:#2f7d5b;background:#e2f1e9}
+.fy-tag.cat-ev{color:#b07d3a;background:#f4ead6}
+.fy-tag.cat-eff{color:#4a5e94;background:#e7ecf6}
+.fy-tag.cat-close{color:#93577f;background:#f1e4ee}
+.fy-thumbs{display:flex;gap:8px;margin-bottom:14px}
+.fy-thumbs img{width:33.33%;aspect-ratio:1/1.25;object-fit:cover;object-position:top center;border-radius:11px;background:#fbf4e7;border:1px solid var(--line)}
 .fy-card h3{font-family:var(--disp);font-weight:600;font-size:21px;line-height:1.18;margin-bottom:8px}
 .fy-card p{font-size:14.5px;color:var(--ink-soft);line-height:1.55;flex:1}
 .fy-card .fy-go{margin-top:16px;align-self:flex-start;font-weight:600;color:var(--accent);cursor:pointer;border:none;background:none;font-family:var(--body);font-size:15px;padding:0}
@@ -85,7 +91,7 @@
     <a class="back" href="/">← back to everything</a>
     <div class="verb reveal">a little gift</div>
     <h1 class="reveal d1">For you</h1>
-    <p class="sub reveal d2">Fun little projects I build in my free time. Free, and yours to make your own. :)</p>
+    <p class="sub reveal d2">Fun little projects I build in my free time, to feel closer to my friends and others, or just to make my life easier. Feel free to use them and make them your own. :)</p>
   </div>
 </header>
 
@@ -102,28 +108,32 @@
     <div class="fy-sec reveal" style="margin-top:54px">
       <div class="fy-eyebrow">also here</div>
       <div class="fy-grid">
-        <a class="fy-card" href="/make-them-a-character" data-track="foryou:character" style="text-decoration:none;color:var(--ink)">
-          <div class="ic">🎨</div>
-          <span class="fy-tag try">free recipe</span>
-          <h3>Make Them a Character</h3>
-          <p>I turned my friends into little AI characters, then made postcards, birthday cards, even cake toppers. Here's the gallery, the exact prompt, and how to make your own.</p>
+        <a class="fy-card" href="/for-you/make-them-a-character" data-track="foryou:character" style="text-decoration:none;color:var(--ink)">
+          <div class="fy-thumbs">
+            <img src="/assets/character-1.jpg" alt="" loading="lazy">
+            <img src="/assets/character-2.jpg" alt="" loading="lazy">
+            <img src="/assets/character-3.jpg" alt="" loading="lazy">
+          </div>
+          <span class="fy-tag cat-fr">For friends &amp; family · free</span>
+          <h3>Create characters with personality</h3>
+          <p>Turn your friends into little characters based on who they actually are. Inside: the gallery, the exact prompt, and how to make your own.</p>
           <span class="fy-go">See how it works →</span>
         </a>
         <div class="fy-card fy-soon">
           <div class="ic">🃏</div>
-          <span class="fy-tag soon">download · soon</span>
+          <span class="fy-tag cat-ev">For everyone · soon</span>
           <h3>The Connection Card Deck</h3>
           <p>My deck of deep questions, icebreakers and tiny dares, sorted by occasion. Dinners, teams, road trips, first dates. Pull one out whenever a conversation needs somewhere to go.</p>
         </div>
         <div class="fy-card fy-soon">
           <div class="ic">🤖</div>
-          <span class="fy-tag soon">guide · soon</span>
+          <span class="fy-tag cat-eff">Efficiency · soon</span>
           <h3>How I Built This With AI</h3>
           <p>A non-techie's guide, with the actual prompts, to how I built this whole thing. The site, the blog, the tools, even the analytics. If I could figure it out, so can you.</p>
         </div>
         <div class="fy-card fy-soon">
           <div class="ic">🗂️</div>
-          <span class="fy-tag soon">system · soon</span>
+          <span class="fy-tag cat-close">Staying close · soon</span>
           <h3>My Personal CRM</h3>
           <p>The little system I use to actually stay close to people. AI helps me remember what someone loves, what they're going through, who to reach out to when I need a hand or just miss them, and when a friendship needs a nudge. Way more than birthdays. The whole person.</p>
         </div>

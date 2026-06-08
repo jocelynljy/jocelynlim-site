@@ -2,10 +2,12 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/stories/:slug", "destination": "/:slug" }
+    { "source": "/stories/:slug", "destination": "/:slug" },
+    { "source": "/for-you/make-them-a-character", "destination": "/make-them-a-character" }
   ],
   "redirects": [
-    { "source": "/what-a-newsroom-taught-me-about-hosting", "destination": "/stories/what-a-newsroom-taught-me-about-hosting", "permanent": true }
+    { "source": "/what-a-newsroom-taught-me-about-hosting", "destination": "/stories/what-a-newsroom-taught-me-about-hosting", "permanent": true },
+    { "source": "/make-them-a-character", "destination": "/for-you/make-them-a-character", "permanent": true }
   ],
   "headers": [
     {
