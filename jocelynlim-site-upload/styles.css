@@ -37,6 +37,28 @@ img{display:block; max-width:100%}
 .nav-cta:hover{background:var(--bloom)}
 .burger{display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px}
 .burger span{width:24px; height:2px; background:var(--ink); transition:.3s}
+/* My Playground dropdown */
+.nav-pg{position:relative; display:flex; align-items:center}
+.nav-pg-t{font-family:inherit; font-size:14px; font-weight:500; color:var(--ink-soft); background:none; border:none; cursor:pointer; padding:0; display:inline-flex; align-items:center; gap:5px; position:relative; transition:color .2s}
+.nav-pg-t .cv{font-size:10px; transition:transform .25s}
+.nav-pg-t::after{content:""; position:absolute; left:0; bottom:-5px; height:1.5px; width:0; background:var(--bloom); transition:width .25s}
+.nav-pg:hover .nav-pg-t, .nav-pg:focus-within .nav-pg-t, .nav-pg-t.active{color:var(--ink)}
+.nav-pg:hover .nav-pg-t::after, .nav-pg:focus-within .nav-pg-t::after, .nav-pg-t.active::after{width:100%}
+.nav-pg:hover .nav-pg-t .cv, .nav-pg:focus-within .nav-pg-t .cv{transform:rotate(180deg)}
+.nav-pg::after{content:""; position:absolute; top:100%; left:-14px; right:-14px; height:14px}
+.nav-pg-menu{position:absolute; top:calc(100% + 12px); left:50%; transform:translateX(-50%) translateY(-8px); min-width:176px; background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:8px; box-shadow:var(--shadow-lg); display:flex; flex-direction:column; gap:2px; opacity:0; visibility:hidden; transition:opacity .18s, transform .18s; z-index:60}
+.nav-pg:hover .nav-pg-menu, .nav-pg:focus-within .nav-pg-menu{opacity:1; visibility:visible; transform:translateX(-50%) translateY(0)}
+.nav-pg-menu a{font-size:14px; font-weight:500; color:var(--ink-soft); padding:10px 13px; border-radius:10px; transition:background .15s, color .15s}
+.nav-pg-menu a:hover{background:var(--card); color:var(--ink)}
+.nav-pg-menu a::after{display:none!important}
+@media(max-width:880px){
+  .nav-pg{display:block; width:100%}
+  .nav-pg-t{font-size:16px}
+  .nav-pg-t .cv{display:none}
+  .nav-pg::after{display:none}
+  .nav-pg-menu{position:static; transform:none; opacity:1; visibility:visible; box-shadow:none; border:none; background:none; padding:10px 0 0 16px; min-width:0; gap:14px}
+  .nav-pg-menu a{padding:0; font-size:15px}
+}
 
 /* buttons */
 .btn{display:inline-flex; align-items:center; gap:9px; font-weight:600; font-size:15px; padding:13px 26px; border-radius:44px; transition:transform .2s, background .2s, box-shadow .2s; cursor:pointer; border:none}

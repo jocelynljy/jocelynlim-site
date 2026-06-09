@@ -37,6 +37,17 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opac
 .qlinks a.on{color:var(--ink);font-weight:600}
 .qcta{background:var(--ink);color:var(--paper)!important;padding:10px 18px;border-radius:999px;font-weight:600!important}
 .qcta:hover{background:var(--thm);color:#fff!important}
+.nav-pg{position:relative;display:flex;align-items:center}
+.nav-pg-t{font-family:'DM Sans',var(--body);font-size:14.5px;font-weight:500;color:var(--ink-soft);background:none;border:none;cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:5px;transition:color .2s}
+.nav-pg-t .cv{font-size:10px;transition:transform .25s}
+.nav-pg:hover .nav-pg-t,.nav-pg:focus-within .nav-pg-t,.nav-pg-t.active{color:var(--ink)}
+.nav-pg-t.active{font-weight:600}
+.nav-pg:hover .nav-pg-t .cv,.nav-pg:focus-within .nav-pg-t .cv{transform:rotate(180deg)}
+.nav-pg::after{content:"";position:absolute;top:100%;left:-14px;right:-14px;height:14px}
+.nav-pg-menu{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(-8px);min-width:170px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px;box-shadow:0 18px 40px rgba(60,45,30,.18);display:flex;flex-direction:column;gap:2px;opacity:0;visibility:hidden;transition:opacity .18s,transform .18s;z-index:60}
+.nav-pg:hover .nav-pg-menu,.nav-pg:focus-within .nav-pg-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.nav-pg-menu a{font-family:'DM Sans',var(--body);font-size:14px;font-weight:500;color:var(--ink-soft);text-decoration:none;padding:10px 13px;border-radius:10px}
+.nav-pg-menu a:hover{background:var(--paper);color:var(--ink)}
 .qexit{display:none;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none}
 @media(max-width:820px){.qlinks{display:none}.qexit{display:inline}}
 .disp{font-family:var(--disp);font-weight:600;letter-spacing:-.02em;line-height:1.0}
@@ -226,8 +237,13 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     <a href="/facilitation">Facilitation</a>
     <a href="/scentura">Scentura</a>
     <a href="/letsbloom">letsbloom</a>
-    <a href="/stories">Stories</a>
-    <a href="/for-you" class="on">For you</a>
+    <div class="nav-pg">
+        <button class="nav-pg-t active" aria-haspopup="true">My Playground <span class="cv">▾</span></button>
+        <div class="nav-pg-menu">
+          <a href="/stories">Stories</a>
+          <a href="/for-you">For you</a>
+        </div>
+      </div>
     <a class="qcta" href="/#connect">Let's connect</a>
   </div>
   <a class="qexit" href="/for-you">← For you</a>
