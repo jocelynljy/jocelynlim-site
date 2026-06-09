@@ -14,7 +14,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --paper:#f3ead9;--paper-deep:#ebdfc8;--card:#fbf5e9;--ink:#231c16;--ink-soft:#6b6157;--faint:#a59a86;--line:#ddd0b8;
@@ -28,11 +28,17 @@ body{font-family:var(--body);color:var(--ink);background:var(--paper);line-heigh
 body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(60% 50% at 50% 8%, color-mix(in srgb, var(--thm) 15%, transparent), transparent 70%),repeating-radial-gradient(circle at 50% 6%, transparent 0 46px, color-mix(in srgb, var(--ink) 4%, transparent) 46px 47px);transition:background .6s ease}
 body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E")}
 .wrap{max-width:720px;margin:0 auto;padding:18px 22px 100px;position:relative;z-index:1}
-.qnav{position:relative;z-index:5;max-width:720px;margin:0 auto;padding:24px 22px 0;display:flex;justify-content:space-between;align-items:center}
+.qnav{position:relative;z-index:5;max-width:1080px;margin:0 auto;padding:22px 26px 0;display:flex;justify-content:space-between;align-items:center}
 .qbrand{font-family:var(--disp);font-weight:600;font-size:21px;color:var(--ink);text-decoration:none;letter-spacing:-.01em}
 .qbrand span{color:var(--thm)}
-.qexit{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none}
-.qexit:hover{color:var(--ink)}
+.qlinks{display:flex;align-items:center;gap:24px}
+.qlinks a{font-family:'DM Sans',var(--body);font-size:14.5px;color:var(--ink-soft);text-decoration:none;font-weight:500}
+.qlinks a:hover{color:var(--ink)}
+.qlinks a.on{color:var(--ink);font-weight:600}
+.qcta{background:var(--ink);color:var(--paper)!important;padding:10px 18px;border-radius:999px;font-weight:600!important}
+.qcta:hover{background:var(--thm);color:#fff!important}
+.qexit{display:none;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none}
+@media(max-width:820px){.qlinks{display:none}.qexit{display:inline}}
 .disp{font-family:var(--disp);font-weight:600;letter-spacing:-.02em;line-height:1.0}
 .mono{font-family:var(--mono)}
 em{font-style:italic;color:var(--thm);font-family:var(--disp)}
@@ -214,7 +220,17 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 <body>
 <nav class="qnav">
   <a class="qbrand" href="/">Jocelyn Lim<span>.</span></a>
-  <a class="qexit" href="/for-you">← back to For you</a>
+  <div class="qlinks">
+    <a href="/#about">About</a>
+    <a href="/hosting">Hosting</a>
+    <a href="/facilitation">Facilitation</a>
+    <a href="/scentura">Scentura</a>
+    <a href="/letsbloom">letsbloom</a>
+    <a href="/stories">Stories</a>
+    <a href="/for-you" class="on">For you</a>
+    <a class="qcta" href="/#connect">Let's connect</a>
+  </div>
+  <a class="qexit" href="/for-you">← For you</a>
 </nav>
 <div class="wrap">
 
@@ -761,6 +777,8 @@ function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');set
 <script>
 /* lightweight first-party analytics for /for-you/quiz (page view + completion) */
 (function(){
+  try{var _ow=new URLSearchParams(location.search);if(_ow.get('owner')==='1')localStorage.setItem('jl_owner','1');if(_ow.get('owner')==='0')localStorage.removeItem('jl_owner');}catch(e){}
+  try{if(localStorage.getItem('jl_owner')==='1')return;}catch(e){}
   var SB='https://axttzedzhtvlblalrryc.supabase.co';
   var K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4dHR6ZWR6aHR2bGJsYWxycnljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5MjI4MTEsImV4cCI6MjA5NjQ5ODgxMX0.cZMZeeST8ik4Es3UaVtcAZvgrmdLrcBpcWKQ8GOUVAQ';
   function ins(t,row){try{fetch(SB+'/rest/v1/'+t,{method:'POST',keepalive:true,headers:{'apikey':K,'Authorization':'Bearer '+K,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(row)}).catch(function(){});}catch(e){}}

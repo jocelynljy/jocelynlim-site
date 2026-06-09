@@ -20,6 +20,11 @@
 .fy-eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--accent);margin-bottom:6px}
 .fy-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
 .fy-card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:var(--shadow-sm)}
+.fy-feat{grid-column:1/-1;background:linear-gradient(135deg,#fbf5e9,#f3ead9);border-color:#e8dcc4;padding:30px 30px 28px;transition:transform .2s,box-shadow .2s}
+.fy-feat:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(60,45,30,.13)}
+.fy-feat h3{font-size:clamp(25px,3.4vw,32px)!important}
+.fy-feat p{max-width:640px}
+.fy-heads{font-size:30px;letter-spacing:10px;line-height:1;margin-bottom:16px}
 .fy-card .ic{font-size:26px;margin-bottom:10px}
 .fy-tag{align-self:flex-start;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;border-radius:20px;padding:3px 10px;margin-bottom:12px}
 .fy-tag.try{color:#3f8a82;background:#e4f0ee}
@@ -112,17 +117,16 @@
 <section class="section" style="padding-top:50px">
   <div class="wrap">
 
-    <a class="fy-quizcard reveal d1" href="/for-you/quiz" data-track="foryou:quiz">
-      <div class="fy-qc-mark">🔥 ☀️ 🌿 💧</div>
-      <span class="fy-qc-eyebrow">the quiz · 2 min · no sign-up</span>
-      <h3>What's the vibe you give off?</h3>
-      <p>People read you in a tenth of a second, before you say a word. Meet the 8 characters, find out which one you are, your hidden strengths, your (affectionate) flaws, and how to read anyone.</p>
-      <span class="fy-qc-btn">Find my character →</span>
-    </a>
-
-    <div class="fy-sec reveal" style="margin-top:54px">
-      <div class="fy-eyebrow">also here</div>
+    <div class="fy-sec reveal">
+      <div class="fy-eyebrow">try these — all free</div>
       <div class="fy-grid">
+        <a class="fy-card fy-feat" href="/for-you/quiz" data-track="foryou:quiz" style="text-decoration:none;color:var(--ink)">
+          <div class="fy-heads">🔥 ☀️ 🌿 💧</div>
+          <span class="fy-tag cat-fr">The vibe quiz · 2 min · no sign-up</span>
+          <h3>What's the vibe you give off?</h3>
+          <p>People read you in a tenth of a second, before you say a word. Meet the 8 characters, find out which one you are, your hidden strengths, your (affectionate) flaws, and how to read anyone.</p>
+          <span class="fy-go">Find my character →</span>
+        </a>
         <a class="fy-card" href="/for-you/make-them-a-character" data-track="foryou:character" style="text-decoration:none;color:var(--ink)">
           <div class="fy-thumbs">
             <img src="/assets/character-1.jpg" alt="" loading="lazy">

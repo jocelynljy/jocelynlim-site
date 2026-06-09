@@ -371,6 +371,10 @@ if (portrait && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) 
   try { VID = localStorage.getItem('jl_vid'); if (VID) { RETURNING = true; } else { VID = rnd(); localStorage.setItem('jl_vid', VID); } } catch (e) { VID = 'na'; }
   window.sbVid = VID;
 
+  // owner exclude: keep my own visits out of analytics (visit ?owner=1 once on each device; ?owner=0 to undo)
+  try { var _ow = new URLSearchParams(location.search); if (_ow.get('owner') === '1') localStorage.setItem('jl_owner', '1'); if (_ow.get('owner') === '0') localStorage.removeItem('jl_owner'); } catch (e) {}
+  var OWNER = false; try { OWNER = localStorage.getItem('jl_owner') === '1'; } catch (e) {}
+
   // capture UTM tags (so shared links / campaigns are measurable)
   var qs; try { qs = new URLSearchParams(location.search); } catch (e) { qs = { get: function () { return null; } }; }
   var UTM = { source: qs.get('utm_source'), medium: qs.get('utm_medium'), campaign: qs.get('utm_campaign') };
@@ -418,8 +422,8 @@ if (portrait && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) 
     } catch (e) { if (!done) { done = true; clearTimeout(t); cb({}); } }
   }
 
-  // page view, once per load (enriched with source, geo, visitor)
-  withGeo(function (g) {
+  // page view, once per load (enriched with source, geo, visitor) — skipped for owner
+  if (!OWNER) withGeo(function (g) {
     sbInsert('page_views', {
       path: location.pathname || '/',
       referrer: document.referrer ? document.referrer.slice(0, 300) : null,
@@ -431,6 +435,7 @@ if (portrait && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) 
 
   // click tracking: CTAs (data-open), anything with data-track (future resources/downloads/shares), and links
   document.addEventListener('click', function (e) {
+    if (OWNER) return;
     var a = e.target.closest ? e.target.closest('a,[data-open],[data-track],button') : null; if (!a) return;
     var label;
     if (a.getAttribute('data-track')) label = String(a.getAttribute('data-track')).slice(0, 120);
@@ -450,7 +455,7 @@ if (portrait && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) 
   }
   window.addEventListener('scroll', function () { var p = scrollPct(); if (p > _maxScroll) _maxScroll = p; }, { passive: true });
   function sendExit() {
-    if (_sentExit) return; _sentExit = true;
+    if (OWNER || _sentExit) return; _sentExit = true;
     var secs = Math.round((Date.now() - _start) / 1000);
     if (secs < 0 || secs > 7200) secs = 0;
     sbInsert('events', { path: location.pathname, label: 'exit', value: secs, session_id: sid(), visitor_id: VID });
