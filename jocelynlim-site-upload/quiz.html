@@ -57,8 +57,17 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opac
 .nav-pg-menu a:hover{background:var(--card);color:var(--ink)}
 .nav-pg-menu a::after{display:none!important}
 /* back link */
-.qback{font-family:'DM Sans',var(--body);font-size:13.5px;color:var(--ink-soft);font-weight:600;display:inline-flex;gap:7px;align-items:center;text-decoration:none;margin-bottom:6px}
-.qback:hover{color:var(--ink)}
+.qbacklink{font-family:'DM Sans',var(--body);font-size:13.5px;color:var(--ink-soft);font-weight:600;display:inline-flex;gap:7px;align-items:center;text-decoration:none;margin-bottom:16px}
+.qbacklink:hover{color:var(--ink)}
+/* read-then-do flow: hero, story, quiz card */
+.qstory{max-width:720px;margin:0 auto;padding:8px 0 0}
+.qstory .qw-eyebrow{margin:30px 0 10px}
+.qstory-h{font-family:var(--disp);font-weight:600;font-size:clamp(24px,3.6vw,32px);line-height:1.18;margin-bottom:14px;color:var(--ink)}
+.qstory-p{font-family:'DM Sans',var(--body);font-size:16.5px;line-height:1.7;color:var(--ink-soft);max-width:640px}
+#quizcard{scroll-margin-top:86px;margin-top:30px;background:#fff;border:1px solid var(--line);border-radius:24px;padding:34px 34px 24px;box-shadow:0 20px 50px rgba(60,45,30,.12)}
+#quizcard.bare{background:transparent;border:none;box-shadow:none;padding:0}
+@media(max-width:600px){#quizcard{padding:22px 18px 16px;border-radius:18px}}
+#quiz{position:relative;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:22px;padding:30px 30px 22px;box-shadow:0 16px 42px rgba(60,45,30,.10)}
 /* writeup */
 .qwrite{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:0 22px}
 .qw-eyebrow{font-family:'DM Sans',var(--body);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--thm);margin:34px 0 10px}
@@ -296,21 +305,28 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   </div>
 </nav>
 <div class="qwrap">
-  <a class="qback" href="/for-you">← back to For you</a>
+  <a class="qbacklink" href="/for-you">← back to For you</a>
 
-<!-- INTRO -->
-<section id="intro" class="screen active">
+<!-- HERO (the hook) -->
+<section id="intro" class="qhero">
   <div class="topbar"><div class="stamp rev" style="--i:0">Vibe ID · Field Test</div><div class="badge rev" style="--i:1">2 min · 12 questions</div></div>
   <div class="castrow rev" id="castrow" style="--i:2"></div>
   <div class="hero">
     <h1 class="rev" style="--i:3">When you walk in,<span class="l2">what do people <em>feel?</em></span></h1>
-    <p class="lede rev" style="--i:4">A tenth of a second — that's all it takes for someone to get a <em>vibe</em> off you, before you say a word. Meet the 8 characters. Find out which one you are.</p>
-    <div class="startrow rev" style="--i:5"><button class="btn" onclick="start()"><span>Find my character →</span></button><span class="meta">no sign-up · instant result</span></div>
-    <p class="credit rev" style="--i:6">// Built on the two things psychologists found we judge each other on within ~100ms: <b>warmth</b> &amp; <b>boldness</b> — the <b>Interpersonal Circumplex</b>.</p>
+    <p class="lede rev" style="--i:4">A tenth of a second. That's all it takes for someone to get a <em>vibe</em> off you, before you say a word. Meet the 8 characters and find out which one you are.</p>
+    <div class="startrow rev" style="--i:5"><button class="btn" onclick="document.getElementById('quizcard').scrollIntoView({behavior:'smooth',block:'start'})"><span>Take the quiz →</span></button><span class="meta">no sign-up · instant result</span></div>
   </div>
 </section>
 
-<!-- QUIZ -->
+<!-- WHY (the read) -->
+<section class="qstory">
+  <div class="qw-eyebrow">Why I made this</div>
+  <h2 class="qstory-h">I can't stop noticing interactions between people.</h2>
+  <p class="qstory-p">The way a room shifts when someone walks in. The friend everyone drifts toward. The quiet one who somehow runs the table. I kept wondering what we actually pick up about each other in that first second, before anyone says a word. It got me curious enough to turn it into a little test, built on the two things psychologists say we read first in anyone: warmth and boldness.</p>
+</section>
+
+<!-- QUIZ (the do) -->
+<div id="quizcard" class="qcard">
 <section id="quiz" class="screen">
   <div class="qtop"><span class="qcount" id="qcount">01 / 08</span><span class="qaxis" id="qaxis">Warmth</span></div>
   <div class="qbar"><i id="qbarfill"></i></div>
@@ -400,17 +416,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     </div>
   </div>
 
-  <div class="foot"><div class="tag">Meet people. Go deeper. Stay connected.</div><div class="by">A field test by <a href="https://jocelynlim.space">Jocelyn Lim</a> · jocelynlim.space</div></div>
 </section>
+</div><!-- /quizcard -->
 
 </div>
 
 <section class="qwrite">
-  <div class="qw-eyebrow">Why I made this</div>
-  <h2>I host for a living, so first impressions are kind of my obsession.</h2>
-  <p>As an emcee and facilitator, I walk into rooms full of strangers, and my whole job is to make them feel something good, fast. Somewhere along the way I got hooked on the question this quiz asks: what do people pick up from you in the first second, before you have said a word? This is my playful take on it, built on the two things psychologists say we read first in anyone, warmth and boldness.</p>
-  <div class="qw-eyebrow">It is a sneaky-good icebreaker</div>
-  <p>Do it as a group and watch the room light up. Everyone gets a character, and suddenly people are comparing, laughing, and arguing over who is really The Commander. It is the exact kind of warm-up I run for teams and socials: low pressure, a little revealing, over in two minutes. Try it at your next dinner, offsite, or first date.</p>
   <div class="qw-cta">
     <div>
       <h3>Want a room to click like this?</h3>
@@ -708,7 +719,7 @@ const Q=[
 
 let idx=0;const ans=new Array(Q.length).fill(null);let CUR=null;let shuffles={};
 const $=id=>document.getElementById(id);
-function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');window.scrollTo({top:0})}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');var qc=document.getElementById('quizcard');if(qc){qc.classList.toggle('bare',id==='result');qc.scrollIntoView({behavior:'smooth',block:'start'});}else{window.scrollTo({top:0});}}
 function setTheme(cols){const r=document.documentElement;r.style.setProperty('--thm',cols[0]);r.style.setProperty('--thm2',cols[cols.length-1])}
 
 // intro cast lineup
@@ -868,8 +879,10 @@ async function shareNative(){try{$('card').toBlob(async b=>{const f=new File([b]
   if(navigator.canShare&&navigator.canShare({files:[f]}))await navigator.share({files:[f],text:shareText(),title:"What's the vibe you give off?"});
   else if(navigator.share)await navigator.share({text:shareText(),url:'https://jocelynlim.space/for-you/quiz'});else copyText();})}catch(e){copyText()}}
 function copyText(){navigator.clipboard.writeText(shareText()).then(()=>toast('Copied — go share it ✓'))}
-function restart(){document.documentElement.style.setProperty('--thm','#cf5b41');show('intro')}
+function restart(){document.documentElement.style.setProperty('--thm','#cf5b41');idx=0;ans.fill(null);shuffles={};show('quiz');renderQ();}
 function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1900)}
+/* render Q1 on load so the quiz card is ready the moment you scroll to it (no scroll on plain load) */
+try{idx=0;ans.fill(null);shuffles={};document.getElementById('quiz').classList.add('active');renderQ();}catch(e){}
 </script>
 <script>
 /* lightweight first-party analytics for /for-you/quiz (page view + completion) */
@@ -892,7 +905,7 @@ function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');set
 (function(){
   var y=document.querySelector('.year'); if(y) y.textContent=new Date().getFullYear();
   var b=document.querySelector('.burger'); if(b) b.addEventListener('click',function(){var n=document.querySelector('.nav-links'); if(n) n.classList.toggle('open');});
-  try{ if(new URLSearchParams(location.search).get('go')==='1' && typeof start==='function'){ start(); } }catch(e){}
+  try{ if(new URLSearchParams(location.search).get('go')==='1'){ var qc=document.getElementById('quizcard'); if(qc) qc.scrollIntoView({behavior:'smooth',block:'start'}); } }catch(e){}
 })();
 </script>
 </body>
