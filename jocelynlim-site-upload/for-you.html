@@ -63,7 +63,21 @@
 .fy-quote{font-family:var(--disp);font-weight:500;font-style:italic;font-size:clamp(21px,3vw,29px);line-height:1.32;color:var(--ink);margin:0 0 18px}
 .fy-quote span{color:var(--accent);font-style:normal}
 .fy-why p.lead{font-size:16px;color:var(--ink-soft);margin:0}
-@media(max-width:600px){.fy-grid{grid-template-columns:1fr}.quiz{padding:22px}.res-cap .row{flex-direction:column}}
+/* quiz teaser card */
+.fy-quizcard{display:block;text-align:center;background:linear-gradient(160deg,#fffdf8,#f1e8d6);border:1px solid var(--line);border-radius:24px;padding:40px 30px;text-decoration:none;color:var(--ink);box-shadow:0 14px 34px rgba(60,45,30,.10);transition:transform .2s,box-shadow .2s;max-width:760px;margin:18px auto 0}
+.fy-quizcard:hover{transform:translateY(-3px);box-shadow:0 20px 44px rgba(60,45,30,.16)}
+.fy-qc-mark{font-size:25px;letter-spacing:8px;margin-bottom:14px}
+.fy-qc-eyebrow{display:block;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--accent);margin-bottom:11px}
+.fy-quizcard h3{font-family:var(--disp);font-weight:600;font-size:clamp(25px,3.6vw,33px);line-height:1.1;margin-bottom:12px}
+.fy-quizcard p{font-size:15.5px;color:var(--ink-soft);line-height:1.55;max-width:560px;margin:0 auto}
+.fy-qc-btn{display:inline-block;margin-top:22px;background:var(--accent);color:#fff;font-weight:600;font-size:15.5px;padding:14px 28px;border-radius:14px;box-shadow:0 8px 20px rgba(60,45,30,.16)}
+/* events band */
+.fy-events{display:flex;justify-content:space-between;align-items:center;gap:26px;background:#efe7d8;border:1px solid var(--line);border-radius:20px;padding:28px 32px;flex-wrap:wrap}
+.fy-events h3{font-family:var(--disp);font-weight:600;font-size:23px;margin:4px 0 7px}
+.fy-events p{font-size:14.5px;color:var(--ink-soft);line-height:1.55;max-width:540px;margin:0}
+.fy-ev-btn{flex:none;background:var(--accent);color:#fff;border:none;border-radius:14px;padding:15px 26px;font-family:var(--body);font-weight:600;font-size:15px;cursor:pointer;box-shadow:0 8px 20px rgba(60,45,30,.16)}
+.fy-ev-btn:hover{filter:brightness(1.05)}
+@media(max-width:600px){.fy-grid{grid-template-columns:1fr}.quiz{padding:22px}.res-cap .row{flex-direction:column}.fy-events{flex-direction:column;align-items:flex-start}.fy-quizcard{padding:30px 22px}}
 </style>
 </head>
 <body style="--accent:var(--hub)">
@@ -98,12 +112,13 @@
 <section class="section" style="padding-top:50px">
   <div class="wrap">
 
-    <div class="fy-sec reveal">
-      <div class="fy-eyebrow">try it now</div>
-      <p class="lead" style="margin:0 0 6px;max-width:620px">Quick, playful, and a little bit about you.</p>
-    </div>
-
-    <div class="quiz reveal d1" id="quiz" style="margin-top:22px"></div>
+    <a class="fy-quizcard reveal d1" href="/for-you/quiz" data-track="foryou:quiz">
+      <div class="fy-qc-mark">🔥 ☀️ 🌿 💧</div>
+      <span class="fy-qc-eyebrow">the quiz · 2 min · no sign-up</span>
+      <h3>What's the vibe you give off?</h3>
+      <p>People read you in a tenth of a second, before you say a word. Meet the 8 characters, find out which one you are, your hidden strengths, your (affectionate) flaws, and how to read anyone.</p>
+      <span class="fy-qc-btn">Find my character →</span>
+    </a>
 
     <div class="fy-sec reveal" style="margin-top:54px">
       <div class="fy-eyebrow">also here</div>
@@ -143,6 +158,19 @@
   </div>
 </section>
 
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="fy-events reveal">
+      <div>
+        <div class="fy-eyebrow">in real life</div>
+        <h3>Come mingle with us 🌷</h3>
+        <p>The best tool for connection isn't on a screen. I run little letsbloom events, hands-on, low-pressure, basically an excuse for people to meet. Want a heads-up when the next one's on?</p>
+      </div>
+      <button class="fy-ev-btn" data-open="events">Join the events list →</button>
+    </div>
+  </div>
+</section>
+
 <section class="section fy-whysec">
   <div class="wrap">
     <div class="fy-why reveal">
@@ -168,63 +196,6 @@
   </div>
 </footer>
 
-<script>
-(function(){
-  var A={
-    host:{e:'🎤',n:'The Host',t:'You make a room feel like home.',d:'You notice the person standing alone, you pull people in, and somehow everyone leaves feeling like they belonged. Gatherings are better because you were there.',s:'Making people feel welcome and included, instantly.',g:'Remember to let someone host you sometimes. You\'re allowed to be looked after too.',tip:'Before your next gathering, pick one quiet person and make it your mission to help them feel seen.'},
-    listener:{e:'👂',n:'The Listener',t:'You\'re the one people open up to.',d:'You ask the question that actually matters, then you really listen. People tell you things they didn\'t plan to. Being around you feels like exhaling.',s:'Making people feel deeply heard and understood.',g:'Share more of your own story. Being known goes both ways.',tip:'Next conversation, try one honest "me too" before your next question. Watch it deepen.'},
-    spark:{e:'✨',n:'The Spark',t:'You bring the room to life.',d:'You break the ice before anyone realises it was frozen. You get people laughing, loosen the mood, and turn a stiff group into a fun one. Energy follows you.',s:'Lifting the mood and making connection feel easy and light.',g:'It\'s okay to be the quiet one sometimes. Your calm is welcome too.',tip:'Try opening your next group with a silly, low-stakes question. Fun is a doorway to depth.'},
-    anchor:{e:'⚓',n:'The Anchor',t:'You\'re the calm people gravitate to.',d:'When things get tense or loud, you\'re the steady one. People feel safe around you. You don\'t need to fill silence. Your presence does the work.',s:'Being a grounding, steady, safe presence for others.',g:'Let people in on what you\'re feeling. Steady doesn\'t have to mean silent.',tip:'This week, name one feeling out loud to someone you trust. Steadiness plus honesty is magnetic.'},
-    bridge:{e:'🌉',n:'The Bridge',t:'You connect people to each other.',d:'You\'re the natural introducer. "Oh, you two have to meet." You weave separate people into one conversation and somehow always know someone who can help.',s:'Weaving people together and building community around you.',g:'Make space for your own one-on-ones, not just the group. You deserve depth too.',tip:'Introduce two people this week with one specific reason they\'d click. Connection is your art.'}
-  };
-  var Q=[
-    {q:'At a party where you only know the host, you usually…',o:[['Find one person and have a real conversation','listener'],['Get a little group laughing within ten minutes','spark'],['Introduce people who should know each other','bridge'],['Help the host make sure everyone\'s okay','host'],['Find a calm spot and let people come to you','anchor']]},
-    {q:'Friends would say you\'re the one who…',o:[['Remembers the little details of their life','listener'],['Lifts the mood when things get heavy','spark'],['Always knows someone who can help','bridge'],['Plans the thing and makes it happen','host'],['They call when they need to feel steady','anchor']]},
-    {q:'In a brand-new group, your superpower is…',o:[['Asking the question that makes someone open up','listener'],['Breaking the ice so no one feels awkward','spark'],['Weaving separate people into one chat','bridge'],['Making sure no one\'s left standing alone','host'],['Being the calm everyone drifts toward','anchor']]},
-    {q:'Your idea of a perfect catch-up is…',o:[['A long, deep one-on-one','listener'],['A spontaneous, laughter-filled hang','spark'],['Your friends from different worlds finally meeting','bridge'],['A little gathering you host','host'],['A quiet, unhurried evening','anchor']]},
-    {q:'When someone\'s upset, you…',o:[['Sit with them and really listen','listener'],['Gently get them to smile again','spark'],['Connect them with someone who\'s been there','bridge'],['Take charge of what they need','host'],['Stay steady and remind them it\'ll be okay','anchor']]},
-    {q:'At work, people rely on you to…',o:[['Notice how everyone\'s actually feeling','listener'],['Keep the energy up','spark'],['Get the right people in the room','bridge'],['Organise and lead','host'],['Be the level head when it\'s tense','anchor']]}
-  ];
-  var el=document.getElementById('quiz'), i=0, score={host:0,listener:0,spark:0,anchor:0,bridge:0};
-  function intro(){
-    el.innerHTML='<div style="text-align:center"><div class="res-emoji">🌷</div><h2 class="res-name">What\'s your <b>connection style</b>?</h2><p class="res-tagline">Six quick questions. A little mirror for how you show up with people.</p><button class="btn btn-primary" id="qstart">Start the quiz <span class="arrow">→</span></button></div>';
-    document.getElementById('qstart').onclick=function(){i=0;score={host:0,listener:0,spark:0,anchor:0,bridge:0};render();};
-  }
-  function render(){
-    var q=Q[i];
-    el.innerHTML='<div class="quiz-bar"><i style="width:'+Math.round(i/Q.length*100)+'%"></i></div>'+
-      '<div class="quiz-q">'+q.q+'</div><div class="quiz-opts">'+
-      q.o.map(function(o,idx){return '<button class="quiz-opt" data-k="'+o[1]+'">'+o[0]+'</button>';}).join('')+
-      '</div><div class="quiz-step">Question '+(i+1)+' of '+Q.length+'</div>';
-    Array.prototype.forEach.call(el.querySelectorAll('.quiz-opt'),function(b){
-      b.onclick=function(){score[b.getAttribute('data-k')]++;i++;if(i<Q.length)render();else result();};
-    });
-  }
-  function result(){
-    var best='host',max=-1;for(var k in score){if(score[k]>max){max=score[k];best=k;}}
-    var a=A[best];
-    el.innerHTML='<div style="text-align:center"><div class="res-emoji">'+a.e+'</div>'+
-      '<h2 class="res-name">You\'re <b>'+a.n+'</b></h2><p class="res-tagline">'+a.t+'</p>'+
-      '<div class="res-block"><h4>What this looks like</h4><p>'+a.d+'</p></div>'+
-      '<div class="res-block"><h4>Your strength</h4><p>'+a.s+'</p></div>'+
-      '<div class="res-cap" id="cap"><label>Want your full profile, your growth edge plus a tip made just for you? I\'ll send it over. 🤍</label>'+
-      '<div class="row"><input id="capemail" type="email" placeholder="your@email.com"><button class="btn btn-primary" id="capbtn">Send it to me</button></div><div id="capmsg" style="font-size:13.5px;color:var(--ink-soft);margin-top:10px"></div></div>'+
-      '<button class="quiz-again" id="qagain">↺ take it again</button></div>';
-    document.getElementById('qagain').onclick=intro;
-    var btn=document.getElementById('capbtn');
-    btn.onclick=function(){
-      var email=(document.getElementById('capemail').value||'').trim(), msg=document.getElementById('capmsg');
-      if(email.indexOf('@')<1){msg.textContent='Pop in a valid email 🙂';return;}
-      btn.disabled=true;btn.textContent='Sending…';
-      if(window.sbInsert){window.sbInsert('leads',{email:email,source:'connection-quiz',result:a.n});}
-      setTimeout(function(){
-        document.getElementById('cap').innerHTML='<div style="text-align:left"><h4 style="font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:700;margin-bottom:6px">Your growth edge</h4><p style="font-size:15px;color:var(--ink);line-height:1.55;margin-bottom:14px">'+a.g+'</p><h4 style="font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:700;margin-bottom:6px">A tip, just for you</h4><p style="font-size:15px;color:var(--ink);line-height:1.55">'+a.tip+'</p><p style="font-size:13.5px;color:var(--ink-soft);margin-top:14px">Saved 🤍 I\'ll be in touch. Thanks for trusting me with your email. It\'s never shared.</p></div>';
-      },500);
-    };
-  }
-  intro();
-})();
-</script>
 <script src="/main.js"></script>
 </body>
 </html>

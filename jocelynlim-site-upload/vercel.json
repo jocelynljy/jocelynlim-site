@@ -3,7 +3,8 @@
   "trailingSlash": false,
   "rewrites": [
     { "source": "/stories/:slug", "destination": "/:slug" },
-    { "source": "/for-you/make-them-a-character", "destination": "/make-them-a-character" }
+    { "source": "/for-you/make-them-a-character", "destination": "/make-them-a-character" },
+    { "source": "/for-you/quiz", "destination": "/quiz" }
   ],
   "redirects": [
     { "source": "/what-a-newsroom-taught-me-about-hosting", "destination": "/stories/what-a-newsroom-taught-me-about-hosting", "permanent": true },
