@@ -491,6 +491,14 @@ body{background:radial-gradient(125% 85% at 50% -12%, #f9f3e7 0%, #f3ecde 55%, #
 .stat .src{font-size:11px;color:var(--faint);margin-top:12px;line-height:1.4}
 @media(max-width:760px){.stats{grid-template-columns:1fr}}
 
+/* CTA rows (letsbloom tie-back etc.): center on desktop, stack full-width on phones */
+.cta-row{display:flex;flex-wrap:wrap;gap:12px}
+@media(max-width:560px){
+  .cta-row{flex-direction:column;align-items:stretch}
+  .cta-row .btn{width:100%;justify-content:center}
+  .rcard .ract .btn{width:100%;justify-content:center}
+}
+
 /* ============================================================
    v7 — mobile engagement layer (desktop is NOT affected; all
    rules live inside max-width media queries or are hidden by default)
